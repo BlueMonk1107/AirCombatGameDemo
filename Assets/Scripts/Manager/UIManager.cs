@@ -52,21 +52,14 @@ public class UIManager : NormalSingleton<UIManager>
 		}
 	}
 
-	public void Hide(string path)
+	public void Back()
 	{
 		if(_uiStack.Count <= 1)
 			return;
 		
 		string name = _uiStack.Peek();
-		if (name == path)
-		{
-			_uiStack.Pop();
-			_prefabs[name].Hide();
-		}
-		else
-		{
-			return;
-		}
+		_uiStack.Pop();
+		_prefabs[name].Hide();
 
 		name = _uiStack.Peek();
 		_prefabs[name].Show();

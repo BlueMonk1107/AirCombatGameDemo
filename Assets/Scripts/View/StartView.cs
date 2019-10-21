@@ -5,7 +5,7 @@ using UnityEngine;
 [BindPrefab(Paths.START_VIEW,typeof(StartView))]
 public class StartView : ViewBase {
 
-	public override void Init()
+	protected override void InitChild()
 	{
 		Util.Get("Start").AddListener(() =>
 		{

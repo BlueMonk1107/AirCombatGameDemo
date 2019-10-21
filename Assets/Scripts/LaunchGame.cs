@@ -8,5 +8,8 @@ public class LaunchGame : MonoBehaviour {
 		BindConfig config = new BindConfig();
 		config.Init();
 		UIManager.Single.Show(Paths.START_VIEW);
+
+		var reader = ReaderConfig.GetReader(Paths.INIT_PLANE_CONFIG);
+		reader["planes"][0]["life"].Get<int>((value)=>Debug.Log(value));
 	}
 }

@@ -27,8 +27,17 @@ public class UiUtil : MonoBehaviour
 		}
 		else
 		{
-			Debug.LogError("can not find Gameobject name is "+name);
-			return new UiUtilData();
+			Transform trans = transform.Find(name);
+			if (trans == null)
+			{
+				Debug.LogError("can not find Gameobject name is "+name);
+				return new UiUtilData();
+			}
+			else
+			{
+				_datas.Add(name,new UiUtilData(trans.GetComponent<RectTransform>()));
+				return _datas[name];
+			}
 		}
 	}
 }
@@ -58,7 +67,7 @@ public struct UiUtilData
 		}
 		else
 		{
-			Debug.LogError("can not find Button");
+			Debug.LogError("can not find Button,gameobject name is "+Go.name);
 		}
 	}
 }

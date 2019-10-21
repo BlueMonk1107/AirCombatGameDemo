@@ -8,5 +8,7 @@ public class BindConfig {
 	{
 		BindUtil.Bind(Paths.START_VIEW,typeof(StartView));
 		BindUtil.Bind(Paths.SELECTED_HERO_VIEW,typeof(SelectedHeroView));
+		BindUtil.Bind(Paths.STRENGTHEN_VIEW,typeof(StrengthenView));
+		BindUtil.Bind(Paths.LEVELS_VIEW,typeof(LevelsView));
 	}
 }

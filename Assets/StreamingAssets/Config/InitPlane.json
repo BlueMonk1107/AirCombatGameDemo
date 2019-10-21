@@ -1,0 +1,32 @@
+{
+  "planes": [
+    {
+      "planeId": 0,
+      "level": 1,
+      "attack": 5,
+      "fireRate": 0.8,
+      "life": 100
+    },
+    {
+      "planeId": 1,
+      "level": 1,
+      "attack": 10,
+      "fireRate": 0.6,
+      "life": 120
+    },
+    {
+      "planeId": 2,
+      "level": 1,
+      "attack": 20,
+      "fireRate": 0.4,
+      "life": 150
+    },
+    {
+      "planeId": 3,
+      "level": 1,
+      "attack": 40,
+      "fireRate": 0.2,
+      "life": 200
+    }
+  ]
+}
