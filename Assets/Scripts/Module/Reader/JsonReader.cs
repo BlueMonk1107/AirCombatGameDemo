@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading;
 using UnityEngine;
 using LitJson;
 using Object = System.Object;
@@ -30,7 +32,6 @@ public class JsonReader : IReader
                 return this;
             }
             InitTempData();
-            Debug.Log(key+" "+_tempData[key]);
             _tempData = _tempData[key];
             return this;
         }
@@ -72,7 +73,6 @@ public class JsonReader : IReader
         GetTextForStreamingAssets(path, (json) =>
         {
             _data = JsonMapper.ToObject(json);
-            Debug.Log("complete:"+_data["planes"][0]["life"]);
         });
     }
 
@@ -99,14 +99,9 @@ public class JsonReader : IReader
 
     private T GetValue<T>(JsonData data)
     {
-        if (typeof(T) == typeof(JsonData))
-        {
-            return (T)(object)data;
-        }
-        else
-        {
-            return (T) (object) data.ToString();
-        }
+        //这里涉及类型转换问题
+        var converter = TypeDescriptor.GetConverter(typeof(T));
+        return (T) converter.ConvertTo(data.ToString(), typeof(T));
     }
 
     public void GetTextForStreamingAssets(string path, Action<string> complete)
@@ -124,20 +119,20 @@ public class JsonReader : IReader
             localPath = "file:///" + path;
         }
 
-        WWW t_WWW = new WWW(localPath); //格式必须是"ANSI"，不能是"UTF-8"
+        WWW www = new WWW(localPath); 
 
-        if (t_WWW.error != null)
+        if (www.error != null)
         {
             Debug.LogError("error : " + localPath);
-            complete(null); //读取文件出错
+            complete(null);
         }
 
-        while (!t_WWW.isDone)
+        while (!www.isDone)
         {
         }
 
-        Debug.Log("t_WWW.text=  " + t_WWW.text);
-        complete(t_WWW.text);
+        Debug.Log("WWW.text=  " + www.text);
+        complete(www.text);
     }
 }
 
