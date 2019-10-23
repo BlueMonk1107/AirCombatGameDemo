@@ -6,9 +6,10 @@ using UnityEngine;
 [AttributeUsage(AttributeTargets.Class)]
 public class BindPrefab : Attribute
 {
-	public BindPrefab(string path ,Type type)
+	public string Path { get; private set; }
+
+	public BindPrefab(string path)
 	{
-		Debug.Log("BindPrefab");
-		BindUtil.Bind(path,type);
+		Path = path;
 	}
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[BindPrefab(Paths.START_VIEW,typeof(StartView))]
+[BindPrefab(Paths.START_VIEW)]
 public class StartView : ViewBase {
 
 	protected override void InitChild()

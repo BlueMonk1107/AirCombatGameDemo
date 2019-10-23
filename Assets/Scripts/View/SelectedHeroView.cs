@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[BindPrefab(Paths.SELECTED_HERO_VIEW)]
 public class SelectedHeroView : ViewBase {
 
     protected override void InitChild()

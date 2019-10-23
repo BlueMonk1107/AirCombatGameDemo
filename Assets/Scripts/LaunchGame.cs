@@ -5,8 +5,8 @@ public class LaunchGame : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		BindConfig config = new BindConfig();
-		config.Init();
+		InitCustomAttributes attributes = new InitCustomAttributes();
+		attributes.Init();
 		UIManager.Single.Show(Paths.START_VIEW);
 
 		var reader = ReaderConfig.GetReader(Paths.INIT_PLANE_CONFIG);

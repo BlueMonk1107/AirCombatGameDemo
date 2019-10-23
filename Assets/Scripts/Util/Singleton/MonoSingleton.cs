@@ -23,7 +23,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 
     private void Awake()
     {
-        if (Single != null && Single.gameObject != gameObject)
+        if (_single != null)
         {
             Destroy(gameObject);
         }
