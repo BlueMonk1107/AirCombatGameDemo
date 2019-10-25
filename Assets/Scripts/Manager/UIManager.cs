@@ -6,7 +6,7 @@ public class UIManager : NormalSingleton<UIManager>
 {
 	private Canvas _canvas;
 	private Stack<string> _uiStack = new Stack<string>();
-	private Dictionary<string, IView> _prefabs = new Dictionary<string, IView>();
+	private Dictionary<string, IView> _views = new Dictionary<string, IView>();
 
 	public Canvas Canvas
 	{
@@ -26,22 +26,22 @@ public class UIManager : NormalSingleton<UIManager>
 		if (_uiStack.Count > 0)
 		{
 			string name = _uiStack.Peek();
-			_prefabs[name].Hide();
+			_views[name].Hide();
 		}
 
 		IView view = InitView(path);
 		view.Show();
 		_uiStack.Push(path);
-		_prefabs[path] = view;
+		_views[path] = view;
 
 		return view;
 	}
 
 	private IView InitView(string path)
 	{
-		if (_prefabs.ContainsKey(path))
+		if (_views.ContainsKey(path))
 		{
-			return _prefabs[path];
+			return _views[path];
 		}
 		else
 		{
@@ -59,9 +59,9 @@ public class UIManager : NormalSingleton<UIManager>
 		
 		string name = _uiStack.Peek();
 		_uiStack.Pop();
-		_prefabs[name].Hide();
+		_views[name].Hide();
 
 		name = _uiStack.Peek();
-		_prefabs[name].Show();
+		_views[name].Show();
 	}
 }
