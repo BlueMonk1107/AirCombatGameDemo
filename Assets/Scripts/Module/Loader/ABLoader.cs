@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,5 +17,10 @@ public class ABLoader : ILoader {
     public Sprite[] LoadAllSprites(string path)
     {
         throw new System.NotImplementedException();
+    }
+
+    public void LoadConfig(string path, Action<object> complete)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -6,9 +6,9 @@ using UnityEngine;
 public class ReaderConfig
 {
 
-	private static readonly Dictionary<string, Func<string,IReader>> READER_DIC = new Dictionary<string, Func<string,IReader>>()
+	private static readonly Dictionary<string, Func<IReader>> READER_DIC = new Dictionary<string, Func<IReader>>()
 	{
-		{".json", (path) => new JsonReader(path)},
+		{".json", () => new JsonReader()},
 	};
 
 	public static IReader GetReader(string path)
@@ -17,7 +17,7 @@ public class ReaderConfig
 		{
 			if (path.Contains(pair.Key))
 			{
-				return pair.Value(path);
+				return pair.Value();
 			}
 		}
 

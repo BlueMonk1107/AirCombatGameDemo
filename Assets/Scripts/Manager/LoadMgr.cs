@@ -2,7 +2,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public class LoadMgr : NormalSingleton<LoadMgr>
+public class LoadMgr : NormalSingleton<LoadMgr>,ILoader
 {
 	private ILoader _loader;
 
@@ -24,5 +24,10 @@ public class LoadMgr : NormalSingleton<LoadMgr>
 	public Sprite[] LoadAllSprites(string path)
 	{
 		return _loader.LoadAllSprites(path);
+	}
+
+	public void LoadConfig(string path, Action<object> complete)
+	{
+		_loader.LoadConfig(path, complete);
 	}
 }

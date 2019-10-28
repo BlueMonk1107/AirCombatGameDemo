@@ -8,4 +8,5 @@ public interface IReader
     IReader this[string key] { get; }
     IReader this[int key] { get; }
     void Get<T>(Action<T> complete);
+    void SetData(object data);
 }

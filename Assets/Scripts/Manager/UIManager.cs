@@ -46,6 +46,7 @@ public class UIManager : NormalSingleton<UIManager>
 		else
 		{
 			GameObject viewGo = LoadMgr.Single.LoadPrefab(path,Canvas.transform);
+			viewGo.AddComponent(BindUtil.GetScriptType(path));
 			IView view = viewGo.GetComponent<IView>();
 			view.Init();
 			return view;

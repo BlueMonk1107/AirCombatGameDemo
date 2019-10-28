@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class HeroItem : MonoBehaviour
 {
-	private Color _default = Color.white;
-	private Color _grey = Color.gray;
+	private Color _selected = Color.white;
+	private Color _default = Color.gray;
 	private float _time = 0.5f;
 	private Image _image;
 	private Action _callBack;
@@ -27,13 +27,13 @@ public class HeroItem : MonoBehaviour
 			_callBack();
 		
 		_image.DOKill();
-		_image.DOColor(_default, _time);
+		_image.DOColor(_selected, _time);
 	}
 
 	public void UnSelected()
 	{
 		_image.DOKill();
-		_image.DOColor(_grey, _time);
+		_image.DOColor(_default, _time);
 	}
 
 	public void AddResetListener(Action callBack)

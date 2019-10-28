@@ -68,33 +68,37 @@ public class JsonReader : IReader
         }
     }
 
-    public JsonReader(string path)
+    public void SetData(object data)
     {
-        GetTextForStreamingAssets(path, (json) =>
+        if (data is string)
         {
-            _data = JsonMapper.ToObject(json);
-        });
+            _data = JsonMapper.ToObject(data as string);
+        }
+        else
+        {
+            Debug.LogError("当前传入数据类型错误，当前类只能解析json");
+        }
     }
 
-    public void Get<T>(Action<T> complete)
+    public void Get<T>(Action<T> callBack)
     {
         if (_tempKeysQueue != null)
         {
             _tempKeysQueue.OnComplete((data) =>
             {
                 T value = GetValue<T>(data);
-                complete(value);
+                callBack(value);
             });
         }
         
-        if (complete == null || _tempData == null)
+        if (callBack == null || _tempData == null)
         {
             _tempData = null;
             return;
         }
 
         T temp = GetValue<T>(_tempData);
-        complete(temp);
+        callBack(temp);
     }
 
     private T GetValue<T>(JsonData data)
@@ -102,37 +106,6 @@ public class JsonReader : IReader
         //这里涉及类型转换问题
         var converter = TypeDescriptor.GetConverter(typeof(T));
         return (T) converter.ConvertTo(data.ToString(), typeof(T));
-    }
-
-    public void GetTextForStreamingAssets(string path, Action<string> complete)
-    {
-        if (complete == null)
-            return;
-
-        string localPath = "";
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            localPath = path;
-        }
-        else
-        {
-            localPath = "file:///" + path;
-        }
-
-        WWW www = new WWW(localPath); 
-
-        if (www.error != null)
-        {
-            Debug.LogError("error : " + localPath);
-            complete(null);
-        }
-
-        while (!www.isDone)
-        {
-        }
-
-        Debug.Log("WWW.text=  " + www.text);
-        complete(www.text);
     }
 }
 

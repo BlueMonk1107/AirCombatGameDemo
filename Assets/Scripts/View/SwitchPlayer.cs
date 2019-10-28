@@ -40,13 +40,13 @@ public class SwitchPlayer : ViewBase {
 
 	public override void Show()
 	{
-		_id = DataMgr.Single.GetInt(DataKeys.PLANE_ID);
+		_id = DataMgr.Single.Get<int>(DataKeys.PLANE_ID);
 	}
 
 	private void Switch(ref int id,int value)
 	{
 		
-		int level = DataMgr.Single.GetInt(DataKeys.LEVEL);
+		int level = DataMgr.Single.Get<int>(DataKeys.LEVEL);
 
 		int max = _planeSprites.Count;
 		id += value;

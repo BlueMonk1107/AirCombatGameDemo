@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConfigMgr : NormalSingleton<ConfigMgr>
+public class ReaderMgr : NormalSingleton<ReaderMgr>
 {
     private Dictionary<string, IReader> _readersDic = new Dictionary<string, IReader>();
 
@@ -16,6 +16,7 @@ public class ConfigMgr : NormalSingleton<ConfigMgr>
         else
         {
             reader = ReaderConfig.GetReader(path);
+            LoadMgr.Single.LoadConfig(path,(data)=>reader.SetData(data));
             _readersDic[path] = reader;
         }
 
