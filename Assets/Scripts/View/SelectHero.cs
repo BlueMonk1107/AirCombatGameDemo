@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class SelectHero : MonoBehaviour
 {
+
 	private List<HeroItem> _items;
 	// Use this for initialization
-	void Start () {
-		_items = new List<HeroItem>();
+	void Start ()
+	{
+		_items = new List<HeroItem>(transform.childCount);
 		HeroItem item = null;
 		foreach (Transform trans in transform)
 		{
@@ -17,11 +19,11 @@ public class SelectHero : MonoBehaviour
 		}
 	}
 
-	public void ResetState()
+	private void ResetState()
 	{
 		foreach (HeroItem item in _items)
 		{
-			item.UnSelected();
+			item.Unselected();
 		}
 	}
 }

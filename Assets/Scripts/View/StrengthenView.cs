@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrengthenView : ViewBase
+[BindPrefab(Paths.STRENGTHEN_VIEW)]
+public class StrengthenView : ViewBase 
 {
-	protected override void InitChild()
-	{
-		PlaneProperty property = Util.Get("Property").Go.AddComponent<PlaneProperty>();
-		
-		SwitchPlayer switchP = Util.Get("Switchplayer").Go.AddComponent<SwitchPlayer>();
-		switchP.AddUpdateDataListener(property.UpdateData);
-		
-		Util.Get("Back").AddListener(UIManager.Single.Back);
-	}
+    protected override void InitChild()
+    {
+        Util.Get("Switchplayer").Go.AddComponent<SwitchPlayer>();
+        Util.Get("Property").Go.AddComponent<PlaneProperty>();
+    }
 }

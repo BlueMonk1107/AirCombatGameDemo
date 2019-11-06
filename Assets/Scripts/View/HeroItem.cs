@@ -7,37 +7,37 @@ using UnityEngine.UI;
 
 public class HeroItem : MonoBehaviour
 {
-	private Color _default = Color.white;
-	private Color _grey = Color.gray;
+	private Color _default = Color.gray;
+	private Color _selected = Color.white;
 	private float _time = 0.5f;
 	private Image _image;
 	private Action _callBack;
-
+	
 	// Use this for initialization
 	void Start ()
 	{
-		_image = GetComponent<Image>();
+		_image = transform.GetComponent<Image>();
 		GetComponent<Button>().onClick.AddListener(Selected);
-		UnSelected();
+		Unselected();
 	}
 
 	private void Selected()
 	{
-		if(_callBack != null)
+		if (_callBack != null)
 			_callBack();
 		
+		_image.DOKill();
+		_image.DOColor(_selected, _time);
+	}
+
+	public void Unselected()
+	{
 		_image.DOKill();
 		_image.DOColor(_default, _time);
 	}
 
-	public void UnSelected()
+	public void AddResetListener(Action action)
 	{
-		_image.DOKill();
-		_image.DOColor(_grey, _time);
-	}
-
-	public void AddResetListener(Action callBack)
-	{
-		_callBack = callBack;
+		_callBack = action;
 	}
 }

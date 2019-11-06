@@ -2,15 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataMgr : NormalSingleton<DataMgr> 
+public class DataMgr : NormalSingleton<DataMgr>,IDataMemory
 {
-    public int GetInt(string key)
+    private IDataMemory _dataMemory;
+
+    public DataMgr()
     {
-        return PlayerPrefs.GetInt(key,0);
+        _dataMemory = new PlayerPrefsMemory();
+    }
+    
+    public T Get<T>(string key)
+    {
+        return _dataMemory.Get<T>(key);
     }
 
-    public void SetInt(string key,int value)
+    public void Set<T>(string key, T value)
     {
-        PlayerPrefs.SetInt(key,value);
+        _dataMemory.Set(key,value);
+    }
+
+    public void Clear(string key)
+    {
+        _dataMemory.Clear(key);
+    }
+
+    public void ClearAll()
+    {
+        _dataMemory.ClearAll();
+    }
+
+    public bool Contains(string key)
+    {
+       return _dataMemory.Contains(key);
+    }
+
+    public void SetObject(string key, object value)
+    {
+        _dataMemory.SetObject(key,value);
+    }
+
+    public object GetObject(string key)
+    {
+        return _dataMemory.GetObject(key);
     }
 }

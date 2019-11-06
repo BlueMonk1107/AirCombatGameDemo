@@ -3,30 +3,34 @@
     {
       "planeId": 0,
       "level": 1,
-      "attack": 5,
-      "fireRate": 0.8,
-      "life": 100
+      "attackTime":1,
+      "attack": {"name":"攻击","value":5,"cost":200,"grouth":10,"maxVaue": 500},
+      "fireRate": {"name":"攻速","value":80,"cost":200,"grouth":1,"maxVaue": 100},
+      "life": {"name":"生命","value":100,"cost":200,"grouth":50,"maxVaue": 1000}
     },
     {
       "planeId": 1,
       "level": 1,
-      "attack": 10,
-      "fireRate": 0.6,
-      "life": 120
+      "attackTime":1,
+      "attack": {"name":"攻击","value":10,"cost":200,"grouth":20,"maxVaue": 800},
+      "fireRate": {"name":"攻速","value":120,"cost":200,"grouth":2,"maxVaue": 180},
+      "life": {"name":"生命","value":120,"cost":200,"grouth":100,"maxVaue": 1500}
     },
     {
       "planeId": 2,
       "level": 1,
-      "attack": 20,
-      "fireRate": 0.4,
-      "life": 150
+      "attackTime":1,
+      "attack": {"name":"攻击","value":20,"cost":200,"grouth":50,"maxVaue": 1000},
+      "fireRate": {"name":"攻速","value":140,"cost":200,"grouth":5,"maxVaue": 200},
+      "life": {"name":"生命","value":150,"cost":200,"grouth":200,"maxVaue": 3000}
     },
     {
       "planeId": 3,
       "level": 1,
-      "attack": 40,
-      "fireRate": 0.2,
-      "life": 200
+      "attackTime":1,
+      "attack": {"name":"攻击","value":40,"cost":200,"grouth":80,"maxVaue": 1500},
+      "fireRate": {"name":"攻速","value":180,"cost":200,"grouth":10,"maxVaue": 240},
+      "life": {"name":"生命","value":200,"cost":200,"grouth":300,"maxVaue": 5000}
     }
   ]
 }
