@@ -22,7 +22,7 @@ public class TextureSetting : AssetPostprocessor
 
 	private void PlayerNaming()
 	{
-		if (assetPath.Contains(Paths.PLAYER_PICTURE_FOLDER))
+		if (assetPath.Contains(Paths.PICTURE_PLAYER_PICTURE_FOLDER))
 		{
 			string name = Path.GetFileNameWithoutExtension(Path.GetFileName(assetPath));
 
@@ -34,7 +34,7 @@ public class TextureSetting : AssetPostprocessor
 				if (_playerData == null)
 				{
 					_playerData = new FolderData();
-					_playerData.FolderPath = Paths.PLAYER_PICTURE_FOLDER;
+					_playerData.FolderPath = Paths.PICTURE_PLAYER_PICTURE_FOLDER;
 					_playerData.NameTip = "0_0";
 				}
 				

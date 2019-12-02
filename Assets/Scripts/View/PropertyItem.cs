@@ -13,7 +13,6 @@ public class PropertyItem : MonoBehaviour,IViewUpdate,IViewShow {
 		cost,
 		grouth,
 		maxVaue,
-		COUNT
 	}
 
 	private static int _itemId = -1;
@@ -24,36 +23,10 @@ public class PropertyItem : MonoBehaviour,IViewUpdate,IViewShow {
 		_key = key;
 		_itemId++;
 		UpdatePos(_itemId);
-		InitButtonAction();
 	}
 
-	private void InitButtonAction()
-	{
-		transform.ButtonAction("Add", AddAction);
-	}
 
-	private void AddAction()
-	{
-		string valueKey = GetNewKey(ItemKey.value);
-		int value = GetValue(valueKey);
-		string grouthKey = GetNewKey(ItemKey.grouth);
-		int grouth = GetValue(grouthKey);
-		value += grouth;
-		
-		DataMgr.Single.SetObject(valueKey,value);
-	}
 
-	private string GetNewKey(ItemKey key)
-	{
-		int planeId = GameStateModel.Single.SelectedPlaneId;
-		return KeysUtil.GetPropertyKeys(planeId, _key + key);
-	}
-
-	private int GetValue(string key)
-	{
-		return DataMgr.Single.Get<int>(key);
-	}
-	
 
 	private void UpdatePos(int itemId)
 	{
@@ -75,7 +48,7 @@ public class PropertyItem : MonoBehaviour,IViewUpdate,IViewShow {
 			Transform trans = transform.Find(ConvertName(i));
 			if (trans != null)
 			{
-				string key = KeysUtil.GetPropertyKeys(planeId, _key + i);
+				string key = KeysUtil.GetPropertyKeys(_key + i);
 				trans.GetComponent<Text>().text = DataMgr.Single.GetObject(key).ToString();
 			}
 			else
@@ -89,8 +62,8 @@ public class PropertyItem : MonoBehaviour,IViewUpdate,IViewShow {
 	{
 		Slider slider = transform.Find("Slider").GetComponent<Slider>();
 		slider.minValue = 0;
-		slider.maxValue = DataMgr.Single.Get<int>(GetNewKey(ItemKey.maxVaue));
-		slider.value = DataMgr.Single.Get<int>(GetNewKey(ItemKey.value));
+		slider.maxValue = DataMgr.Single.Get<int>(KeysUtil.GetNewKey(ItemKey.maxVaue,_key));
+		slider.value = DataMgr.Single.Get<int>(KeysUtil.GetNewKey(ItemKey.value,_key));
 	}
 
 	private string ConvertName(ItemKey key)
@@ -107,7 +80,6 @@ public class PropertyItem : MonoBehaviour,IViewUpdate,IViewShow {
 
 	public void Show()
 	{
-		int id = DataMgr.Single.Get<int>(DataKeys.PLANE_ID);
-		UpdatePlaneId(id);
+		UpdatePlaneId(GameStateModel.Single.SelectedPlaneId);
 	}
 }

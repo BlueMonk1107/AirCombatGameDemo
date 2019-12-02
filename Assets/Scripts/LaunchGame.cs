@@ -10,11 +10,11 @@ public class LaunchGame : MonoBehaviour {
 	void Start ()
 	{
 		//DataMgr.Single.ClearAll();
-		ConfigMgr.Single.Init();
-		
-		InitCustomAttributes initAtt = new InitCustomAttributes();
-		initAtt.Init();
 
-		UIManager.Single.Show(Paths.START_VIEW);
+		GameStateModel.Single.CurrentScene = SceneName.Main;
+		IInit lifeCycle = LifeCycleMgr.Single;
+		lifeCycle.Init();
+
+		UIManager.Single.Show(Paths.PREFAB_START_VIEW);
 	}
 }

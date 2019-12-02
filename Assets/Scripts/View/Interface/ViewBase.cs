@@ -33,8 +33,6 @@ public abstract class ViewBase : MonoBehaviour,IView
         InitChild();
         InitSubView();
         InitAllSubView();
-        
-        InitUpdateObjects();
     }
 
     protected abstract void InitChild();
@@ -44,10 +42,9 @@ public abstract class ViewBase : MonoBehaviour,IView
         _viewInits = new List<IViewInit>();
         _viewShows = new List<IViewShow>();
         _viewHides = new List<IViewHide>();
+        _viewUpdates = new List<IViewUpdate>();
 
-        InitViewInterface(_viewInits);
-        InitViewInterface(_viewShows);
-        InitViewInterface(_viewHides);
+        InitInterface();
     }
 
     private void InitViewInterface<T>(List<T> list)
@@ -61,11 +58,6 @@ public abstract class ViewBase : MonoBehaviour,IView
         }
     }
 
-    private void InitUpdateObjects()
-    {
-        _viewUpdates = transform.GetComponentsInChildren<IViewUpdate>().ToList();
-    }
-
     private void InitAllSubView()
     {
         foreach (var view in _viewInits)
@@ -74,8 +66,6 @@ public abstract class ViewBase : MonoBehaviour,IView
         }
     }
 
-   
-
     public virtual void Show()
     {
         gameObject.SetActive(true);
@@ -83,6 +73,8 @@ public abstract class ViewBase : MonoBehaviour,IView
         {
             view.Show();
         }
+
+        UpdateFun();
     }
 
     public virtual void Hide()
@@ -94,7 +86,7 @@ public abstract class ViewBase : MonoBehaviour,IView
         gameObject.SetActive(false);
     }
 
-    private void UpdateAction()
+    public virtual void UpdateFun()
     {
         foreach (IViewUpdate update in _viewUpdates)
         {
@@ -102,12 +94,22 @@ public abstract class ViewBase : MonoBehaviour,IView
         }
     }
 
-    public virtual void UpdateFun()
-    {
-    }
-
     public Transform GetTrans()
     {
         return transform;
+    }
+
+    private void InitInterface()
+    {
+        InitViewInterface(_viewInits);
+        InitViewInterface(_viewShows);
+        InitViewInterface(_viewHides);
+        InitViewInterface(_viewUpdates);
+    }
+
+    public void Reacquire()
+    {
+        InitInterface();
+        InitAllSubView();
     }
 }

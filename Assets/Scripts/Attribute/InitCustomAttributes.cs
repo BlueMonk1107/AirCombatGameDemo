@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 
-public class InitCustomAttributes {
+public class InitCustomAttributes : IInit {
 
     public void Init()
     {

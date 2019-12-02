@@ -9,6 +9,8 @@ public class UIManager : NormalSingleton<UIManager>
     private Stack<string> _uiStack = new Stack<string>();
     private Dictionary<string,IView> _views = new Dictionary<string, IView>();
     private Canvas _canvas;
+    private IView _dialog;
+    
     public Canvas Canvas
     {
         get
@@ -41,6 +43,21 @@ public class UIManager : NormalSingleton<UIManager>
         return view;
     }
 
+    public DialogView ShowDialog(string content,Action trueAction = null,Action falseAcion = null)
+    {
+        var dialogGo = LoadMgr.Single.LoadPrefab(Paths.PREFAB_DIALOG, Canvas.transform);
+        AddTypeComponent(dialogGo,Paths.PREFAB_DIALOG);
+
+        DialogView dialog = dialogGo.GetComponent<DialogView>();
+        if (dialog != null)
+        {
+            dialog.InitDialog(content,trueAction,falseAcion);
+        }
+
+        _dialog = dialog;
+        return dialog;
+    }
+
     private IView InitView(string path)
     {
         if (_views.ContainsKey(path))
@@ -51,21 +68,48 @@ public class UIManager : NormalSingleton<UIManager>
         {
             GameObject viewGo = LoadMgr.Single.LoadPrefab(path, Canvas.transform);
 
-            foreach (var type in BindUtil.GetType(path))
-            {
-                viewGo.AddComponent(type);
-                
-                IInit[] inits = viewGo.GetComponents<IInit>();
+            AddTypeComponent(viewGo, path);
 
-                foreach (var init in inits)
-                {
-                    init.Init();
-                }
-            }
+            AddUpdateListener(viewGo);
+
+            InitComponent(viewGo);
 
             IView view = viewGo.GetComponent<IView>();
             
             return view;
+        }
+    }
+
+    private void AddTypeComponent(GameObject viewGo,string path)
+    {
+        foreach (var type in BindUtil.GetType(path))
+        {
+            viewGo.AddComponent(type);
+        }
+    }
+
+    private void AddUpdateListener(GameObject viewGo)
+    {
+        var controller = viewGo.GetComponent<IController>();
+        if (controller == null)
+        {
+            Debug.LogWarning("当前物体没有IController组件，物体名称:"+viewGo.name);
+            return;
+        }
+
+        foreach (IUpdate update in viewGo.GetComponents<IUpdate>())
+        {
+            controller.AddUpdateListener(update.UpdateFun);
+        }
+    }
+
+    private void InitComponent(GameObject viewGo)
+    {
+        IInit[] inits = viewGo.GetComponents<IInit>();
+
+        foreach (var init in inits)
+        {
+            init.Init();
         }
     }
 
@@ -74,11 +118,21 @@ public class UIManager : NormalSingleton<UIManager>
         if(_uiStack.Count <= 1)
             return;
 
-        string name = _uiStack.Pop();
-        HideAll(_views[name]);
+        if (_dialog == null)
+        {
+            string name = _uiStack.Pop();
+            HideAll(_views[name]);
 
-        name = _uiStack.Peek();
-        ShowAll(_views[name]);
+            name = _uiStack.Peek();
+            ShowAll(_views[name]);
+        }
+        else
+        {
+            _dialog.Hide();
+            _dialog = null;
+            _views[_uiStack.Peek()].Show();
+        }
+        
     }
 
     private void ShowAll(IView view)

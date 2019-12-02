@@ -21,7 +21,15 @@ public class JsonReader : IReader
         {
             if (!SetKey(key))
             {
-                _tempData = _tempData[key];
+                try
+                {
+                    _tempData = _tempData[key];
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("在数据中无法找到对应键值，数据："+_tempData.ToJson()+"  键值："+key);
+                }
+                
             }
             return this;
         }
@@ -33,7 +41,14 @@ public class JsonReader : IReader
         {
             if (!SetKey(key))
             {
-                _tempData = _tempData[key];
+                try
+                {
+                    _tempData = _tempData[key];
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("在数据中无法找到对应键值，数据："+_tempData.ToJson()+"  键值："+key);
+                }
             }
             return this;
         }
@@ -56,6 +71,32 @@ public class JsonReader : IReader
         return false;
     }
 
+    public void Count(Action<int> callBack)
+    {
+        bool success = SetKey<Action>(() =>
+        {
+            if (callBack != null)
+                callBack(GetCount());
+        });
+
+        if (!success)
+        {
+            callBack(GetCount());
+        }
+        else
+        {
+            _keyQueues.Enqueue(_keys);
+            _keys = null;
+        }
+        
+        
+    }
+
+    private int GetCount()
+    {
+        return _tempData.IsArray ? _tempData.Count : 0;
+    }
+
     public void Get<T>(Action<T> callBack)
     {
         if (_keys != null)
@@ -63,8 +104,8 @@ public class JsonReader : IReader
             _keys.OnComplete((dataTemp) =>
             {
                 T value = GetValue<T>(dataTemp);
-                callBack(value);
                 ResetData();
+                callBack(value);
             });
             
             _keyQueues.Enqueue(_keys);
@@ -81,8 +122,8 @@ public class JsonReader : IReader
         }
 
         T data = GetValue<T>(_tempData);
-        callBack(data);
         ResetData();
+        callBack(data);
     }
 
     private void ExecuteKeysQueue()
@@ -102,6 +143,10 @@ public class JsonReader : IReader
                 else if(value is int)
                 {
                     reader = this[(int) value];
+                }
+                else if (value is Action)
+                {
+                    ((Action) value)();
                 }
                 else
                 {
@@ -130,7 +175,7 @@ public class JsonReader : IReader
         }
         catch (Exception e)
         {
-           Debug.LogError("当前类型转换出现问题，目标类型为："+typeof(T).Name);
+           Debug.LogError("当前类型转换出现问题，目标类型为："+typeof(T).Name+"  data:"+data);
            return default(T);
         }
         

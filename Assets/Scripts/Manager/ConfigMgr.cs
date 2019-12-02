@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using LitJson;
 using UnityEngine;
 
-public class ConfigMgr : NormalSingleton<ConfigMgr> {
+public class ConfigMgr : NormalSingleton<ConfigMgr>,IInit {
 
     public void Init()
     {
@@ -12,7 +12,7 @@ public class ConfigMgr : NormalSingleton<ConfigMgr> {
 
     private void InitPlaneConfig()
     {
-        var config = ReaderMgr.Single.GetReader(Paths.INIT_PLANE_CONFIG);
+        var config = ReaderMgr.Single.GetReader(Paths.CONFIG_INIT_PLANE_CONFIG);
         config["planes"].Get<JsonData>(data =>
         {
             foreach (JsonData item in data)

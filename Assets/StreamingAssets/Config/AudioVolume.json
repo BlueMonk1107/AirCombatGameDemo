@@ -1,0 +1,30 @@
+[
+  {
+    "Name": "Game_BG",
+    "Volume": 0.5
+  },
+  {
+    "Name": "player_0",
+    "Volume": 0.5
+  },
+  {
+    "Name": "player_1",
+    "Volume": 0.5
+  },
+  {
+    "Name": "player_2",
+    "Volume": 0.5
+  },
+  {
+    "Name": "UI_ClickButton",
+    "Volume": 0.5
+  },
+  {
+    "Name": "UI_Loading",
+    "Volume": 0.5
+  },
+  {
+    "Name": "UI_StartGame",
+    "Volume": 0.5
+  }
+]

@@ -7,7 +7,7 @@ public class PlaneProperty : ViewBase {
     
     public enum Property
     {
-        attack,
+        attack = 0,
         fireRate,
         life,
         COUNT
@@ -21,7 +21,7 @@ public class PlaneProperty : ViewBase {
         
         for (Property i = 0; i < Property.COUNT; i++)
         {
-            GameObject item = LoadMgr.Single.LoadPrefab(Paths.PROPERTY_ITEM, transform);
+            GameObject item = LoadMgr.Single.LoadPrefab(Paths.PREFAB_PROPERTY_ITEM, transform);
             PropertyItem itemS = item.AddComponent<PropertyItem>();
             itemS.Init(i.ToString());
             _items.Add(itemS);

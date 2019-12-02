@@ -46,7 +46,6 @@ public class UiUtilData
 {
 	public GameObject Go { get; private set; }
 	public RectTransform RectTrans { get; private set; }
-	public Button Btn { get; private set; }
 	public Image Img { get; private set; }
 	public Text Text { get; private set; }
 
@@ -54,21 +53,8 @@ public class UiUtilData
 	{
 		RectTrans = rectTrans;
 		Go = rectTrans.gameObject;
-		Btn = rectTrans.GetComponent<Button>();
 		Img = RectTrans.GetComponent<Image>();
 		Text = rectTrans.GetComponent<Text>();
-	}
-
-	public void AddListener(Action action)
-	{
-		if (Btn != null)
-		{
-			Btn.onClick.AddListener(()=>action());
-		}
-		else
-		{
-			Debug.LogError("当前物体上没有button组件，物体名称为"+Go.name);
-		}
 	}
 
 	public void SetSprite(Sprite sprite)
@@ -80,6 +66,53 @@ public class UiUtilData
 		else
 		{
 			Debug.LogError("当前物体上没有image组件，物体名称为"+Go.name);
+		}
+	}
+
+	public void SetText(int content)
+	{
+		SetText(content.ToString());
+	}
+	
+	public void SetText(float content)
+	{
+		SetText(content.ToString());
+	}
+
+	public void SetText(string content)
+	{
+		if (Text != null)
+		{
+			Text.text = content;
+		}
+		else
+		{
+			Debug.LogError("当前物体上没有Text组件，物体名称为"+Go.name);
+		}
+	}
+
+	public T Get<T>() where T : Component
+	{
+		if (Go != null)
+		{
+			return Go.GetComponent<T>();
+		}
+		else
+		{
+			Debug.LogError("当前gameobject为空");
+			return null;
+		}
+	}
+
+	public void Add<T>() where T : Component
+	{
+		if (Go != null)
+		{
+			Go.AddComponent<T>();
+		}
+		else
+		{
+			Debug.LogError("当前gameobject为空");
 		}
 	}
 }

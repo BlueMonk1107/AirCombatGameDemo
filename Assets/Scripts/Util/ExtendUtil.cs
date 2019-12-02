@@ -12,7 +12,7 @@ public static class ExtendUtil
         return trans.GetComponent<RectTransform>();
     }
 
-    public static void ButtonAction(this Transform trans, string path, Action action)
+    public static void ButtonAction(this Transform trans, string path, Action action,bool useDefaultAudio = true)
     {
         var target = trans.Find(path);
         if (target == null)
@@ -29,7 +29,15 @@ public static class ExtendUtil
             else
             {
                 button.onClick.AddListener(()=>action());
+                if(useDefaultAudio)
+                    button.onClick.AddListener(AddButtonAudio);
             }
         }
     }
+
+    private static void AddButtonAudio()
+    {
+        AudioMgr.Single.PlayOnce(UIAduio.UI_ClickButton.ToString());
+    }
+    
 }
