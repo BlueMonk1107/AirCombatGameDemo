@@ -42,4 +42,5 @@ public class DataKeys
 
     public const string AUDIO_NAME = "Name";
     public const string AUDIO_Volume = "Volume";
+    public const string HAND_MODE = "HandMode";
 }

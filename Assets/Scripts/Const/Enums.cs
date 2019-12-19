@@ -11,7 +11,8 @@ public enum SceneName
 {
     NULL,
     Main,
-    Game
+    Game,
+    COUNT
 }
 
 public enum BGAudio
@@ -24,4 +25,20 @@ public enum UIAduio
     UI_ClickButton,
     UI_Loading,
     UI_StartGame
+}
+
+public enum HandMode
+{
+    RIGHT,
+    LEFT
+    
+}
+
+
+public enum UILayer
+{
+    BASE_UI,
+    MIDDLE_UI,
+    TOP_UI,
+    COUNT
 }

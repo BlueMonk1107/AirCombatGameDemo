@@ -12,6 +12,16 @@ public static class ExtendUtil
         return trans.GetComponent<RectTransform>();
     }
 
+    public static T AddComponent<T>(this Transform trans) where T : Component
+    {
+        return trans.gameObject.AddComponent<T>();
+    }
+    
+    public static T AddComponent<T>(this Transform trans,string path) where T : Component
+    {
+        return trans.Find(path).gameObject.AddComponent<T>();
+    }
+
     public static void ButtonAction(this Transform trans, string path, Action action,bool useDefaultAudio = true)
     {
         var target = trans.Find(path);

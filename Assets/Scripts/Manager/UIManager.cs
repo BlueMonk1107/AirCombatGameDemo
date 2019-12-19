@@ -10,6 +10,11 @@ public class UIManager : NormalSingleton<UIManager>
     private Dictionary<string,IView> _views = new Dictionary<string, IView>();
     private Canvas _canvas;
     private IView _dialog;
+
+    private HashSet<string> _skipViews = new HashSet<string>()
+    {
+        Paths.PREFAB_LOADING_VIEW
+    };
     
     public Canvas Canvas
     {
@@ -30,22 +35,32 @@ public class UIManager : NormalSingleton<UIManager>
         if (_uiStack.Count > 0)
         {
             string name = _uiStack.Peek();
-            _views[name].Hide();
+            if (GetLayer(name) >= GetLayer(path))
+            {
+                HideAll(_views[name]);
+            }
         }
 
         IView view = InitView(path);
 
         ShowAll(view);
         
-        _uiStack.Push(path);
+        if(!_skipViews.Contains(path) )
+            _uiStack.Push(path);
+        
         _views[path] = view;
 
         return view;
     }
 
+    private UILayer GetLayer(string path)
+    {
+        return UILayerMgr._single.GetLayer(path);
+    }
+
     public DialogView ShowDialog(string content,Action trueAction = null,Action falseAcion = null)
     {
-        var dialogGo = LoadMgr.Single.LoadPrefab(Paths.PREFAB_DIALOG, Canvas.transform);
+        var dialogGo = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.PREFAB_DIALOG, Canvas.transform);
         AddTypeComponent(dialogGo,Paths.PREFAB_DIALOG);
 
         DialogView dialog = dialogGo.GetComponent<DialogView>();
@@ -66,7 +81,9 @@ public class UIManager : NormalSingleton<UIManager>
         }
         else
         {
-            GameObject viewGo = LoadMgr.Single.LoadPrefab(path, Canvas.transform);
+            GameObject viewGo = LoadMgr.Single.LoadPrefabAndInstantiate(path, Canvas.transform);
+
+            InitLayer(path,viewGo.transform);
 
             AddTypeComponent(viewGo, path);
 
@@ -78,6 +95,11 @@ public class UIManager : NormalSingleton<UIManager>
             
             return view;
         }
+    }
+
+    private void InitLayer(string path,Transform view)
+    {
+        UILayerMgr.Single.SetParent(path,view);
     }
 
     private void AddTypeComponent(GameObject viewGo,string path)
@@ -133,6 +155,11 @@ public class UIManager : NormalSingleton<UIManager>
             _views[_uiStack.Peek()].Show();
         }
         
+    }
+
+    public void Hide(string name)
+    {
+        HideAll(_views[name]);
     }
 
     private void ShowAll(IView view)

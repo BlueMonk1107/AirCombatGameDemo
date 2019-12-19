@@ -5,8 +5,12 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class ABLoader : ILoader {
-	
-	public GameObject LoadPrefab(string path, Transform parent = null)
+	public GameObject LoadPrefab(string path)
+	{
+		throw new NotImplementedException();
+	}
+
+	public GameObject LoadPrefabAndInstantiate(string path, Transform parent = null)
 	{
 		throw new System.NotImplementedException();
 	}

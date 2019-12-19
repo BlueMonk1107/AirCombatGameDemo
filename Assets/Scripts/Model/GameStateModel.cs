@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class GameStateModel : NormalSingleton<GameStateModel> {
 
+	public GameStateModel()
+	{
+		HandMode = (HandMode) DataMgr.Single.Get<int>(DataKeys.HAND_MODE);
+	}
+
+	public HandMode HandMode { get; set; }
+	public bool Pause { get; set; }
 	public SceneName CurrentScene { get; set; }
 	public SceneName TargetScene { get; set; }
 	public Hero SelectedHero { get; set; }
 	public int SelectedPlaneId { get; set; }
 
-	public int Level
+	/// <summary>
+	/// 飞机等级
+	/// </summary>
+	public int PlaneLevel
 	{
 		get
 		{

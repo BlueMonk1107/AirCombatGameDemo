@@ -6,9 +6,16 @@ using Object = UnityEngine.Object;
 
 public class ResourceLoader : ILoader {
 
-    public GameObject LoadPrefab(string path,Transform parent = null)
+    public GameObject LoadPrefab(string path)
     {
         GameObject prefab = Resources.Load<GameObject>(path);
+       
+        return prefab;
+    }
+    
+    public GameObject LoadPrefabAndInstantiate(string path, Transform parent = null)
+    {
+        GameObject prefab = LoadPrefab(path);
         GameObject temp = Object.Instantiate(prefab, parent);
         return temp;
     }

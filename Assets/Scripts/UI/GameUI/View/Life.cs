@@ -1,0 +1,49 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Life : ViewBase,IReceiver
+{
+    private List<LifeItem> _items;
+    
+    protected override void InitChild()
+    {
+        _items = new List<LifeItem>();
+        InitItem();
+        UpdateLife();
+    }
+
+    public override void Show()
+    {
+        base.Show();
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_HP,this);
+    }
+
+    public override void Hide()
+    {
+        base.Hide();
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_HP,this);
+    }
+    
+
+    private void InitItem()
+    {
+        GameObject item = null;
+        for (int i = 0; i < Const.LIFE_ITEM_NUM; i++)
+        {
+            item = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.PREFAB_LIFE_ITEM_VIEW, transform);
+            item.name = i.ToString();
+            _items.Add(item.AddComponent<LifeItem>());
+        }
+    }
+
+    private void UpdateLife()
+    {
+        Util.Get("Value").SetText(GameModel.Single.Life);
+    }
+
+    public void ReceiveMessage(params object[] args)
+    {
+        UpdateLife();
+    }
+}

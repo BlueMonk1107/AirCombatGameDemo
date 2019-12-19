@@ -14,9 +14,11 @@ public class LifeCycleAddConfig : IInit{
     
     private void Add()
     {
+        Objects.Add(UILayerMgr.Single);
         Objects.Add(ConfigMgr.Single);
         Objects.Add(new InitCustomAttributes());
         Objects.Add(PlaneSpritesModel.Single);
         Objects.Add(AudioMgr.Single);
+        Objects.Add(SceneConfig.Single);
     }
 }

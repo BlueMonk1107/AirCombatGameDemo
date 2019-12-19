@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NormalSingleton<T> where T: class,new()
 {
-    private static T _single;
+    protected static T _single;
 
     public static T Single
     {

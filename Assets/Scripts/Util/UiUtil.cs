@@ -104,15 +104,16 @@ public class UiUtilData
 		}
 	}
 
-	public void Add<T>() where T : Component
+	public T Add<T>() where T : Component
 	{
 		if (Go != null)
 		{
-			Go.AddComponent<T>();
+			return Go.AddComponent<T>();
 		}
 		else
 		{
 			Debug.LogError("当前gameobject为空");
+			return null;
 		}
 	}
 }

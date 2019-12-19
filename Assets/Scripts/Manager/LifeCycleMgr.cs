@@ -49,6 +49,9 @@ public class LifeCycleMgr : MonoSingleton<LifeCycleMgr>, IInit
     // Update is called once per frame
     private void Update()
     {
+        if(GameStateModel.Single.Pause)
+            return;
+        
         LifeCycleConfig.LifeCycleFuns[LifeName.UPDATE]();
     }
 }
@@ -63,7 +66,7 @@ public interface ILifeCycle
 public class LifeCycle<T> : ILifeCycle
 {
     private HashSet<object> _objects = new HashSet<object>();
-    private HashSet<object> _nullObjects = new HashSet<object>();
+    private HashSet<object> _removeObjects = new HashSet<object>();
 
     public bool Add(object o)
     {
@@ -78,7 +81,7 @@ public class LifeCycle<T> : ILifeCycle
 
     public void Remove(object o)
     {
-        _objects.Remove(o);
+        _removeObjects.Add(o);
     }
 
     public void Execute<T1>(Action<T1> execute)
@@ -86,15 +89,27 @@ public class LifeCycle<T> : ILifeCycle
         foreach (var o in _objects)
         {
             if (o == null)
-                _nullObjects.Add(o);
-            execute((T1)o);
+            {
+                _removeObjects.Add(o);
+            }
+            else
+            {
+                try
+                {
+                    execute((T1)o);
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
+            }
         }
 
-        foreach (object o in _nullObjects)
+        foreach (object o in _removeObjects)
         {
             _objects.Remove(o);
         }
         
-        _nullObjects.Clear();
+        _removeObjects.Clear();
     }
 }
