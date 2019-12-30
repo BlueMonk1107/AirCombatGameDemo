@@ -6,7 +6,12 @@ public class PoolConfig
 {
         public List<PoolData> Data = new List<PoolData>()
         {
-              
+              new PoolData()
+              {
+                      Path = Paths.PREFAB_BULLET,
+                      PreloadCount = 15,
+                      AutoDestroy = false
+              }
         };
 }
 

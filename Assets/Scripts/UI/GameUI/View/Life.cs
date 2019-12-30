@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Life : ViewBase,IReceiver
+public class Life : ViewBase
 {
     private List<LifeItem> _items;
     
@@ -16,13 +16,13 @@ public class Life : ViewBase,IReceiver
     public override void Show()
     {
         base.Show();
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_HP,this);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_HP,ReceiveMessage);
     }
 
     public override void Hide()
     {
         base.Hide();
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_HP,this);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_HP,ReceiveMessage);
     }
     
 

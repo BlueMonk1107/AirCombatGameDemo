@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IReceiver
+public interface IColliderMsg
 {
-	void ReceiveMessage(params object[] args);
+    void ColliderMsg(Transform other);
 }

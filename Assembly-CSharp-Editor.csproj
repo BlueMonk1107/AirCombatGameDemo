@@ -218,6 +218,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\AudioSetting.cs" />
+    <Compile Include="Assets\Editor\AutoTags.cs" />
     <Compile Include="Assets\Editor\JsonDataTool.cs" />
     <Compile Include="Assets\Editor\NameMgrWindow.cs" />
     <Compile Include="Assets\Editor\TextureSetting.cs" />

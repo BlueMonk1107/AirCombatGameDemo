@@ -7,6 +7,28 @@ using UnityEngine.UI;
 
 public static class ExtendUtil 
 {
+    public static T AddOrGet<T>(this Transform trans) where T : Component
+    {
+        var t = trans.GetComponent<T>();
+        if (t == null)
+        {
+            t = trans.AddComponent<T>();
+        }
+
+        return t;
+    }
+    
+    public static T AddOrGet<T>(this GameObject go) where T : Component
+    {
+        var t = go.GetComponent<T>();
+        if (t == null)
+        {
+            t = go.AddComponent<T>();
+        }
+
+        return t;
+    }
+    
     public static RectTransform Rect(this Transform trans)
     {
         return trans.GetComponent<RectTransform>();

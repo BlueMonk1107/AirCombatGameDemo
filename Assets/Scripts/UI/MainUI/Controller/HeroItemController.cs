@@ -39,4 +39,10 @@ public class HeroItemController : ControllerBase
             AudioMgr.Single.Stop(_hero.ToString());
         }
     }
+
+    public override void Hide()
+    {
+        base.Hide();
+        AudioMgr.Single.Stop(_hero.ToString());
+    }
 }

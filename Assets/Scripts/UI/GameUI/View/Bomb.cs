@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bomb : ViewBase,IReceiver {
+public class Bomb : ViewBase {
     
     private ItemCDEffect _cdEffect;
     private int _count;
@@ -20,30 +20,40 @@ public class Bomb : ViewBase,IReceiver {
     public override void Show()
     {
         base.Show();
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_BOMB,this);
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_BOMB,this);
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_CHANGE_HAND,this);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_BOMB,ReceiveBomb);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_BOMB,ReceiveBomb);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_CHANGE_HAND,ReceiveHandState);
         _count = GameModel.Single.BombCount;
-        ReceiveMessage();
+        UpdateShow();
+    }
+
+    private void UpdateShow()
+    {
+        ReceiveBomb();
+        ReceiveHandState();
     }
 
     public override void Hide()
     {
         base.Hide();
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_BOMB,this);
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_BOMB,this);
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_CHANGE_HAND,this);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_BOMB,ReceiveBomb);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_BOMB,ReceiveBomb);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_CHANGE_HAND,ReceiveHandState);
     }
     
     private void UpdateCount()
     {
         Util.Get("Num").SetText(GameModel.Single.BombCount);
     }
-
-    public void ReceiveMessage(params object[] args)
+    
+    private void ReceiveBomb(params object[] args)
     {
         UpdateCount();
         UpdateState();
+    }
+    
+    private void ReceiveHandState(params object[] args)
+    {
         UpdateHandState();
     }
     

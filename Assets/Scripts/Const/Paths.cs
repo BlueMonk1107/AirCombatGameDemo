@@ -18,19 +18,33 @@ public class Paths {
 	public const string PREFAB_LIFE_ITEM_VIEW = UI_FOLDER + "LifeItem";
 	public const string PREFAB_PAUSE_VIEW = UI_FOLDER + "GamePauseView";
 	public const string PREFAB_ITEM_EFFECT_VIEW = UI_FOLDER + "ItemEffect";
-	
+	//game预制
 	private const string Game_FOLDER = PREFAB_FOLDER + "Game/";
 	public const string PREFAB_GAME_ROOT = Game_FOLDER + "GameRoot";
+	public const string PREFAB_MAP_MGR = Game_FOLDER + "MapMgr";
+	public const string PREFAB_PLAYER = Game_FOLDER + "Player";
+	public const string PREFAB_BULLET = Game_FOLDER + "Bullet";
+	
+	private const string EFFECT_FOLDER = Game_FOLDER + "Effect/";
+	public const string EFFECT_SHIELD = EFFECT_FOLDER + "Shield";
+	
+	public const string ENEMY_FOLDER = PREFAB_FOLDER + "Enemy/";
 	//图片路径
 	private const string PICTURE_FOLDER = "Picture/";
 	public const string PICTURE_PLAYER_PICTURE_FOLDER = PICTURE_FOLDER+"Player/";
 	public const string PICTURE_MAP_FOLDER = PICTURE_FOLDER+"Map/";
+	
+	public const string PICTURE_BULLET_FOLDER = PICTURE_FOLDER+"Buttle/";
+	public const string PICTURE_PLAYER_BULLET_FOLDER = PICTURE_BULLET_FOLDER+"Player/";
+	public const string PICTURE_BULLET_EFFECT = PICTURE_BULLET_FOLDER+"Effect/";
+	public const string PICTURE_POWER = PICTURE_BULLET_EFFECT+"Power";
 	//配置路径
 	public static readonly string CONFIG_FOLDER = Application.streamingAssetsPath + "/Config";
 	public static readonly string CONFIG_INIT_PLANE_CONFIG = CONFIG_FOLDER + "/InitPlane.json";
 	public static readonly string CONFIG_LEVEL_CONFIG = CONFIG_FOLDER + "/LevelConfig.json";
 	public static readonly string CONFIG_AUDIO_VOLUME_CONFIG = CONFIG_FOLDER + "/AudioVolume.json";
 	public static readonly string CONFIG_Game_CONFIG = CONFIG_FOLDER + "/GameConfig.json";
+	public static readonly string CONFIG_BULLET_CONFIG = CONFIG_FOLDER + "/BulletConfig.json";
 	//音频路径
 	public static readonly string AUDIO_FOLDER = "Audio";
 	public static readonly string AUDIO_UI_FOLDER = AUDIO_FOLDER+"/UI/";

@@ -13,8 +13,8 @@ public class SceneConfig : NormalSingleton<SceneConfig>,IInit
         SceneMgr.Single.AddSceneLoaded(SceneName.Game, (callBack) =>
         {
             var gameRoot = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.PREFAB_GAME_ROOT);
-            var map = gameRoot.AddComponent<MapMgr>();
-            map.Init();
+            var root = gameRoot.AddComponent<GameRoot>();
+            root.Init();
             callBack();
         });
     }

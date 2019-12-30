@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LifeItem : ViewBase,IReceiver
+public class LifeItem : ViewBase
 {
 
     private int _lifeMin;
@@ -16,7 +16,7 @@ public class LifeItem : ViewBase,IReceiver
 
     private int GetLifeMin(int id)
     {
-        int eachLife = Const.LIFE_MAX / Const.LIFE_ITEM_NUM;
+        int eachLife = GameModel.Single.LifeMax / Const.LIFE_ITEM_NUM;
         return id * eachLife;
     }
     
@@ -32,13 +32,13 @@ public class LifeItem : ViewBase,IReceiver
     public override void Show()
     {
         base.Show();
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_HP,this);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_HP,ReceiveMessage);
     }
 
     public override void Hide()
     {
         base.Hide();
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_HP,this);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_HP,ReceiveMessage);
     }
 
     public void ReceiveMessage(params object[] args)

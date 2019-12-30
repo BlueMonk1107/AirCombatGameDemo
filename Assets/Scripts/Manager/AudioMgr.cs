@@ -45,7 +45,6 @@ public class AudioMgr : MonoSingleton<AudioMgr>,IInit {
 				_changeVolume();
 			_changeVolume = null;
 		});
-		
 	}
 
 	public AudioClip GetClip(string name)
@@ -110,14 +109,16 @@ public class AudioMgr : MonoSingleton<AudioMgr>,IInit {
 		source.Play();
 		_clipAndSourceMap[name] = source;
 		
-		CoroutineMgr.Single.ExecuteOnce(Wait(name));
+		CoroutineMgr.Single.ExecuteOnce(Wait(name,loop));
 	}
 
-	private IEnumerator Wait(string name)
+	private IEnumerator Wait(string name,bool loop)
 	{
 		var clip = GetClip(name);
 		yield return new WaitForSeconds(clip.length);
-		Stop(name);
+		
+		if(!loop)
+			Stop(name);
 	}
 
 	public void Stop(string name)
@@ -130,6 +131,34 @@ public class AudioMgr : MonoSingleton<AudioMgr>,IInit {
 			_activeSources.Remove(source);
 			_inactiveSources.Add(source);
 			_clipAndSourceMap.Remove(name);
+		}
+	}
+
+	public void PauseNow(string name)
+	{
+		if (_clipAndSourceMap.ContainsKey(name))
+		{
+			var source = _clipAndSourceMap[name];
+			source.Pause();
+		}
+	}
+
+	public void PauseDelay(string name)
+	{
+		if (_clipAndSourceMap.ContainsKey(name))
+		{
+			var source = _clipAndSourceMap[name];
+			source.loop = false;
+		}
+	}
+	
+	public void Replay(string name,bool loop = true)
+	{
+		if (_clipAndSourceMap.ContainsKey(name))
+		{
+			var source = _clipAndSourceMap[name];
+			source.loop = loop;
+			source.Play();
 		}
 	}
 

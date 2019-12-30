@@ -36,5 +36,6 @@
       "life": {"name":"生命","value":200,"cost":200,"costUnit":"star","grouth":300,"maxVaue": 5000},
       "upgrades": {"name":"升级","coefficient": 5,"max":4,"0": 300,"1": 600,"2": 900,"3": 1200,"costUnit":"diamond"}
     }
-  ]
+  ],
+  "planeSpeed": 1.2
 }

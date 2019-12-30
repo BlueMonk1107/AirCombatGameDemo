@@ -1,3 +1,4 @@
 {
-  "cameraSpeed": 1
+  "cameraSpeed": 1,
+  "bulletSpeed" : 5
 }

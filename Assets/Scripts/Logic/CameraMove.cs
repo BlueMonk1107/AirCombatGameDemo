@@ -7,14 +7,21 @@ public class CameraMove : MonoBehaviour,IUpdate
 {
 
 	private float _speed;
+	private MoveComponent _move;
 
 	// Use this for initialization
 	void Start ()
 	{
 		_speed = 0;
 		var reader = ReaderMgr.Single.GetReader(Paths.CONFIG_Game_CONFIG);
-		reader["cameraSpeed"].Get<float>((value) => { _speed = value; });
+		reader["cameraSpeed"].Get<float>((value) =>
+		{
+			_speed = value;
+			_move = gameObject.AddComponent<MoveComponent>();
+			_move.Init(_speed);
+		});
 		LifeCycleMgr.Single.Add(LifeName.UPDATE,this);
+		
 	}
 
 	private void OnDestroy()
@@ -24,6 +31,6 @@ public class CameraMove : MonoBehaviour,IUpdate
 
 	public void UpdateFun()
 	{
-		transform.Translate(0,_speed * Time.deltaTime,0);
+		_move.Move(Vector2.up);
 	}
 }

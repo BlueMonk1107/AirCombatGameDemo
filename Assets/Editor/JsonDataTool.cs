@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using LitJson;
 using UnityEditor;
 using UnityEngine;
@@ -22,38 +23,61 @@ public class JsonDataTool {
         
         DirectoryInfo info = new DirectoryInfo(selectedPath);
         FileInfo[] fileInfos = info.GetFiles("*", SearchOption.AllDirectories);
-
-        List<AudioVolume> volumes = new List<AudioVolume>();
-        foreach (FileInfo fileInfo in fileInfos)
-        {
-            if(fileInfo.Name.EndsWith(".meta"))
-                continue;
-            string name = Path.GetFileNameWithoutExtension(fileInfo.Name);
-            var temp = new AudioVolume();
-            temp.Name = name;
-            temp.Volume = 0.5;
-            volumes.Add(temp);
-        }
         
-        string json = JsonMapper.ToJson(volumes);
+        
         string path = Paths.CONFIG_AUDIO_VOLUME_CONFIG;
-
+        List<AudioVolume> volumes = new List<AudioVolume>();
+        
         if (File.Exists(path))
         {
-            if (EditorUtility.DisplayDialog("警告", "是否覆盖AudioVolume配置文件", "确认", "取消"))
+            AudioVolume[] data = JsonMapper.ToObject<AudioVolume[]>(File.ReadAllText(path));
+            
+           
+            foreach (FileInfo fileInfo in fileInfos)
             {
-                File.WriteAllText(path,json);
-                Debug.Log("成功生成AudioVolume配置文件");
+                if(fileInfo.Name.EndsWith(".meta"))
+                    continue;
+                string name = Path.GetFileNameWithoutExtension(fileInfo.Name);
+                var temp = new AudioVolume();
+                temp.Name = name;
+                temp.Volume = GetVolume(data, name);
+                volumes.Add(temp);
             }
+
         }
         else
         {
-            File.WriteAllText(path,json);
-            Debug.Log("成功生成AudioVolume配置文件");
+            foreach (FileInfo fileInfo in fileInfos)
+            {
+                if(fileInfo.Name.EndsWith(".meta"))
+                    continue;
+                string name = Path.GetFileNameWithoutExtension(fileInfo.Name);
+                var temp = new AudioVolume();
+                temp.Name = name;
+                temp.Volume = 0.5f;
+                volumes.Add(temp);
+            }
         }
+
+        string json = JsonMapper.ToJson(volumes);
+        File.WriteAllText(path,json);
+        Debug.Log("成功生成AudioVolume配置文件");
         
         AssetDatabase.Refresh();
        
+    }
+    
+    private static double GetVolume(AudioVolume[] data,string key)
+    {
+        var item = data.Where(u => u.Name == key).FirstOrDefault();
+        if (item != null)
+        {
+            return item.Volume;
+        }
+        else
+        {
+            return 0.5f;
+        }
     }
 }
 

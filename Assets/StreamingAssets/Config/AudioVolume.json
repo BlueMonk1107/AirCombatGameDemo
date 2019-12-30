@@ -4,6 +4,14 @@
     "Volume": 0.5
   },
   {
+    "Name": "Fire",
+    "Volume": 0.2
+  },
+  {
+    "Name": "Power",
+    "Volume": 0.5
+  },
+  {
     "Name": "player_0",
     "Volume": 0.5
   },

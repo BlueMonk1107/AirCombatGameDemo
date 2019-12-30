@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : ViewBase,IReceiver
+public class Shield : ViewBase
 {
 
     private ItemCDEffect _cdEffect;
@@ -20,19 +20,25 @@ public class Shield : ViewBase,IReceiver
     public override void Show()
     {
         base.Show();
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_SHIELD,this);
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_SHIELD,this);
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_CHANGE_HAND,this);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_SHIELD,ReceiveShield);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_SHIELD,ReceiveShield);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_CHANGE_HAND,ReceiveHandState);
         _count = GameModel.Single.ShieldCount;
-        ReceiveMessage();
+        UpdateShow();
+    }
+    
+    private void UpdateShow()
+    {
+        ReceiveShield();
+        ReceiveHandState();
     }
 
     public override void Hide()
     {
         base.Hide();
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_SHIELD,this);
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_SHIELD,this);
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_CHANGE_HAND,this);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_SHIELD,ReceiveShield);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_SHIELD,ReceiveShield);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_CHANGE_HAND,ReceiveHandState);
     }
 
     private void UpdateCount()
@@ -40,11 +46,14 @@ public class Shield : ViewBase,IReceiver
         Util.Get("Num").SetText(GameModel.Single.ShieldCount);
     }
 
-
-    public void ReceiveMessage(params object[] args)
+    private void ReceiveShield(params object[] args)
     {
         UpdateCount();
         UpdateState();
+    }
+    
+    private void ReceiveHandState(params object[] args)
+    {
         UpdateHandState();
     }
 

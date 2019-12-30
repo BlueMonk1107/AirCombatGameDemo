@@ -1,41 +1,69 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public interface IMessageSystem
 {
-    void AddListener(int key, IReceiver receiver);
-    void RemoveListener(int key, IReceiver receiver);
+    void AddListener(int key,Action<object[]> callback);
+    void RemoveListener(int key,Action<object[]> callback);
     void DispatchMsg(int key, params object[] args);
+    
+    void AddListener(string key,Action<object[]> callback);
+    void RemoveListener(string key,Action<object[]> callback);
+    void DispatchMsg(string key, params object[] args);
 }
 
 public class MessageSystem :IMessageSystem {
     
-    private Dictionary<int,HashSet<IReceiver>> _receivers = new Dictionary<int, HashSet<IReceiver>>();
+    private Dictionary<int,Action<object[]>> _intReceivers = new Dictionary<int,Action<object[]>>();
+    private Dictionary<string,Action<object[]>> _stringReceivers = new Dictionary<string,Action<object[]>>();
 
-    public void AddListener(int key,IReceiver receiver)
+    public void AddListener(int key,Action<object[]> callback)
     {
-        if (!_receivers.ContainsKey(key))
+        if (!_intReceivers.ContainsKey(key))
         {
-            _receivers[key] = new HashSet<IReceiver>();
+            _intReceivers[key] = callback;
         }
-        
-        _receivers[key].Add(receiver);
+
+        _intReceivers[key] += callback;
     }
 
-    public void RemoveListener(int key,IReceiver receiver)
+    public void RemoveListener(int key,Action<object[]> callback)
     {
-        if (_receivers.ContainsKey(key))
+        if (_intReceivers.ContainsKey(key))
         {
-            _receivers[key].Remove(receiver);
+            _intReceivers[key] -= callback;
         }
     }
 
     public void DispatchMsg(int key,params object[] args)
     {
-        foreach (IReceiver receiver in _receivers[key])
+        if(_intReceivers.ContainsKey(key))
+            _intReceivers[key](args);
+    }
+
+    public void AddListener(string key,Action<object[]> callback)
+    {
+        if (!_stringReceivers.ContainsKey(key))
         {
-            receiver.ReceiveMessage(args);
+            _stringReceivers[key] = callback;
         }
+        
+        _stringReceivers[key] += callback;
+    }
+
+    public void RemoveListener(string key,Action<object[]> callback)
+    {
+        if (_stringReceivers.ContainsKey(key))
+        {
+            _stringReceivers[key] -= callback;
+        }
+    }
+
+    public void DispatchMsg(string key, params object[] args)
+    {
+        if(_stringReceivers.ContainsKey(key))
+            _stringReceivers[key](args);
     }
 }

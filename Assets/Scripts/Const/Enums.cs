@@ -27,6 +27,12 @@ public enum UIAduio
     UI_StartGame
 }
 
+public enum GameAudio
+{
+    Fire,
+    Power
+}
+
 public enum HandMode
 {
     RIGHT,
@@ -41,4 +47,17 @@ public enum UILayer
     MIDDLE_UI,
     TOP_UI,
     COUNT
+}
+
+public enum GameLayer
+{
+    BACKGROUND = 0,
+    PLANE = -1,
+    EFFECT = -2
+}
+
+public enum BulletOwner
+{
+    PLAYER,
+    ENEMY
 }

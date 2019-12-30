@@ -6,7 +6,7 @@ public class GameModel : NormalSingleton<GameModel> {
 
 	public GameModel()
 	{
-		Life = Const.LIFE_MAX;
+		Life = LifeMax;
 	}
 
 	public int Life { get; set; }
@@ -19,6 +19,15 @@ public class GameModel : NormalSingleton<GameModel> {
 	/// 选中的关卡
 	/// </summary>
 	public int SelectedLevel { get; set; }
+
+	public int LifeMax
+	{
+		get
+		{
+			string key = KeysUtil.GetNewKey(PropertyItem.ItemKey.value, PlaneProperty.Property.life.ToString());
+			return DataMgr.Single.Get<int>(key);
+		}
+	}
 
 	public void Clear()
 	{

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using LitJson;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,8 @@ public class LaunchGame : MonoBehaviour{
 	// Use this for initialization
 	void Start ()
 	{
+		TestMgr.Single.Init();
+		
 		if (FindObjectsOfType<LaunchGame>().Length > 1)
 		{
 			Destroy(gameObject);

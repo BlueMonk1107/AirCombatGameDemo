@@ -122,4 +122,9 @@ public class SceneMgr : NormalSingleton<SceneMgr>
 		CurInitNum = 0;
 		InitItemTotalNum();
 	}
+
+	public bool IsScene(SceneName name)
+	{
+		return GameStateModel.Single.CurrentScene == name;
+	}
 }
