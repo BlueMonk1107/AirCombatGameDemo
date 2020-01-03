@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Money : ViewBase {
+﻿public class Money : ViewBase
+{
     protected override void InitChild()
     {
-        
     }
 
     public override void UpdateFun()

@@ -1,16 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelRootController : ControllerBase {
+public class LevelRootController : ControllerBase
+{
     protected override void InitChild()
     {
         var reader = ReaderMgr.Single.GetReader(Paths.CONFIG_LEVEL_CONFIG);
-        reader["levelCount"].Get<int>((data) =>
-        {
-            CoroutineMgr.Single.ExecuteOnce(Wait(data));
-        });
-        
+        reader["levelCount"].Get<int>(data => { CoroutineMgr.Single.ExecuteOnce(Wait(data)); });
     }
 
     private IEnumerator Wait(int count)
@@ -22,9 +18,6 @@ public class LevelRootController : ControllerBase {
 
     private void AddComponent()
     {
-        foreach (Transform trans in transform)
-        {
-            trans.gameObject.AddComponent<LevelItemController>();
-        }
+        foreach (Transform trans in transform) trans.gameObject.AddComponent<LevelItemController>();
     }
 }

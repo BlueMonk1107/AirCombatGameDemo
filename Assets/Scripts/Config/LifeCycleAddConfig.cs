@@ -1,9 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class LifeCycleAddConfig : IInit{
-
+public class LifeCycleAddConfig : IInit
+{
     public ArrayList Objects { get; private set; }
 
     public void Init()
@@ -11,7 +9,7 @@ public class LifeCycleAddConfig : IInit{
         Objects = new ArrayList();
         Add();
     }
-    
+
     private void Add()
     {
         Objects.Add(UILayerMgr.Single);

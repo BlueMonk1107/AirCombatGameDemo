@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IDataMemory
+﻿public interface IDataMemory
 {
     T Get<T>(string key);
     void Set<T>(string key, T value);

@@ -1,17 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestMgr : NormalSingleton<TestMgr>,IInit
+public class TestMgr : NormalSingleton<TestMgr>, IInit
 {
-
-    private List<ITest> _editorTests = new List<ITest>()
+    private readonly List<ITest> _editorTests = new List<ITest>
     {
         new MsgEventTest()
     };
-    private List<ITest> _realTests = new List<ITest>()
-    {
-    };
-    
+
+    private readonly List<ITest> _realTests = new List<ITest>();
+
     public void Init()
     {
 #if UNITY_EDITOR
@@ -34,10 +32,10 @@ public class TestMgr : NormalSingleton<TestMgr>,IInit
 
     private void ExecuteAll(List<ITest> tests)
     {
-        foreach (ITest test in tests)
+        foreach (var test in tests)
         {
             test.Execute();
-            Debug.Log("当前"+test+"类测试完成");
+            Debug.Log("当前" + test + "类测试完成");
         }
     }
 

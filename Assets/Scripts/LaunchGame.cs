@@ -1,31 +1,26 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using LitJson;
-using UnityEditorInternal;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class LaunchGame : MonoBehaviour{
-	// Use this for initialization
-	void Start ()
-	{
-		TestMgr.Single.Init();
-		
-		if (FindObjectsOfType<LaunchGame>().Length > 1)
-		{
-			Destroy(gameObject);
-			return;
-		}
-		//DataMgr.Single.ClearAll(); 
+public class LaunchGame : MonoBehaviour
+{
+    // Use this for initialization
+    private void Start()
+    {
+        TestMgr.Single.Init();
 
-		GameStateModel.Single.CurrentScene = SceneName.Main;
-		IInit lifeCycle = LifeCycleMgr.Single;
-		lifeCycle.Init();
+        if (FindObjectsOfType<LaunchGame>().Length > 1)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        //DataMgr.Single.ClearAll(); 
 
-		UIManager.Single.Show(Paths.PREFAB_START_VIEW);
-		
-		DontDestroyOnLoad(gameObject);
-	}
+        GameStateModel.Single.CurrentScene = SceneName.Main;
+        IInit lifeCycle = LifeCycleMgr.Single;
+        lifeCycle.Init();
+
+        UIManager.Single.Show(Paths.PREFAB_START_VIEW);
+
+        DontDestroyOnLoad(gameObject);
+    }
 }

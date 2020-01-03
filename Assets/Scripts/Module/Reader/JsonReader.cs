@@ -4,33 +4,30 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using LitJson;
 using UnityEngine;
-using UnityEngine.Events;
 
 //jsonReader["planes"][0]["planeId"].Get<int>(()=>)
 //jsonReader["planes"][0]["planeId"]
 public class JsonReader : IReader
 {
     private JsonData _data;
-    private JsonData _tempData;
+    private readonly Queue<KeyQueue> _keyQueues = new Queue<KeyQueue>();
     private KeyQueue _keys;
-    private Queue<KeyQueue> _keyQueues = new Queue<KeyQueue>();
-    
+    private JsonData _tempData;
+
     public IReader this[string key]
     {
         get
         {
             if (!SetKey(key))
-            {
                 try
                 {
                     _tempData = _tempData[key];
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError("在数据中无法找到对应键值，数据："+_tempData.ToJson()+"  键值："+key);
+                    Debug.LogError("在数据中无法找到对应键值，数据：" + _tempData.ToJson() + "  键值：" + key);
                 }
-                
-            }
+
             return this;
         }
     }
@@ -40,40 +37,22 @@ public class JsonReader : IReader
         get
         {
             if (!SetKey(key))
-            {
                 try
                 {
                     _tempData = _tempData[key];
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError("在数据中无法找到对应键值，数据："+_tempData.ToJson()+"  键值："+key);
+                    Debug.LogError("在数据中无法找到对应键值，数据：" + _tempData.ToJson() + "  键值：" + key);
                 }
-            }
+
             return this;
         }
     }
 
-    private bool SetKey<T>(T key)
-    {
-        if (_data == null || _keys != null)
-        {
-            if(_keys == null)
-                _keys = new KeyQueue();
-                
-            IKey keyData = new Key();
-            keyData.Set(key);
-            _keys.Enqueue(keyData);
-
-            return true;
-        }
-
-        return false;
-    }
-
     public void Count(Action<int> callBack)
     {
-        bool success = SetKey<Action>(() =>
+        var success = SetKey<Action>(() =>
         {
             if (callBack != null)
                 callBack(GetCount());
@@ -88,32 +67,25 @@ public class JsonReader : IReader
             _keyQueues.Enqueue(_keys);
             _keys = null;
         }
-        
-        
-    }
-
-    private int GetCount()
-    {
-        return _tempData.IsArray ? _tempData.Count : 0;
     }
 
     public void Get<T>(Action<T> callBack)
     {
         if (_keys != null)
         {
-            _keys.OnComplete((dataTemp) =>
+            _keys.OnComplete(dataTemp =>
             {
-                T value = GetValue<T>(dataTemp);
+                var value = GetValue<T>(dataTemp);
                 ResetData();
                 callBack(value);
             });
-            
+
             _keyQueues.Enqueue(_keys);
             _keys = null;
             ExecuteKeysQueue();
             return;
         }
-        
+
         if (callBack == null)
         {
             Debug.LogWarning("当前回调方法为空，不返回数据");
@@ -121,69 +93,9 @@ public class JsonReader : IReader
             return;
         }
 
-        T data = GetValue<T>(_tempData);
+        var data = GetValue<T>(_tempData);
         ResetData();
         callBack(data);
-    }
-
-    private void ExecuteKeysQueue()
-    {
-        if(_data == null)
-            return;
-
-        IReader reader = null;
-        foreach (KeyQueue keyQueue in _keyQueues)
-        {
-            foreach (object value in keyQueue)
-            {
-                if (value is string)
-                {
-                    reader = this[(string) value];
-                }
-                else if(value is int)
-                {
-                    reader = this[(int) value];
-                }
-                else if (value is Action)
-                {
-                    ((Action) value)();
-                }
-                else
-                {
-                    Debug.LogError("当前键值类型错误");
-                }
-            }
-            
-            keyQueue.Complete(_tempData);
-        }
-    }
-
-    private T GetValue<T>(JsonData data)
-    {
-        var converter = TypeDescriptor.GetConverter(typeof(T));
-
-        try
-        {
-            if (converter.CanConvertTo(typeof(T)))
-            {
-                return (T) converter.ConvertTo(data.ToString(), typeof(T));
-            }
-            else
-            {
-                return (T) (object) data;
-            }
-        }
-        catch (Exception e)
-        {
-           Debug.LogError("当前类型转换出现问题，目标类型为："+typeof(T).Name+"  data:"+data);
-           return default(T);
-        }
-        
-    }
-
-    private void ResetData()
-    {
-        _tempData = _data;
     }
 
     public void SetData(object data)
@@ -204,21 +116,92 @@ public class JsonReader : IReader
     {
         if (_tempData == null)
             return new string[0];
-        
+
         return _tempData.Keys;
+    }
+
+    private bool SetKey<T>(T key)
+    {
+        if (_data == null || _keys != null)
+        {
+            if (_keys == null)
+                _keys = new KeyQueue();
+
+            IKey keyData = new Key();
+            keyData.Set(key);
+            _keys.Enqueue(keyData);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private int GetCount()
+    {
+        return _tempData.IsArray ? _tempData.Count : 0;
+    }
+
+    private void ExecuteKeysQueue()
+    {
+        if (_data == null)
+            return;
+
+        IReader reader = null;
+        foreach (var keyQueue in _keyQueues)
+        {
+            foreach (var value in keyQueue)
+                if (value is string)
+                    reader = this[(string) value];
+                else if (value is int)
+                    reader = this[(int) value];
+                else if (value is Action)
+                    ((Action) value)();
+                else
+                    Debug.LogError("当前键值类型错误");
+
+            keyQueue.Complete(_tempData);
+        }
+    }
+
+    private T GetValue<T>(JsonData data)
+    {
+        var converter = TypeDescriptor.GetConverter(typeof(T));
+
+        try
+        {
+            if (converter.CanConvertTo(typeof(T)))
+                return (T) converter.ConvertTo(data.ToString(), typeof(T));
+            return (T) (object) data;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("当前类型转换出现问题，目标类型为：" + typeof(T).Name + "  data:" + data);
+            return default(T);
+        }
+    }
+
+    private void ResetData()
+    {
+        _tempData = _data;
     }
 }
 
 public class KeyQueue : IEnumerable
 {
-    private Queue<IKey> _keys = new Queue<IKey>();
     private Action<JsonData> _complete;
+    private readonly Queue<IKey> _keys = new Queue<IKey>();
+
+    public IEnumerator GetEnumerator()
+    {
+        foreach (var key in _keys) yield return key.Get();
+    }
 
     public void Enqueue(IKey key)
     {
         _keys.Enqueue(key);
     }
-    
+
     public void Dequeue()
     {
         _keys.Dequeue();
@@ -239,21 +222,13 @@ public class KeyQueue : IEnumerable
     {
         _complete = complete;
     }
-    
-    public IEnumerator GetEnumerator()
-    {
-        foreach (IKey key in _keys)
-        {
-            yield return key.Get();
-        }
-    }
 }
 
 public interface IKey
 {
+    Type KeyType { get; }
     void Set<T>(T key);
     object Get();
-    Type KeyType { get; }
 }
 
 public class Key : IKey

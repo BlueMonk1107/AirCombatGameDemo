@@ -1,29 +1,29 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 public class UIManager : NormalSingleton<UIManager>
 {
-    private Stack<string> _uiStack = new Stack<string>();
-    private Dictionary<string,IView> _views = new Dictionary<string, IView>();
     private Canvas _canvas;
     private IView _dialog;
 
-    private HashSet<string> _skipViews = new HashSet<string>()
+    private readonly HashSet<string> _skipViews = new HashSet<string>
     {
         Paths.PREFAB_LOADING_VIEW
     };
-    
+
+    private readonly Stack<string> _uiStack = new Stack<string>();
+    private readonly Dictionary<string, IView> _views = new Dictionary<string, IView>();
+
     public Canvas Canvas
     {
         get
         {
             if (_canvas == null)
                 _canvas = Object.FindObjectOfType<Canvas>();
-            
-            if(_canvas == null)
+
+            if (_canvas == null)
                 Debug.LogError("场景中没有Canvas");
 
             return _canvas;
@@ -34,20 +34,17 @@ public class UIManager : NormalSingleton<UIManager>
     {
         if (_uiStack.Count > 0)
         {
-            string name = _uiStack.Peek();
-            if (GetLayer(name) >= GetLayer(path))
-            {
-                HideAll(_views[name]);
-            }
+            var name = _uiStack.Peek();
+            if (GetLayer(name) >= GetLayer(path)) HideAll(_views[name]);
         }
 
-        IView view = InitView(path);
+        var view = InitView(path);
 
         ShowAll(view);
-        
-        if(!_skipViews.Contains(path) )
+
+        if (!_skipViews.Contains(path))
             _uiStack.Push(path);
-        
+
         _views[path] = view;
 
         return view;
@@ -58,16 +55,13 @@ public class UIManager : NormalSingleton<UIManager>
         return UILayerMgr._single.GetLayer(path);
     }
 
-    public DialogView ShowDialog(string content,Action trueAction = null,Action falseAcion = null)
+    public DialogView ShowDialog(string content, Action trueAction = null, Action falseAcion = null)
     {
         var dialogGo = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.PREFAB_DIALOG, Canvas.transform);
-        AddTypeComponent(dialogGo,Paths.PREFAB_DIALOG);
+        AddTypeComponent(dialogGo, Paths.PREFAB_DIALOG);
 
-        DialogView dialog = dialogGo.GetComponent<DialogView>();
-        if (dialog != null)
-        {
-            dialog.InitDialog(content,trueAction,falseAcion);
-        }
+        var dialog = dialogGo.GetComponent<DialogView>();
+        if (dialog != null) dialog.InitDialog(content, trueAction, falseAcion);
 
         _dialog = dialog;
         return dialog;
@@ -79,35 +73,30 @@ public class UIManager : NormalSingleton<UIManager>
         {
             return _views[path];
         }
-        else
-        {
-            GameObject viewGo = LoadMgr.Single.LoadPrefabAndInstantiate(path, Canvas.transform);
 
-            InitLayer(path,viewGo.transform);
+        var viewGo = LoadMgr.Single.LoadPrefabAndInstantiate(path, Canvas.transform);
 
-            AddTypeComponent(viewGo, path);
+        InitLayer(path, viewGo.transform);
 
-            AddUpdateListener(viewGo);
+        AddTypeComponent(viewGo, path);
 
-            InitComponent(viewGo);
+        AddUpdateListener(viewGo);
 
-            IView view = viewGo.GetComponent<IView>();
-            
-            return view;
-        }
+        InitComponent(viewGo);
+
+        var view = viewGo.GetComponent<IView>();
+
+        return view;
     }
 
-    private void InitLayer(string path,Transform view)
+    private void InitLayer(string path, Transform view)
     {
-        UILayerMgr.Single.SetParent(path,view);
+        UILayerMgr.Single.SetParent(path, view);
     }
 
-    private void AddTypeComponent(GameObject viewGo,string path)
+    private void AddTypeComponent(GameObject viewGo, string path)
     {
-        foreach (var type in BindUtil.GetType(path))
-        {
-            viewGo.AddComponent(type);
-        }
+        foreach (var type in BindUtil.GetType(path)) viewGo.AddComponent(type);
     }
 
     private void AddUpdateListener(GameObject viewGo)
@@ -115,34 +104,28 @@ public class UIManager : NormalSingleton<UIManager>
         var controller = viewGo.GetComponent<IController>();
         if (controller == null)
         {
-            Debug.LogWarning("当前物体没有IController组件，物体名称:"+viewGo.name);
+            Debug.LogWarning("当前物体没有IController组件，物体名称:" + viewGo.name);
             return;
         }
 
-        foreach (IUpdate update in viewGo.GetComponents<IUpdate>())
-        {
-            controller.AddUpdateListener(update.UpdateFun);
-        }
+        foreach (var update in viewGo.GetComponents<IUpdate>()) controller.AddUpdateListener(update.UpdateFun);
     }
 
     private void InitComponent(GameObject viewGo)
     {
-        IInit[] inits = viewGo.GetComponents<IInit>();
+        var inits = viewGo.GetComponents<IInit>();
 
-        foreach (var init in inits)
-        {
-            init.Init();
-        }
+        foreach (var init in inits) init.Init();
     }
 
     public void Back()
     {
-        if(_uiStack.Count <= 1)
+        if (_uiStack.Count <= 1)
             return;
 
         if (_dialog == null)
         {
-            string name = _uiStack.Pop();
+            var name = _uiStack.Pop();
             HideAll(_views[name]);
 
             name = _uiStack.Peek();
@@ -154,7 +137,6 @@ public class UIManager : NormalSingleton<UIManager>
             _dialog = null;
             _views[_uiStack.Peek()].Show();
         }
-        
     }
 
     public void Hide(string name)
@@ -164,17 +146,24 @@ public class UIManager : NormalSingleton<UIManager>
 
     private void ShowAll(IView view)
     {
-        foreach (IShow show in view.GetTrans().GetComponents<IShow>())
-        {
-            show.Show();
-        }
+        foreach (var show in view.GetTrans().GetComponents<IShow>()) show.Show();
     }
-    
+
     private void HideAll(IView view)
     {
-        foreach (IHide hide in view.GetTrans().GetComponents<IHide>())
+        foreach (var hide in view.GetTrans().GetComponents<IHide>()) hide.Hide();
+    }
+
+    public Transform GetViwePrefab(string path)
+    {
+        if (_views.ContainsKey(path))
         {
-            hide.Hide();
+            return _views[path].GetTrans();
+        }
+        else
+        {
+            Debug.LogError("当前预制为在uimanager管理当中,path:"+path);
+            return null;
         }
     }
 }

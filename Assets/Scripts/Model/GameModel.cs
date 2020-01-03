@@ -1,36 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿public class GameModel : NormalSingleton<GameModel>
+{
+    public GameModel()
+    {
+        Life = LifeMax;
+    }
 
-public class GameModel : NormalSingleton<GameModel> {
+    public int Life { get; set; }
+    public int Score { get; set; }
+    public int Stars { get; set; }
+    public int ShieldCount { get; set; }
+    public int BombCount { get; set; }
 
-	public GameModel()
-	{
-		Life = LifeMax;
-	}
+    /// <summary>
+    ///     选中的关卡
+    /// </summary>
+    public int SelectedLevel { get; set; }
 
-	public int Life { get; set; }
-	public int Score { get; set; }
-	public int Stars { get; set; }
-	public int ShieldCount { get; set; }
-	public int BombCount { get; set; }
+    public int LifeMax
+    {
+        get
+        {
+            var key = KeysUtil.GetNewKey(PropertyItem.ItemKey.value, PlaneProperty.Property.life.ToString());
+            return DataMgr.Single.Get<int>(key);
+        }
+    }
 
-	/// <summary>
-	/// 选中的关卡
-	/// </summary>
-	public int SelectedLevel { get; set; }
-
-	public int LifeMax
-	{
-		get
-		{
-			string key = KeysUtil.GetNewKey(PropertyItem.ItemKey.value, PlaneProperty.Property.life.ToString());
-			return DataMgr.Single.Get<int>(key);
-		}
-	}
-
-	public void Clear()
-	{
-		_single = new GameModel();
-	}
+    public void Clear()
+    {
+        _single = new GameModel();
+    }
 }

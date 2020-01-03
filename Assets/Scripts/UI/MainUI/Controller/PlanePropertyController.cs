@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class PlanePropertyController : ControllerBase {
+﻿public class PlanePropertyController : ControllerBase
+{
     protected override void InitChild()
     {
         AddComponent();

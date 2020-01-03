@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public abstract class ViewBase : MonoBehaviour,IView
+public abstract class ViewBase : MonoBehaviour, IView
 {
     private UiUtil _util;
-    private List<IViewUpdate> _viewUpdates;
+    private List<IViewHide> _viewHides;
     private List<IViewInit> _viewInits;
     private List<IViewShow> _viewShows;
-    private List<IViewHide> _viewHides;
+    private List<IViewUpdate> _viewUpdates;
 
 
     protected UiUtil Util
@@ -27,11 +23,45 @@ public abstract class ViewBase : MonoBehaviour,IView
             return _util;
         }
     }
-    
+
     public virtual void Init()
     {
         InitChild();
         InitSubView();
+        InitAllSubView();
+    }
+
+    public virtual void Show()
+    {
+        gameObject.SetActive(true);
+        foreach (var view in _viewShows) view.Show();
+
+        UpdateFun();
+    }
+
+    public virtual void Hide()
+    {
+        foreach (var view in _viewHides) view.Hide();
+        gameObject.SetActive(false);
+    }
+
+    public int Times { get; set; }
+
+    public int UpdateTimes { get; }
+
+    public virtual void UpdateFun()
+    {
+        foreach (var update in _viewUpdates) update.UpdateFun();
+    }
+
+    public Transform GetTrans()
+    {
+        return transform;
+    }
+
+    public void Reacquire()
+    {
+        InitInterface();
         InitAllSubView();
     }
 
@@ -60,43 +90,7 @@ public abstract class ViewBase : MonoBehaviour,IView
 
     private void InitAllSubView()
     {
-        foreach (var view in _viewInits)
-        {
-            view.Init();
-        }
-    }
-
-    public virtual void Show()
-    {
-        gameObject.SetActive(true);
-        foreach (var view in _viewShows)
-        {
-            view.Show();
-        }
-
-        UpdateFun();
-    }
-
-    public virtual void Hide()
-    {
-        foreach (var view in _viewHides)
-        {
-            view.Hide();
-        }
-        gameObject.SetActive(false);
-    }
-
-    public virtual void UpdateFun()
-    {
-        foreach (IViewUpdate update in _viewUpdates)
-        {
-            update.UpdateFun();
-        }
-    }
-
-    public Transform GetTrans()
-    {
-        return transform;
+        foreach (var view in _viewInits) view.Init();
     }
 
     private void InitInterface()
@@ -105,11 +99,5 @@ public abstract class ViewBase : MonoBehaviour,IView
         InitViewInterface(_viewShows);
         InitViewInterface(_viewHides);
         InitViewInterface(_viewUpdates);
-    }
-
-    public void Reacquire()
-    {
-        InitInterface();
-        InitAllSubView();
     }
 }

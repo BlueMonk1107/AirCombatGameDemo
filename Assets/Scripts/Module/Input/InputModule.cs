@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,10 +12,16 @@ public interface IInputModule
 
 public class InputModule : IInputModule
 {
-    private Dictionary<KeyCode, int> _keyCodeDic;
-    private Dictionary<int, int> _mouseDic;
-    private Action<KeyCode,InputState> _keyEvent;
-    private Action<int,InputState> _mouseEvent;
+    private readonly Dictionary<KeyCode, int> _keyCodeDic;
+    private Action<KeyCode, InputState> _keyEvent;
+    private readonly Dictionary<int, int> _mouseDic;
+    private Action<int, InputState> _mouseEvent;
+
+    public InputModule()
+    {
+        _keyCodeDic = new Dictionary<KeyCode, int>();
+        _mouseDic = new Dictionary<int, int>();
+    }
 
     public int ListenerCount
     {
@@ -29,34 +34,20 @@ public class InputModule : IInputModule
         }
     }
 
-    public InputModule()
-    {
-        _keyCodeDic = new Dictionary<KeyCode, int>();
-        _mouseDic = new Dictionary<int, int>();
-    }
-    
     public void AddListener(KeyCode code)
     {
         if (_keyCodeDic.ContainsKey(code))
-        {
             _keyCodeDic[code] += 1;
-        }
         else
-        {
-            _keyCodeDic.Add(code,1);
-        }
+            _keyCodeDic.Add(code, 1);
     }
-    
+
     public void AddMouseListener(int code)
     {
         if (_mouseDic.ContainsKey(code))
-        {
             _mouseDic[code] += 1;
-        }
         else
-        {
-            _mouseDic.Add(code,1);
-        }
+            _mouseDic.Add(code, 1);
     }
 
     public void RemoveListener(KeyCode code)
@@ -64,42 +55,37 @@ public class InputModule : IInputModule
         if (_keyCodeDic.ContainsKey(code))
         {
             _keyCodeDic[code] -= 1;
-            if (_keyCodeDic[code] <= 0)
-            {
-                _keyCodeDic.Remove(code);
-            }
+            if (_keyCodeDic[code] <= 0) _keyCodeDic.Remove(code);
         }
         else
         {
-            Debug.LogError("当前移除指令并没有被监听，Keycode："+code);
+            Debug.LogError("当前移除指令并没有被监听，Keycode：" + code);
         }
     }
-    
+
     public void RemoveMouseListener(int code)
     {
         if (_mouseDic.ContainsKey(code))
         {
             _mouseDic[code] -= 1;
-            if (_mouseDic[code] <= 0)
-            {
-                _mouseDic.Remove(code);
-            }
+            if (_mouseDic[code] <= 0) _mouseDic.Remove(code);
         }
         else
         {
-            Debug.LogError("当前移除指令并没有被监听，Keycode："+code);
+            Debug.LogError("当前移除指令并没有被监听，Keycode：" + code);
         }
     }
 
-    public void AddSendEvent(Action<KeyCode,InputState> keyEvent)
+    public void AddSendEvent(Action<KeyCode, InputState> keyEvent)
     {
         _keyEvent = keyEvent;
     }
-    public void AddSendEvent(Action<int,InputState> keyEvent)
+
+    public void AddSendEvent(Action<int, InputState> keyEvent)
     {
         _mouseEvent = keyEvent;
     }
-    
+
 
     public void Execute()
     {
@@ -108,36 +94,19 @@ public class InputModule : IInputModule
             Debug.LogError("输入监听模块发送消息事件不能为空");
             return;
         }
-        foreach (KeyValuePair<KeyCode,int> pair in _keyCodeDic)
+
+        foreach (var pair in _keyCodeDic)
         {
-            if (Input.GetKeyDown(pair.Key))
-            {
-                _keyEvent(pair.Key, InputState.DOWN);
-            }
-            if (Input.GetKey(pair.Key))
-            {
-                _keyEvent(pair.Key, InputState.PREE);
-            }
-            if (Input.GetKeyUp(pair.Key))
-            {
-                _keyEvent(pair.Key, InputState.UP);
-            }
+            if (Input.GetKeyDown(pair.Key)) _keyEvent(pair.Key, InputState.DOWN);
+            if (Input.GetKey(pair.Key)) _keyEvent(pair.Key, InputState.PREE);
+            if (Input.GetKeyUp(pair.Key)) _keyEvent(pair.Key, InputState.UP);
         }
-        
-        foreach (KeyValuePair<int,int> pair in _mouseDic)
+
+        foreach (var pair in _mouseDic)
         {
-            if (Input.GetMouseButtonDown(pair.Key))
-            {
-                _mouseEvent(pair.Key, InputState.DOWN);
-            }
-            if (Input.GetMouseButton(pair.Key))
-            {
-                _mouseEvent(pair.Key, InputState.PREE);
-            }
-            if (Input.GetMouseButtonUp(pair.Key))
-            {
-                _mouseEvent(pair.Key, InputState.UP);
-            }
+            if (Input.GetMouseButtonDown(pair.Key)) _mouseEvent(pair.Key, InputState.DOWN);
+            if (Input.GetMouseButton(pair.Key)) _mouseEvent(pair.Key, InputState.PREE);
+            if (Input.GetMouseButtonUp(pair.Key)) _mouseEvent(pair.Key, InputState.UP);
         }
     }
 }

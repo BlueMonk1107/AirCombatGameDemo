@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public interface IView : IViewInit,IViewShow,IViewHide,IViewUpdate
+public interface IView : IViewInit, IViewShow, IViewHide, IViewUpdate
 {
     Transform GetTrans();
     void Reacquire();

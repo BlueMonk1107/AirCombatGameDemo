@@ -1,23 +1,33 @@
-
-
 using System.Collections.Generic;
 
 public class PoolConfig
 {
-        public List<PoolData> Data = new List<PoolData>()
+    public List<PoolData> Data = new List<PoolData>
+    {
+        new PoolData
         {
-              new PoolData()
-              {
-                      Path = Paths.PREFAB_BULLET,
-                      PreloadCount = 15,
-                      AutoDestroy = false
-              }
-        };
+            Path = Paths.PREFAB_BULLET,
+            PreloadCount = 15,
+            AutoDestroy = false
+        },
+        new PoolData
+        {
+            Path = Paths.PREFAB_PLANE,
+            PreloadCount = 15,
+            AutoDestroy = false
+        },
+        new PoolData
+        {
+            Path = Paths.PREFAB_STAR,
+            PreloadCount = 10,
+            AutoDestroy = false
+        }
+    };
 }
 
 public class PoolData
 {
-        public string Path { get; set; }
-        public int PreloadCount { get; set; }
-        public bool AutoDestroy { get; set; }
+    public string Path { get; set; }
+    public int PreloadCount { get; set; }
+    public bool AutoDestroy { get; set; }
 }

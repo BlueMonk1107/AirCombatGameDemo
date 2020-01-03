@@ -1,36 +1,36 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CameraMove : MonoBehaviour,IUpdate
+public class CameraMove : MonoBehaviour, IUpdate
 {
+    private MoveComponent _move;
 
-	private float _speed;
-	private MoveComponent _move;
+    private float _speed;
 
-	// Use this for initialization
-	void Start ()
-	{
-		_speed = 0;
-		var reader = ReaderMgr.Single.GetReader(Paths.CONFIG_Game_CONFIG);
-		reader["cameraSpeed"].Get<float>((value) =>
-		{
-			_speed = value;
-			_move = gameObject.AddComponent<MoveComponent>();
-			_move.Init(_speed);
-		});
-		LifeCycleMgr.Single.Add(LifeName.UPDATE,this);
-		
-	}
+    public int Times { get; set; }
 
-	private void OnDestroy()
-	{
-		LifeCycleMgr.Single.Remove(LifeName.UPDATE,this);
-	}
+    public int UpdateTimes { get; }
 
-	public void UpdateFun()
-	{
-		_move.Move(Vector2.up);
-	}
+    public void UpdateFun()
+    {
+        _move.Move(Vector2.up);
+    }
+
+    // Use this for initialization
+    private void Start()
+    {
+        _speed = 0;
+        var reader = ReaderMgr.Single.GetReader(Paths.CONFIG_Game_CONFIG);
+        reader["cameraSpeed"].Get<float>(value =>
+        {
+            _speed = value;
+            _move = gameObject.AddComponent<MoveComponent>();
+            _move.Init(_speed);
+        });
+        LifeCycleMgr.Single.Add(LifeName.UPDATE, this);
+    }
+
+    private void OnDestroy()
+    {
+        LifeCycleMgr.Single.Remove(LifeName.UPDATE, this);
+    }
 }

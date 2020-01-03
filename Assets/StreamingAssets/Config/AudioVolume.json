@@ -1,14 +1,54 @@
 [
   {
-    "Name": "Game_BG",
+    "Name": "Battle_BGM",
+    "Volume": 0.5
+  },
+  {
+    "Name": "Boss_BGM",
+    "Volume": 0.5
+  },
+  {
+    "Name": "Game_BGM",
     "Volume": 0.5
   },
   {
     "Name": "Fire",
-    "Volume": 0.2
+    "Volume": 0.3
   },
   {
     "Name": "Power",
+    "Volume": 0.5
+  },
+  {
+    "Name": "Effcet_Great",
+    "Volume": 0.5
+  },
+  {
+    "Name": "Effect_Gameover",
+    "Volume": 0.5
+  },
+  {
+    "Name": "Explode_Bullet",
+    "Volume": 0.5
+  },
+  {
+    "Name": "Explode_Plane",
+    "Volume": 0.3
+  },
+  {
+    "Name": "Get_Gold",
+    "Volume": 0.5
+  },
+  {
+    "Name": "Get_Item",
+    "Volume": 0.5
+  },
+  {
+    "Name": "Get_Shield",
+    "Volume": 0.5
+  },
+  {
+    "Name": "Lost_Item",
     "Volume": 0.5
   },
   {

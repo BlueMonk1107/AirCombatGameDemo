@@ -1,20 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿public class ShieldController : ControllerBase
+{
+    protected override void InitChild()
+    {
+        transform.ButtonAction("Icon", Click);
+    }
 
-public class ShieldController : ControllerBase {
-
-	protected override void InitChild()
-	{
-		transform.ButtonAction("Icon",Click);
-	}
-
-	private void Click()
-	{
-		if (GameModel.Single.ShieldCount > 0)
-		{
-			GameModel.Single.ShieldCount--;
-		}
-		MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_USE_SHIELD);
-	}
+    private void Click()
+    {
+        if (GameModel.Single.ShieldCount > 0) GameModel.Single.ShieldCount--;
+        MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_USE_SHIELD);
+    }
 }

@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[BindPrefab(Paths.PREFAB_PAUSE_VIEW,Const.BIND_PREFAB_PRIORITY_CONTROLLER)]
-public class GamePauseController : ControllerBase {
+﻿[BindPrefab(Paths.PREFAB_PAUSE_VIEW, Const.BIND_PREFAB_PRIORITY_CONTROLLER)]
+public class GamePauseController : ControllerBase
+{
     protected override void InitChild()
     {
-        transform.ButtonAction("Exit",Exit);
-        transform.ButtonAction("Continue",Continue);
-        transform.ButtonAction("Hand",ChangeHand);
+        transform.ButtonAction("Exit", Exit);
+        transform.ButtonAction("Continue", Continue);
+        transform.ButtonAction("Hand", ChangeHand);
     }
 
     public override void Show()

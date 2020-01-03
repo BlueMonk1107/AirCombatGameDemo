@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HeroItemController : ControllerBase
 {
-
     private Hero _hero;
-    
+
     protected override void InitChild()
     {
-        string heroName = GetComponent<Image>().sprite.name;
-        
+        var heroName = GetComponent<Image>().sprite.name;
+
         try
         {
             _hero = (Hero) Enum.Parse(typeof(Hero), heroName);
@@ -21,7 +18,7 @@ public class HeroItemController : ControllerBase
         {
             Debug.Log(e);
         }
-       
+
         GetComponent<Button>().onClick.AddListener(Selected);
     }
 
@@ -34,10 +31,7 @@ public class HeroItemController : ControllerBase
     public override void UpdateFun()
     {
         base.UpdateFun();
-        if (_hero != GameStateModel.Single.SelectedHero)
-        {
-            AudioMgr.Single.Stop(_hero.ToString());
-        }
+        if (_hero != GameStateModel.Single.SelectedHero) AudioMgr.Single.Stop(_hero.ToString());
     }
 
     public override void Hide()

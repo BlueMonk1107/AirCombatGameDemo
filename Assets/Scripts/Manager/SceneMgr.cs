@@ -6,125 +6,100 @@ using UnityEngine.SceneManagement;
 
 public class SceneMgr : NormalSingleton<SceneMgr>
 {
+    private AsyncOperation _async;
+    private readonly Dictionary<SceneName, int> _initItemTotalNum = new Dictionary<SceneName, int>();
+    private readonly Dictionary<SceneName, Action<Action>> _loadedDic = new Dictionary<SceneName, Action<Action>>();
+    private readonly Dictionary<SceneName, Action> _unloadedDic = new Dictionary<SceneName, Action>();
 
-	private AsyncOperation _async;
-	private Dictionary<SceneName, Action<Action>> _loadedDic =new Dictionary<SceneName, Action<Action>>();
-	private Dictionary<SceneName, Action> _unloadedDic =new Dictionary<SceneName, Action>();
-	private Dictionary<SceneName, int> _initItemTotalNum = new Dictionary<SceneName, int>();
-	public int CurInitNum { get; private set; }
+    public SceneMgr()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnload;
+        InitItemTotalNum();
+    }
 
-	public int InitTotalNum
-	{
-		get { return _initItemTotalNum[GameStateModel.Single.TargetScene]; }
-	}
+    public int CurInitNum { get; private set; }
 
-	public SceneMgr()
-	{
-		SceneManager.sceneLoaded += OnSceneLoaded;
-		SceneManager.sceneUnloaded += OnSceneUnload;
-		InitItemTotalNum();
-	}
+    public int InitTotalNum => _initItemTotalNum[GameStateModel.Single.TargetScene];
 
-	private void InitItemTotalNum()
-	{
-		for (SceneName i = SceneName.Main; i < SceneName.COUNT; i++)
-		{
-			_initItemTotalNum[i] = 1;
-		}
-	}
+    private void InitItemTotalNum()
+    {
+        for (var i = SceneName.Main; i < SceneName.COUNT; i++) _initItemTotalNum[i] = 1;
+    }
 
-	public void AsyncLoadScene(SceneName name)
-	{
-		ResetData();
-		CoroutineMgr.Single.ExecuteOnce(AsyncLoad(name.ToString()));
-	}
+    public void AsyncLoadScene(SceneName name)
+    {
+        ResetData();
+        CoroutineMgr.Single.ExecuteOnce(AsyncLoad(name.ToString()));
+    }
 
-	private IEnumerator AsyncLoad(string name)
-	{
-		_async = SceneManager.LoadSceneAsync(name);
-		_async.allowSceneActivation = false;
-		yield return _async;
-	}
+    private IEnumerator AsyncLoad(string name)
+    {
+        _async = SceneManager.LoadSceneAsync(name);
+        _async.allowSceneActivation = false;
+        yield return _async;
+    }
 
-	private void OnSceneLoaded(Scene scene,LoadSceneMode mode)
-	{
-		SceneName name = (SceneName) Enum.Parse(typeof(SceneName), scene.name);
-		if (_loadedDic.ContainsKey(name) && _loadedDic[name] != null)
-		{
-			_loadedDic[name](LoadCallBack);
-		}
-	}
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        var name = (SceneName) Enum.Parse(typeof(SceneName), scene.name);
+        if (_loadedDic.ContainsKey(name) && _loadedDic[name] != null) _loadedDic[name](LoadCallBack);
+    }
 
-	private void LoadCallBack()
-	{
-		CurInitNum++;
-	}
+    private void LoadCallBack()
+    {
+        CurInitNum++;
+    }
 
-	private void OnSceneUnload(Scene scene)
-	{
-		SceneName name = (SceneName) Enum.Parse(typeof(SceneName), scene.name);
-		if (_unloadedDic.ContainsKey(name) && _unloadedDic[name] != null)
-		{
-			_unloadedDic[name]();
-		}
-	}
+    private void OnSceneUnload(Scene scene)
+    {
+        var name = (SceneName) Enum.Parse(typeof(SceneName), scene.name);
+        if (_unloadedDic.ContainsKey(name) && _unloadedDic[name] != null) _unloadedDic[name]();
+    }
 
-	public void AddSceneLoaded(SceneName name,Action<Action> action)
-	{
-		_initItemTotalNum[name] += 1;
+    public void AddSceneLoaded(SceneName name, Action<Action> action)
+    {
+        _initItemTotalNum[name] += 1;
 
-		if (_loadedDic.ContainsKey(name))
-		{
-			_loadedDic[name] += action;
-		}
-		else
-		{
-			_loadedDic[name] = action;
-		}
-		
-	}
-	
-	public void AddSceneUnloaded(SceneName name,Action action)
-	{
-		if (_unloadedDic.ContainsKey(name))
-		{
-			_unloadedDic[name] += action;
-		}
-		else
-		{
-			_unloadedDic[name] = action;
-		}
-		
-	}
+        if (_loadedDic.ContainsKey(name))
+            _loadedDic[name] += action;
+        else
+            _loadedDic[name] = action;
+    }
 
-	public float Process()
-	{
-		float ratio = CurInitNum / (float) InitTotalNum;
-		
-		if (_async != null && _async.progress >= 0.9f)
-		{
-			SceneActivation();
-		}
+    public void AddSceneUnloaded(SceneName name, Action action)
+    {
+        if (_unloadedDic.ContainsKey(name))
+            _unloadedDic[name] += action;
+        else
+            _unloadedDic[name] = action;
+    }
 
-		return ratio;
-	}
+    public float Process()
+    {
+        var ratio = CurInitNum / (float) InitTotalNum;
 
-	public void SceneActivation()
-	{
-		CurInitNum++;
-		_async.allowSceneActivation = true;
-		GameStateModel.Single.CurrentScene = GameStateModel.Single.TargetScene;
-		_async = null;
-	}
+        if (_async != null && _async.progress >= 0.9f) SceneActivation();
 
-	private void ResetData()
-	{
-		CurInitNum = 0;
-		InitItemTotalNum();
-	}
+        return ratio;
+    }
 
-	public bool IsScene(SceneName name)
-	{
-		return GameStateModel.Single.CurrentScene == name;
-	}
+    public void SceneActivation()
+    {
+        CurInitNum++;
+        _async.allowSceneActivation = true;
+        GameStateModel.Single.CurrentScene = GameStateModel.Single.TargetScene;
+        _async = null;
+    }
+
+    private void ResetData()
+    {
+        CurInitNum = 0;
+        InitItemTotalNum();
+    }
+
+    public bool IsScene(SceneName name)
+    {
+        return GameStateModel.Single.CurrentScene == name;
+    }
 }

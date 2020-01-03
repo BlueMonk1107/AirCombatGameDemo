@@ -1,8 +1,3 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IControllerUpdate : IUpdate
+﻿public interface IControllerUpdate : IUpdate
 {
-    
 }

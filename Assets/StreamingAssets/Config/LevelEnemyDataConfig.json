@@ -1,0 +1,32 @@
+{
+  "LevelDatas": [
+    {
+      "CreaterDatas": [
+        {
+          "IdMax": 1,
+          "IdMin": 0,
+          "QueuePlaneNum": 5,
+          "QueueNum": 4,
+          "Type": 0,
+          "X": 0.0
+        }
+      ],
+      "EnemyNumMax": 50,
+      "EnemyNumMin": 40
+    },
+    {
+      "CreaterDatas": [
+        {
+          "IdMax": 1,
+          "IdMin": 0,
+          "QueuePlaneNum": 5,
+          "QueueNum": 4,
+          "Type": 0,
+          "X": 0.0
+        }
+      ],
+      "EnemyNumMax": 50,
+      "EnemyNumMin": 40
+    }
+  ]
+}

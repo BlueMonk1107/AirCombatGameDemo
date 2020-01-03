@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class SwitchPlayer : ViewBase
+﻿public class SwitchPlayer : ViewBase
 {
     protected override void InitChild()
     {
     }
-    
+
 
     public override void Show()
     {
@@ -20,12 +15,12 @@ public class SwitchPlayer : ViewBase
     {
         UpdateSprite();
     }
-    
+
 
     private void UpdateSprite()
     {
-        int id = GameStateModel.Single.SelectedPlaneId;
-        int level = GameStateModel.Single.PlaneLevel;
-        Util.Get("Icon").SetSprite(PlaneSpritesModel.Single[id,level]);
+        var id = GameStateModel.Single.SelectedPlaneId;
+        var level = GameStateModel.Single.PlaneLevel;
+        Util.Get("Icon").SetSprite(PlaneSpritesModel.Single[id, level]);
     }
 }

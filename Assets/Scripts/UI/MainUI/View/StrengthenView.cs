@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-[BindPrefab(Paths.PREFAB_STRENGTHEN_VIEW,Const.BIND_PREFAB_PRIORITY_VIEW)]
-public class StrengthenView : ViewBase 
+﻿[BindPrefab(Paths.PREFAB_STRENGTHEN_VIEW, Const.BIND_PREFAB_PRIORITY_VIEW)]
+public class StrengthenView : ViewBase
 {
     protected override void InitChild()
     {
@@ -21,14 +17,14 @@ public class StrengthenView : ViewBase
     private void UpdateLevelView()
     {
         //名称
-        string key = KeysUtil.GetPropertyKeys(DataKeys.UPGRADES + DataKeys.NAME);
-        string data = DataMgr.Single.Get<string>(key);
+        var key = KeysUtil.GetPropertyKeys(DataKeys.UPGRADES + DataKeys.NAME);
+        var data = DataMgr.Single.Get<string>(key);
         Util.Get("Upgrades/Text").SetText(data);
         //花费
         key = KeysUtil.GetPropertyKeys(DataKeys.LEVEL);
-        int level = DataMgr.Single.Get<int>(key);
+        var level = DataMgr.Single.Get<int>(key);
         key = KeysUtil.GetPropertyKeys(DataKeys.UPGRADES + level);
-        int cost = DataMgr.Single.Get<int>(key);
+        var cost = DataMgr.Single.Get<int>(key);
         Util.Get("Upgrades/Upgrades/Text").SetText(cost);
     }
 }

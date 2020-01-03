@@ -1,12 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
-[BindPrefab(Paths.PREFAB_GAME_UI_VIEW,Const.BIND_PREFAB_PRIORITY_VIEW)]
+﻿[BindPrefab(Paths.PREFAB_GAME_UI_VIEW, Const.BIND_PREFAB_PRIORITY_VIEW)]
 public class GameUIView : ViewBase
 {
-    
     protected override void InitChild()
     {
         Util.Get("Life").Add<Life>();
@@ -18,13 +12,13 @@ public class GameUIView : ViewBase
     public override void Show()
     {
         base.Show();
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_SCORE,ReceiveMessage);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_SCORE, ReceiveMessage);
     }
-    
+
     public override void Hide()
     {
         base.Hide();
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_SCORE,ReceiveMessage);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_SCORE, ReceiveMessage);
     }
 
     public void ReceiveMessage(params object[] args)

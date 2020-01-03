@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using LitJson;
-using UnityEngine;
+﻿using LitJson;
 
-public class ConfigMgr : NormalSingleton<ConfigMgr>,IInit {
-
+public class ConfigMgr : NormalSingleton<ConfigMgr>, IInit
+{
     public void Init()
     {
         InitPlaneConfig();
@@ -16,19 +13,14 @@ public class ConfigMgr : NormalSingleton<ConfigMgr>,IInit {
         config["planes"].Get<JsonData>(data =>
         {
             foreach (JsonData item in data)
+            foreach (var key in item.Keys)
             {
-                foreach (string key in item.Keys)
-                {
-                    if(key == "planeId")
-                        continue;
-                    
-                    string newKey = KeysUtil.GetPropertyKeys(int.Parse(item["planeId"].ToJson()), key);
+                if (key == "planeId")
+                    continue;
 
-                    if (!DataMgr.Single.Contains(newKey))
-                    {
-                        DataMgr.Single.SetJsonData(newKey,item[key]);
-                    }
-                }
+                var newKey = KeysUtil.GetPropertyKeys(int.Parse(item["planeId"].ToJson()), key);
+
+                if (!DataMgr.Single.Contains(newKey)) DataMgr.Single.SetJsonData(newKey, item[key]);
             }
         });
     }

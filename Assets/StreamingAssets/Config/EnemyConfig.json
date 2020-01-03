@@ -1,0 +1,118 @@
+{
+  "Normal": [
+    {
+      "id": 0,
+      "attackTime":1,
+      "attack": 0,
+      "fireRate": 0,
+      "life": 100,
+      "speed": 1,
+      "trajectoryType": 0,
+      "trajectoryID": -1
+    },
+    {
+      "id": 1,
+      "attackTime":1,
+      "attack": 0,
+      "fireRate": 0,
+      "life": 120,
+      "speed": 1,
+      "trajectoryType": 0,
+      "trajectoryID": -1
+    },
+    {
+      "id": 2,
+      "attackTime":1,
+      "attack": 10,
+      "fireRate": 1,
+      "life": 140,
+      "speed": 1,
+      "trajectoryType": 0,
+      "trajectoryID": -1
+    },
+    {
+      "id": 3,
+      "attackTime":1,
+      "attack": 12,
+      "fireRate": 0.8,
+      "life": 200,
+      "speed": 1,
+      "trajectoryType": 0,
+      "trajectoryID": -1
+    },
+    {
+      "id": 4,
+      "attackTime":1,
+      "attack": 14,
+      "fireRate": 0.8,
+      "life": 220,
+      "speed": 1,
+      "trajectoryType": 0,
+      "trajectoryID": -1
+    },
+    {
+      "id": 5,
+      "attackTime":1,
+      "attack": 20,
+      "fireRate": 0.7,
+      "life": 240,
+      "speed": 1,
+      "trajectoryType": 0,
+      "trajectoryID": -1
+    }
+  ],
+  "Elites":[
+    {
+      "id": 0,
+      "attackTime":1,
+      "attack": 30,
+      "fireRate": 0.8,
+      "life": 400,
+      "speed": 1,
+      "trajectoryType": 0,
+      "trajectoryID": -1
+    },
+    {
+      "id": 1,
+      "attackTime":1,
+      "attack": 40,
+      "fireRate": 0.8,
+      "life": 500,
+      "speed": 1,
+      "trajectoryType": 0,
+      "trajectoryID": -1
+    },
+    {
+      "id": 2,
+      "attackTime":1,
+      "attack": 50,
+      "fireRate": 0.8,
+      "life": 600,
+      "speed": 1,
+      "trajectoryType": 0,
+      "trajectoryID": -1
+    }
+  ],
+  "Boss":[
+    {
+      "id": 0,
+      "attackTime":1,
+      "attack": 0,
+      "fireRate": 0,
+      "life": 100,
+      "speed": 1,
+      "trajectoryType": 0,
+      "trajectoryID": -1
+    },
+    {
+      "id": 1,
+      "attackTime":1,
+      "attack": 0,
+      "fireRate": 0,
+      "life": 100,
+      "speed": 1,
+      "trajectoryType": 0,
+      "trajectoryID": -1
+    }
+  ]
+}

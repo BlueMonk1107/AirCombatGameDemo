@@ -1,32 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Shield : ViewBase
+﻿public class Shield : ViewBase
 {
-
     private ItemCDEffect _cdEffect;
     private int _count;
     private ItemEffect _itemEffect;
-    
+
     protected override void InitChild()
     {
-        var effect = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.PREFAB_ITEM_EFFECT_VIEW,transform);
+        var effect = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.PREFAB_ITEM_EFFECT_VIEW, transform);
         _itemEffect = effect.AddComponent<ItemEffect>();
         _cdEffect = Util.Get("Mask").Add<ItemCDEffect>();
         _cdEffect.SetShow();
     }
-    
+
     public override void Show()
     {
         base.Show();
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_SHIELD,ReceiveShield);
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_SHIELD,ReceiveShield);
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_CHANGE_HAND,ReceiveHandState);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_SHIELD, ReceiveShield);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_SHIELD, ReceiveShield);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_CHANGE_HAND, ReceiveHandState);
         _count = GameModel.Single.ShieldCount;
         UpdateShow();
     }
-    
+
     private void UpdateShow()
     {
         ReceiveShield();
@@ -36,9 +31,9 @@ public class Shield : ViewBase
     public override void Hide()
     {
         base.Hide();
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_SHIELD,ReceiveShield);
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_SHIELD,ReceiveShield);
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_CHANGE_HAND,ReceiveHandState);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_SHIELD, ReceiveShield);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_SHIELD, ReceiveShield);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_CHANGE_HAND, ReceiveHandState);
     }
 
     private void UpdateCount()
@@ -51,7 +46,7 @@ public class Shield : ViewBase
         UpdateCount();
         UpdateState();
     }
-    
+
     private void ReceiveHandState(params object[] args)
     {
         UpdateHandState();
@@ -68,7 +63,7 @@ public class Shield : ViewBase
         {
             if (_count > GameModel.Single.ShieldCount)
             {
-                _cdEffect.StartCD(()=> _itemEffect.SetActive(true));
+                _cdEffect.StartCD(() => _itemEffect.SetActive(true));
                 _count = GameModel.Single.ShieldCount;
                 _itemEffect.SetActive(false);
             }
