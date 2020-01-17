@@ -79,6 +79,9 @@ public class Bullet : MonoBehaviour, IUpdate, IBullet
 
     private void OnBecameInvisible()
     {
+        if(PoolMgr.Single == null)
+            return;
+        
         PoolMgr.Single.Despawn(gameObject);
     }
 }

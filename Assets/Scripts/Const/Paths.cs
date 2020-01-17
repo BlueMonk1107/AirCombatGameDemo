@@ -15,7 +15,8 @@ public class Paths
     public const string PREFAB_LOADING_VIEW = UI_FOLDER + "LoadingView";
     public const string PREFAB_GAME_UI_VIEW = UI_FOLDER + "GameUI";
     public const string PREFAB_LIFE_ITEM_VIEW = UI_FOLDER + "LifeItem";
-    public const string PREFAB_PAUSE_VIEW = UI_FOLDER + "GamePauseView";
+    public const string PREFAB_SETTING_VIEW = UI_FOLDER + "SettingView";
+    public const string PREFAB_GAME_RESULT_VIEW = UI_FOLDER + "GameResultView";
 
     public const string PREFAB_ITEM_EFFECT_VIEW = UI_FOLDER + "ItemEffect";
 

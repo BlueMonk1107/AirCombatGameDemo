@@ -10,7 +10,8 @@ public class UILayerConfig : NormalSingleton<UILayerConfig>
         {Paths.PREFAB_LOADING_VIEW, UILayer.BASE_UI},
         {Paths.PREFAB_GAME_UI_VIEW, UILayer.BASE_UI},
         {Paths.PREFAB_LEVELS_VIEW, UILayer.BASE_UI},
-        {Paths.PREFAB_PAUSE_VIEW, UILayer.MIDDLE_UI},
-        {Paths.PREFAB_DIALOG, UILayer.TOP_UI}
+        {Paths.PREFAB_SETTING_VIEW, UILayer.MIDDLE_UI},
+        {Paths.PREFAB_DIALOG, UILayer.TOP_UI},
+        {Paths.PREFAB_GAME_RESULT_VIEW,UILayer.MIDDLE_UI}
     };
 }

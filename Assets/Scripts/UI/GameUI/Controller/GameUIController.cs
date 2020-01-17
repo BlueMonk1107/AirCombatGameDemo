@@ -5,6 +5,6 @@ public class GameUIController : ControllerBase
     {
         transform.AddComponent<ShieldController>("Shield");
         transform.AddComponent<BombController>("Bomb");
-        transform.ButtonAction("Pause", () => UIManager.Single.Show(Paths.PREFAB_PAUSE_VIEW));
+        transform.ButtonAction("Pause", () => UIManager.Single.Show(Paths.PREFAB_SETTING_VIEW));
     }
 }

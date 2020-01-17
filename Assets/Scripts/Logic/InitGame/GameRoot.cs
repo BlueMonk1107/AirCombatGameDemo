@@ -18,5 +18,7 @@ public class GameRoot : MonoBehaviour
 
         var player = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.PREFAB_PLANE);
         player.AddComponent<PlayerView>();
+
+        gameObject.AddComponent<GameEvent>();
     }
 }

@@ -82,11 +82,14 @@ public class BulletMgr : MonoBehaviour, IBullet
     private void OnDisable()
     {
         CoroutineMgr.Single.Stop(_id);
+        AudioMgr.Single.Stop(_model.AudioName.ToString());
         _id = -1;
     }
 
     private void Spawn(IBulletModel model, ITrajectory trajectory)
     {
+        if(PoolMgr.Single == null)
+            return;
         var bulletGo = PoolMgr.Single.Spawn(Paths.PREFAB_BULLET);
         var bullet = bulletGo.AddOrGet<Bullet>();
         bullet.Init(model, trajectory, transform.position);

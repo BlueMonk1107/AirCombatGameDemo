@@ -19,20 +19,27 @@ public class PoolMgr : IInit
             {
                 if (_single == null)
                 {
-                    _single = new PoolMgr();
-                    _selfGo = new GameObject("PoolMgr");
+                    InitSelf();
                 }
 
                 return _single;
             }
 
-            Debug.LogError("非游戏场景无法使用PoolMgr");
             return null;
         }
     }
 
+    private static void InitSelf()
+    {
+        if (_single == null)
+            _single = new PoolMgr();
+        if (_selfGo == null)
+            _selfGo = new GameObject("PoolMgr");
+    }
+
     public async void Init()
     {
+        InitSelf();
         _pools = new Dictionary<string, GameObjectPool>();
         var config = new PoolConfig();
         GameObject temp = null;

@@ -1,6 +1,7 @@
 ﻿[BindPrefab(Paths.PREFAB_LOADING_VIEW, Const.BIND_PREFAB_PRIORITY_CONTROLLER)]
 public class LoadingController : ControllerBase
 {
+    private bool _showEnd;
     protected override void InitChild()
     {
     }
@@ -14,11 +15,17 @@ public class LoadingController : ControllerBase
             SceneMgr.Single.AsyncLoadScene(GameStateModel.Single.TargetScene);
             LifeCycleMgr.Single.Add(LifeName.UPDATE, this);
         }
+
+        _showEnd = true;
     }
 
     public override void UpdateFun()
     {
         base.UpdateFun();
+        
+        if(!_showEnd)
+            return;
+        
         if (SceneMgr.Single.Process() == 1)
         {
             if (GameStateModel.Single.TargetScene == SceneName.Game)
@@ -35,5 +42,6 @@ public class LoadingController : ControllerBase
         if (GameStateModel.Single.TargetScene != SceneName.NULL) GameStateModel.Single.TargetScene = SceneName.NULL;
 
         LifeCycleMgr.Single.Remove(LifeName.UPDATE, this);
+        _showEnd = false;
     }
 }

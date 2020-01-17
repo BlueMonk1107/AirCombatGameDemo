@@ -20,7 +20,8 @@ public class PlayerBehaviour : MonoBehaviour, IBehaviour
 
     public void Dead()
     {
-        //AniMgr.Single.PlaneDestroyAni(transform.position);
+        MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_END_GAME);
+        AniMgr.Single.PlaneDestroyAni(transform.position);
         Destroy(gameObject);
         AudioMgr.Single.PlayOnce(GameAudio.Explode_Plane.ToString());
     }

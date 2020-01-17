@@ -16,6 +16,8 @@
     /// </summary>
     public int SelectedLevel { get; set; }
 
+    public bool IsFinishOneLevel { get; set; }
+
     public int LifeMax
     {
         get

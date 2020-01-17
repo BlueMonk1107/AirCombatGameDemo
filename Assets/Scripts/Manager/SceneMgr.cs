@@ -24,7 +24,8 @@ public class SceneMgr : NormalSingleton<SceneMgr>
 
     private void InitItemTotalNum()
     {
-        for (var i = SceneName.Main; i < SceneName.COUNT; i++) _initItemTotalNum[i] = 1;
+        for (var i = SceneName.Main; i < SceneName.COUNT; i++) 
+            _initItemTotalNum[i] = 1;
     }
 
     public void AsyncLoadScene(SceneName name)
@@ -78,8 +79,8 @@ public class SceneMgr : NormalSingleton<SceneMgr>
     public float Process()
     {
         var ratio = CurInitNum / (float) InitTotalNum;
-
-        if (_async != null && _async.progress >= 0.9f) SceneActivation();
+        if (_async != null && _async.progress >= 0.9f) 
+            SceneActivation();
 
         return ratio;
     }

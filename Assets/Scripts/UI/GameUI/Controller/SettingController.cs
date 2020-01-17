@@ -1,5 +1,5 @@
-﻿[BindPrefab(Paths.PREFAB_PAUSE_VIEW, Const.BIND_PREFAB_PRIORITY_CONTROLLER)]
-public class GamePauseController : ControllerBase
+﻿[BindPrefab(Paths.PREFAB_SETTING_VIEW, Const.BIND_PREFAB_PRIORITY_CONTROLLER)]
+public class SettingController : ControllerBase
 {
     protected override void InitChild()
     {
@@ -16,10 +16,7 @@ public class GamePauseController : ControllerBase
 
     private void Exit()
     {
-        GameStateModel.Single.Pause = false;
-        GameStateModel.Single.TargetScene = SceneName.Main;
-        UIManager.Single.Show(Paths.PREFAB_LOADING_VIEW);
-        UIManager.Single.Back();
+        UIManager.Single.Show(Paths.PREFAB_GAME_RESULT_VIEW);
     }
 
     private void Continue()

@@ -1,5 +1,5 @@
-﻿[BindPrefab(Paths.PREFAB_PAUSE_VIEW, Const.BIND_PREFAB_PRIORITY_VIEW)]
-public class GamePauseView : ViewBase
+﻿[BindPrefab(Paths.PREFAB_SETTING_VIEW, Const.BIND_PREFAB_PRIORITY_VIEW)]
+public class SettingView : ViewBase
 {
     protected override void InitChild()
     {

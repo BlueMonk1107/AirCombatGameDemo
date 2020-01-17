@@ -1,9 +1,11 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 [BindPrefab(Paths.PREFAB_LOADING_VIEW, Const.BIND_PREFAB_PRIORITY_VIEW)]
 public class LoadingView : ViewBase
 {
     private Slider _slider;
+    private bool _showEnd;
 
     protected override void InitChild()
     {
@@ -14,11 +16,15 @@ public class LoadingView : ViewBase
     {
         base.Show();
         LifeCycleMgr.Single.Add(LifeName.UPDATE, this);
+        _showEnd = true;
     }
 
     public override void UpdateFun()
     {
         base.UpdateFun();
+        if(!_showEnd)
+            return;
+        
         UpdateProgress();
         UpdateSlider();
     }
@@ -27,6 +33,7 @@ public class LoadingView : ViewBase
     {
         base.Hide();
         LifeCycleMgr.Single.Remove(LifeName.UPDATE, this);
+        _showEnd = false;
     }
 
     private void UpdateProgress()

@@ -34,7 +34,7 @@ public class EnemyBehaviour : MonoBehaviour, IBehaviour
 
 	public void Dead()
 	{
-		//AniMgr.Single.PlaneDestroyAni(transform.position);
+		AniMgr.Single.PlaneDestroyAni(transform.position);
 		GameModel.Single.Score++;
 		MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_SCORE);
 		PoolMgr.Single.Despawn(gameObject);
