@@ -14,42 +14,46 @@ public interface IMessageSystem
 
 public class MessageSystem : IMessageSystem
 {
-    private readonly Dictionary<int, Action<object[]>> _intReceivers = new Dictionary<int, Action<object[]>>();
-    private readonly Dictionary<string, Action<object[]>> _stringReceivers = new Dictionary<string, Action<object[]>>();
+    private readonly Dictionary<int, ActionMgr<object[]>> _intReceivers = new Dictionary<int, ActionMgr<object[]>>();
+    private readonly Dictionary<string, ActionMgr<object[]>> _stringReceivers = new Dictionary<string, ActionMgr<object[]>>();
 
     public void AddListener(int key, Action<object[]> callback)
     {
-        if (!_intReceivers.ContainsKey(key)) _intReceivers[key] = callback;
+        if (!_intReceivers.ContainsKey(key)) 
+            _intReceivers[key] = new ActionMgr<object[]>();
 
-        _intReceivers[key] += callback;
+        _intReceivers[key].Add(callback);
     }
 
     public void RemoveListener(int key, Action<object[]> callback)
     {
-        if (_intReceivers.ContainsKey(key)) _intReceivers[key] -= callback;
+        if (_intReceivers.ContainsKey(key))
+            _intReceivers[key].Remove(callback);
     }
 
     public void DispatchMsg(int key, params object[] args)
     {
         if (_intReceivers.ContainsKey(key))
-            _intReceivers[key](args);
+            _intReceivers[key].Execute(args);
     }
 
     public void AddListener(string key, Action<object[]> callback)
     {
-        if (!_stringReceivers.ContainsKey(key)) _stringReceivers[key] = callback;
+        if (!_stringReceivers.ContainsKey(key)) 
+            _stringReceivers[key] = new ActionMgr<object[]>();
 
-        _stringReceivers[key] += callback;
+        _stringReceivers[key].Add(callback);
     }
 
     public void RemoveListener(string key, Action<object[]> callback)
     {
-        if (_stringReceivers.ContainsKey(key)) _stringReceivers[key] -= callback;
+        if (_stringReceivers.ContainsKey(key)) 
+            _stringReceivers[key].Remove(callback);
     }
 
     public void DispatchMsg(string key, params object[] args)
     {
         if (_stringReceivers.ContainsKey(key))
-            _stringReceivers[key](args);
+            _stringReceivers[key].Execute(args);
     }
 }

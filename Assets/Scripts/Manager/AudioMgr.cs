@@ -125,8 +125,12 @@ public class AudioMgr : MonoSingleton<AudioMgr>, IInit
 
     public void Play(string name, bool loop = false)
     {
+        if(name == "Null")
+            return;
         var source = GetSource();
         var clip = GetClip(name);
+        if(clip == null)
+            return;
         source.clip = clip;
         SetVolume(name, source);
         source.loop = loop;

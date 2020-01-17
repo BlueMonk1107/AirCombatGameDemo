@@ -26,9 +26,11 @@ public class Paths
     public const string PREFAB_PLANE = Game_FOLDER + "Plane";
     public const string PREFAB_BULLET = Game_FOLDER + "Bullet";
     public const string PREFAB_STAR = Game_FOLDER + "Star";
+    public const string PREFAB_ENEMY_LIFE = Game_FOLDER + "EnemyLife";
 
     private const string EFFECT_FOLDER = Game_FOLDER + "Effect/";
     public const string EFFECT_SHIELD = EFFECT_FOLDER + "Shield";
+    public const string EFFECT_FRAME_ANI = EFFECT_FOLDER + "FrameAni";
 
     public const string ENEMY_FOLDER = PREFAB_FOLDER + "Enemy/";
 
@@ -36,9 +38,12 @@ public class Paths
     private const string PICTURE_FOLDER = "Picture/";
     public const string PICTURE_PLAYER_PICTURE_FOLDER = PICTURE_FOLDER + "Player/";
     public const string PICTURE_MAP_FOLDER = PICTURE_FOLDER + "Map/";
+    public const string PICTURE_EFFECT_FOLDER = PICTURE_FOLDER + "Effect/";
+    public const string PICTURE_PLANE_DESTROY_FOLDER = PICTURE_EFFECT_FOLDER + "PlaneDestroy/";
 
     public const string PICTURE_BULLET_FOLDER = PICTURE_FOLDER + "Buttle/";
     public const string PICTURE_PLAYER_BULLET_FOLDER = PICTURE_BULLET_FOLDER + "Player/";
+    public const string PICTURE_ENEMY_BULLET_FOLDER = PICTURE_BULLET_FOLDER + "Enemy/";
     public const string PICTURE_BULLET_EFFECT = PICTURE_BULLET_FOLDER + "Effect/";
     public const string PICTURE_POWER = PICTURE_BULLET_EFFECT + "Power";
 

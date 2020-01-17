@@ -67,16 +67,20 @@ public class PoolMgr : IInit
         return null;
     }
 
-    public void Despawn(GameObject go)
+    public bool Despawn(GameObject go)
     {
         var goName = go.name.Replace("(Clone)", "");
 
         foreach (var pair in _pools)
+        {
             if (pair.Key.Contains(goName))
             {
                 pair.Value.Despawn(go);
-                break;
+                return true;
             }
+        }
+
+        return false;
     }
 
     public int GetActiveNum(string path)

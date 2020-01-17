@@ -8,6 +8,7 @@ public class StarView : PlaneView
 
     protected override void InitComponent()
     {
+        gameObject.AddOrGet<AutoDespawnComponent>();
         gameObject.AddOrGet<ItemCollideMsgComponent>().Init(CollideEvent);
         _ani = gameObject.AddOrGet<StarAni>();
     }

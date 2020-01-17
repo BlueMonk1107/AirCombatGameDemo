@@ -4,16 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemyTrajectoryData
+public class EnemyTrajectoryDataMgr
 {
-    public Dictionary<TrajectoryType,StraightTrajectoryData[]> TrajectoryDatas;
-    private TrajectoryType _type;
+    public Dictionary<TrajectoryType, ITrajectoryData[]> TrajectoryDatas;
     private int _id;
-    private Func<StraightTrajectoryData> _getAction;
+    private Func<TrajectoryType,ITrajectoryData> _getAction;
 
-    public void Init(TrajectoryType type,int id)
+    public void Init(int id)
     {
-        _type = type;
         _id = id;
 
         if (_id < 0)
@@ -26,7 +24,7 @@ public class EnemyTrajectoryData
         }
     }
 
-    public ITrajectoryData GetData()
+    public ITrajectoryData GetData(TrajectoryType type)
     {
         if (_getAction == null)
         {
@@ -35,17 +33,18 @@ public class EnemyTrajectoryData
         }
         else
         {
-            return _getAction();
+            return _getAction(type);
         }
     }
 
-    private StraightTrajectoryData GetRandomData()
+    private ITrajectoryData GetRandomData(TrajectoryType type)
     {
-        int count = TrajectoryDatas[_type].Length;
+        int count = TrajectoryDatas[type].Length;
         if (count > 0)
         {
+           
             int index = Random.Range(0, count);
-            return TrajectoryDatas[_type][index];
+            return TrajectoryDatas[type][index];
         }
         else
         {
@@ -54,11 +53,11 @@ public class EnemyTrajectoryData
         }
     }
 
-    private StraightTrajectoryData GetOneData()
+    private ITrajectoryData GetOneData(TrajectoryType type)
     {
-        if (_id < TrajectoryDatas[_type].Length)
+        if (_id < TrajectoryDatas[type].Length)
         {
-            return TrajectoryDatas[_type][_id];
+            return TrajectoryDatas[type][_id];
         }
         else
         {
@@ -76,5 +75,11 @@ public interface ITrajectoryData
 public class StraightTrajectoryData : ITrajectoryData
 {
     public double Angle;
+}
+
+public class VTrajectoryData : ITrajectoryData
+{
+    public double Angle;
+    public float[] XPos;
 }
 

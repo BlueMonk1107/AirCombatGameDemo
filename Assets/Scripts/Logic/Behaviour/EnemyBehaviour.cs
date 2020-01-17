@@ -34,7 +34,7 @@ public class EnemyBehaviour : MonoBehaviour, IBehaviour
 
 	public void Dead()
 	{
-		//todo:播放爆炸特效
+		//AniMgr.Single.PlaneDestroyAni(transform.position);
 		GameModel.Single.Score++;
 		MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_SCORE);
 		PoolMgr.Single.Despawn(gameObject);
@@ -42,5 +42,6 @@ public class EnemyBehaviour : MonoBehaviour, IBehaviour
 		var starGo = PoolMgr.Single.Spawn(Paths.PREFAB_STAR);
 		var star = starGo.AddOrGet<StarView>();
 		star.SetPos(transform.position);
+		var typeC = GetComponent<EnemyTypeComponent>();
 	}
 }

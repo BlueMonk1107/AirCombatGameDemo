@@ -11,6 +11,8 @@ public class TrajectoryFactory  {
 		{
 			case TrajectoryType.Straight:
 				return new StraightTrajectory();
+			case TrajectoryType.W:
+				return new VTrajectory();
 			default:
 				Debug.LogError("当前轨迹未添加，名称："+type);
 				return null;

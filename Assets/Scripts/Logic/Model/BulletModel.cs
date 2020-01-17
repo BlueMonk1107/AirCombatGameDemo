@@ -177,8 +177,14 @@ public class PowerBulletModel : NormalSingleton<PowerBulletModel>, IBulletModel
     }
 }
 
-public class EnemyNoBulluetModel : NormalSingleton<EnemyNoBulluetModel>, IBulletModel
+public class EnemyBulluetModel : IBulletModel
 {
+    private EnemyData _data;
+    public EnemyBulluetModel(EnemyData data)
+    {
+        _data = data;
+    }
+        
     public BulletOwner Owner
     {
         get { return BulletOwner.ENEMY; }
@@ -205,24 +211,41 @@ public class EnemyNoBulluetModel : NormalSingleton<EnemyNoBulluetModel>, IBullet
 
     public int GetAttack()
     {
-        return 0;
+        return _data.attack;
     }
 
     public GameAudio AudioName
     {
-        get { return GameAudio.Fire; }
+        get { return GameAudio.Null; }
     }
-    public float FireTime { get; }
+    public float FireTime
+    {
+        get { return (float)_data.fireRate; }
+    }
+
+    private Sprite _sprite;
     public Sprite Sprite()
     {
-        return null;
+        if(_sprite == null)
+            _sprite = LoadMgr.Single.Load<Sprite>(Paths.PICTURE_ENEMY_BULLET_FOLDER + "1");
+
+        return _sprite;
     }
 
     public void GetBulletSpeed(Action<float> callBack)
     {
+        if (callBack != null)
+            callBack(3f);
     }
 
     public void Trajectory(Action<ITrajectory[]> callBack)
     {
+        StraightTrajectoryData data = new StraightTrajectoryData();
+        data.Angle = -90;
+        ITrajectory[] temp = new ITrajectory[1];
+        temp[0] = new StraightTrajectory();
+        temp[0].Init(data);
+        if (callBack != null)
+            callBack(temp);
     }
 }

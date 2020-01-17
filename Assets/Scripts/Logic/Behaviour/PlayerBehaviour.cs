@@ -20,7 +20,7 @@ public class PlayerBehaviour : MonoBehaviour, IBehaviour
 
     public void Dead()
     {
-        //todo:播放爆炸特效
+        //AniMgr.Single.PlaneDestroyAni(transform.position);
         Destroy(gameObject);
         AudioMgr.Single.PlayOnce(GameAudio.Explode_Plane.ToString());
     }

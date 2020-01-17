@@ -4,9 +4,9 @@ using UnityEngine;
 public class EnemyView : PlaneView,IUpdate
 {
     public SpriteRenderer Renderer { get;private set;}
-
-    private ITrajectory _trajectory;
     private MoveComponent _moveComponent;
+    private EnemyLifeView _lifeView;
+    private PathMgr _path;
 
 
     protected override void OnEnable()
@@ -20,7 +20,7 @@ public class EnemyView : PlaneView,IUpdate
         LifeCycleMgr.Single.Remove(LifeName.UPDATE,this);
     }
 
-    public void Init(int id,EnemyData data, Sprite sprite, ITrajectoryData trajectoryData)
+    public void Init(int id,EnemyType type,EnemyData data, Sprite sprite, ITrajectoryData trajectoryData)
     {
         if (Renderer == null)
         {
@@ -30,33 +30,40 @@ public class EnemyView : PlaneView,IUpdate
         gameObject.tag = Tags.ENEMY;
         Renderer.sprite = sprite;
 
-        _trajectory = TrajectoryFactory.GetTrajectory(data.trajectoryType);
-        _trajectory.Init(trajectoryData);
+        _path = new PathMgr(); 
+        _path.Init(transform,data,trajectoryData);
 
         InitPos(id);
-        InitComponent((float)data.speed,data.life);
+        InitComponent(data,type);
     }
 
-    private void InitComponent(float speed,int life)
+    private void InitComponent(EnemyData data,EnemyType type)
     {
-        gameObject.AddOrGet<LifeComponent>().Init(life);
+        gameObject.AddOrGet<CameraMove>().enabled = _path.NeedMoveWithCamera();
+        gameObject.AddOrGet<AutoDespawnComponent>();
+        gameObject.AddOrGet<EnemyTypeComponent>().Init(type);
+        var lifeC = gameObject.AddOrGet<LifeComponent>();
+        lifeC.Init(data.life);
         gameObject.AddOrGet<EnemyBehaviour>();
         _moveComponent = gameObject.AddOrGet<MoveComponent>();
-        _moveComponent.Init(speed);
+        _moveComponent.Init((float)data.speed);
         gameObject.AddOrGet<ColliderComponent>();
         gameObject.AddOrGet<PlaneCollideMsgComponent>();
         var bulletMgr = transform.Find("BulletRoot").AddOrGet<BulletMgr>();
-        bulletMgr.Init(EnemyNoBulluetModel.Single);
+        bulletMgr.Init(new EnemyBulluetModel(data));
+
+        if (_lifeView == null)
+        {
+            var lifeGo = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.PREFAB_ENEMY_LIFE, transform);
+            _lifeView = lifeGo.AddComponent<EnemyLifeView>();
+        }
+        
+        _lifeView.Init();
     }
 
     private void InitPos(int id)
     {
-        float height = Renderer.bounds.max.y - Renderer.bounds.min.y;
-        Vector3 startPos = transform.position;
-        float yOffset = height * 0.5f + height * id;
-        float y = startPos.y + yOffset;
-        float x = _trajectory.GetX(y, startPos);
-        SetPos(new Vector3(x,y,transform.position.z));
+        SetPos(_path.GetInitPos(id));
     }
 
     public void SetPos(Vector3 pos)
@@ -68,48 +75,11 @@ public class EnemyView : PlaneView,IUpdate
 
     public int UpdateTimes { get; }
 
-    private int _times;
-    private int _updateTimes;
+   
     public void UpdateFun()
     {
-        _moveComponent.Move(_trajectory.GetDirection().Reversal());
-
-        LimitUpdate();
+        _moveComponent.Move(_path.GetDirection());
     }
 
-    private void LimitUpdate()
-    {
-        if (_times < _updateTimes)
-        {
-            _times++;
-            return;
-        }
-        _times = 0;
-        
-        if (JudgeBeyondBorder())
-        {
-            PoolMgr.Single.Despawn(gameObject);
-        }
-    }
-
-    private bool JudgeBeyondBorder()
-    {
-        if (Renderer.bounds.max.y < GameUtil.GetCameraMin().y)
-        {
-            return true;
-        }
-        else
-        {
-            if (Renderer.bounds.min.x < GameUtil.GetCameraMin().x)
-            {
-                return true;
-            } 
-            else if (Renderer.bounds.max.x > GameUtil.GetCameraMax().x)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
+   
 }

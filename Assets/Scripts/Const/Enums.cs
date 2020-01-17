@@ -29,6 +29,7 @@ public enum UIAduio
 
 public enum GameAudio
 {
+    Null,
     Fire,
     Power,
     Effcet_Great,
@@ -86,5 +87,16 @@ public enum TrajectoryType
     /// 直线轨迹
     /// </summary>
     Straight,
+    /// <summary>
+    /// W型轨迹
+    /// </summary>
+    W,
     COUNT
+}
+
+public enum PathState
+{
+    ENTER,
+    FORWARD_MOVING,
+    BACK_MOVING
 }

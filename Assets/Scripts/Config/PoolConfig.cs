@@ -21,6 +21,12 @@ public class PoolConfig
             Path = Paths.PREFAB_STAR,
             PreloadCount = 10,
             AutoDestroy = false
+        },
+        new PoolData
+        {
+            Path = Paths.EFFECT_FRAME_ANI,
+            PreloadCount = 15,
+            AutoDestroy = false
         }
     };
 }

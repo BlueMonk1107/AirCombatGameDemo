@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class LifeCycleMgr : MonoSingleton<LifeCycleMgr>, IInit
 {
@@ -53,15 +54,21 @@ public interface ILifeCycle
 
 public class LifeCycle<T> : ILifeCycle
 {
-    private readonly HashSet<object> _objects = new HashSet<object>();
-    private readonly HashSet<object> _removeObjects = new HashSet<object>();
+    private readonly List<object> _objects = new List<object>();
 
     public bool Add(object o)
     {
         if (o is T)
         {
-            _objects.Add(o);
-            return true;
+            if (_objects.Contains(o))
+            {
+                return false;
+            }
+            else
+            {
+                _objects.Add(o);
+                return true;
+            }
         }
 
         return false;
@@ -69,25 +76,14 @@ public class LifeCycle<T> : ILifeCycle
 
     public void Remove(object o)
     {
-        _removeObjects.Add(o);
+        _objects.Remove(o);
     }
 
     public void Execute<T1>(Action<T1> execute)
     {
-        foreach (var o in _objects)
-            if (o == null)
-                _removeObjects.Add(o);
-            else
-                try
-                {
-                    execute((T1) o);
-                }
-                catch (Exception e)
-                {
-                }
-
-        foreach (var o in _removeObjects) _objects.Remove(o);
-
-        _removeObjects.Clear();
+        for (int i = 0; i < _objects.Count; i++)
+        {
+            execute((T1)_objects[i]);
+        }
     }
 }

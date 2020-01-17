@@ -223,12 +223,19 @@
     <Compile Include="Assets\Editor\GenerateTrajectoryData.cs" />
     <Compile Include="Assets\Editor\JsonDataTool.cs" />
     <Compile Include="Assets\Editor\NameMgrWindow.cs" />
+    <Compile Include="Assets\Editor\PrefabChangeSetting.cs" />
     <Compile Include="Assets\Editor\TextureSetting.cs" />
     <Reference Include="Vuforia.UnityExtensions.Editor">
       <HintPath>E:/Unity2017.3/Editor/Data/PlaybackEngines/VuforiaSupport/Managed/Editor/Vuforia.UnityExtensions.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Vuforia.UnityExtensions">
       <HintPath>E:/Unity2017.3/Editor/Data/PlaybackEngines/VuforiaSupport/Managed/Runtime/Vuforia.UnityExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>E:/Unity2017.3/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>E:/Unity2017.3/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Networking">
       <HintPath>E:/Unity2017.3/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
@@ -280,12 +287,6 @@
     </Reference>
     <Reference Include="UnityEditor.VR">
       <HintPath>E:/Unity2017.3/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>E:/Unity2017.3/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>E:/Unity2017.3/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Graphs">
       <HintPath>E:/Unity2017.3/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>

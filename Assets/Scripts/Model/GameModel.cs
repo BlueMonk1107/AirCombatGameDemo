@@ -12,7 +12,7 @@
     public int BombCount { get; set; }
 
     /// <summary>
-    ///     选中的关卡
+    /// 选中的关卡
     /// </summary>
     public int SelectedLevel { get; set; }
 

@@ -8,6 +8,10 @@ public class LevelData
     public CreaterData[] CreaterDatas;
     public int EnemyNumMax;
     public int EnemyNumMin;
+    /// <summary>
+    /// 每死亡多少个普通怪生成一波精英怪
+    /// </summary>
+    public int NormalDeadNumForSpawnElites;
 }
 
 public class CreaterData

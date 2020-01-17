@@ -63,9 +63,30 @@ public class GameUtil
 
     public static Camera GetCamera()
     {
-        _camera = Object.FindObjectOfType<Camera>();
-        if (_camera == null) Debug.LogError("当前场景中没有相机");
+        if (_camera == null)
+        {
+            _camera = Object.FindObjectOfType<Camera>();
+            if (_camera == null)
+                Debug.LogError("当前场景中没有相机");
 
-        return _camera;
+            return _camera;
+        }
+        else
+        {
+            return _camera;
+        }
+        
+       
+    }
+
+    public static SubMsgMgr GetSubMsgMgr(Transform trans)
+    {
+        var msg = trans.GetComponentInParent<SubMsgMgr>();
+        if (msg == null)
+        {
+            var root = trans.GetComponentInParent<IGameRoot>();
+            msg = root.Self.AddComponent<SubMsgMgr>();
+        }
+        return msg;
     }
 }

@@ -21,13 +21,34 @@ public class BulletMgr : MonoBehaviour, IBullet
 
     public BulletOwner[] Tagets => _model.Tagets;
 
+    private int _id;
     public void Init(IBulletModel model)
     {
         _model = model;
         if (GetAttack() > 0)
         {
-            CoroutineMgr.Single.ExecuteOnce(Fire(model));
+            _id = CoroutineMgr.Single.ExecuteOnce(Fire(model));
         }
+
+        InitPos(model);
+    }
+
+    private void InitPos(IBulletModel model)
+    {
+        model.Trajectory((trajectorys) =>
+        {
+            var bulletDirection = trajectorys[0].GetDirection();
+            Vector2 selfDirection = transform.position - transform.parent.position;
+            var angle = Vector2.Angle(selfDirection, bulletDirection);
+
+            var pos = transform.localPosition;
+            if (angle > 90)
+            {
+                pos.y = -pos.y;
+            }
+
+            transform.localPosition = pos;
+        });
     }
 
     private IEnumerator Fire(IBulletModel model)
@@ -56,6 +77,12 @@ public class BulletMgr : MonoBehaviour, IBullet
                 AudioMgr.Single.Replay(audioName);
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        CoroutineMgr.Single.Stop(_id);
+        _id = -1;
     }
 
     private void Spawn(IBulletModel model, ITrajectory trajectory)

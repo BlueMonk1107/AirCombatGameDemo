@@ -25,8 +25,8 @@ public class CameraMove : MonoBehaviour, IUpdate
             _speed = value;
             _move = gameObject.AddComponent<MoveComponent>();
             _move.Init(_speed);
+            LifeCycleMgr.Single.Add(LifeName.UPDATE, this);
         });
-        LifeCycleMgr.Single.Add(LifeName.UPDATE, this);
     }
 
     private void OnDestroy()

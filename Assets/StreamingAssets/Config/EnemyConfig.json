@@ -69,7 +69,7 @@
       "fireRate": 0.8,
       "life": 400,
       "speed": 1,
-      "trajectoryType": 0,
+      "trajectoryType": 1,
       "trajectoryID": -1
     },
     {
@@ -79,7 +79,7 @@
       "fireRate": 0.8,
       "life": 500,
       "speed": 1,
-      "trajectoryType": 0,
+      "trajectoryType": 1,
       "trajectoryID": -1
     },
     {
@@ -89,7 +89,7 @@
       "fireRate": 0.8,
       "life": 600,
       "speed": 1,
-      "trajectoryType": 0,
+      "trajectoryType": 1,
       "trajectoryID": -1
     }
   ],

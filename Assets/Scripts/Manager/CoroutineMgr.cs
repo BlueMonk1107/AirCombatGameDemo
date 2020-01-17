@@ -5,10 +5,11 @@ using UnityEngine;
 public class CoroutineMgr : MonoSingleton<CoroutineMgr>
 {
     private readonly Dictionary<int, CoroutineController> _controllersDic;
-
+    private readonly Dictionary<int, CoroutineController> _onceDic;
     public CoroutineMgr()
     {
         _controllersDic = new Dictionary<int, CoroutineController>();
+        _onceDic = new Dictionary<int, CoroutineController>();
     }
 
     public int Execute(IEnumerator routine, bool autoStart = true)
@@ -22,10 +23,13 @@ public class CoroutineMgr : MonoSingleton<CoroutineMgr>
         return controller.ID;
     }
 
-    public void ExecuteOnce(IEnumerator routine)
+    public int ExecuteOnce(IEnumerator routine)
     {
         var controller = new CoroutineController(this, routine);
         controller.Start();
+        
+        _onceDic.Add(controller.ID, controller);
+        return controller.ID;
     }
 
     public void Restart(int id)
@@ -58,6 +62,8 @@ public class CoroutineMgr : MonoSingleton<CoroutineMgr>
 
         if (controller != null)
             controller.Stop();
+        if (_onceDic.ContainsKey(id))
+            _onceDic.Remove(id);
     }
 
     public void Continue(int id)
@@ -74,8 +80,11 @@ public class CoroutineMgr : MonoSingleton<CoroutineMgr>
         {
             return _controllersDic[id];
         }
+        else if(_onceDic.ContainsKey(id))
+        {
+            return _onceDic[id];
+        }
 
-        Debug.LogError("当前id不存在，id:" + id);
         return null;
     }
 }

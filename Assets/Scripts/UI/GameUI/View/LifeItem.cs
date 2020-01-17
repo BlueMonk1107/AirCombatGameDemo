@@ -38,6 +38,7 @@
 
     public void ReceiveMessage(params object[] args)
     {
-        if (GameModel.Single.Life < _lifeMin) Hide();
+        if (GameModel.Single.Life < _lifeMin) 
+            Hide();
     }
 }

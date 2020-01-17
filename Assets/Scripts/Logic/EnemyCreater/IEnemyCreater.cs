@@ -4,7 +4,8 @@ using UnityEngine;
 
 public interface IEnemyCreater
 {
-    void Init(CreaterData data,AllEnemyData enemyData,EnemyTrajectoryData trajectoryData);
+    void Init(CreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData);
     float GetSpawnRatio();
+    int GetSpawnNum();
     void Spawn();
 }

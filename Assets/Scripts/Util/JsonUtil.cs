@@ -1,17 +1,18 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using LitJson;
 using UnityEngine;
 
 public class JsonUtil  
 {
-    public static string DicConvertToJson(Dictionary<TrajectoryType,StraightTrajectoryData[]> dic)
+    public static string DicConvertToJson(Dictionary<TrajectoryType,ITrajectoryData[]> dic)
     {
         JsonData jsonData = new JsonData();
         foreach (var datase in dic)
         {
             jsonData[datase.Key.ToString()] = new JsonData();
-            foreach (StraightTrajectoryData data in datase.Value)
+            foreach (ITrajectoryData data in datase.Value)
             {
                 jsonData[datase.Key.ToString()].Add(JsonMapper.ToObject(JsonMapper.ToJson(data)));
             }
@@ -20,19 +21,31 @@ public class JsonUtil
         return jsonData.ToJson();
     }
 
-    public static Dictionary<TrajectoryType, StraightTrajectoryData[]> JsonConvertToDic(string json)
+    public static Dictionary<TrajectoryType, ITrajectoryData[]> JsonConvertToDic(string json)
     {
-        Dictionary<TrajectoryType, StraightTrajectoryData[]> dic = new Dictionary<TrajectoryType, StraightTrajectoryData[]>();
+        Dictionary<TrajectoryType, ITrajectoryData[]> dic = new Dictionary<TrajectoryType, ITrajectoryData[]>();
         JsonData data = JsonMapper.ToObject(json);
         for (TrajectoryType type = TrajectoryType.Straight ; type < TrajectoryType.COUNT; type++)
         {
             if (data.Keys.Contains(type.ToString()))
             {
-                var array = JsonMapper.ToObject<StraightTrajectoryData[]>(data[type.ToString()].ToJson());
-                dic[type] = array;
+                dic[type] = GetArray(type,data);
             }
         }
 
         return dic;
+    }
+
+    private static ITrajectoryData[] GetArray(TrajectoryType type,JsonData data)
+    {
+        switch (type)
+        {
+            case TrajectoryType.Straight:
+                return JsonMapper.ToObject<StraightTrajectoryData[]>(data[type.ToString()].ToJson());
+            case TrajectoryType.W:
+                return JsonMapper.ToObject<VTrajectoryData[]>(data[type.ToString()].ToJson());
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        }
     }
 }

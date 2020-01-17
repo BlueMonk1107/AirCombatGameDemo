@@ -14,7 +14,7 @@ public class BulletBehaviour : MonoBehaviour, IBehaviour
 
     private void Destroy()
     {
-        //todo：子弹爆炸动画
+        AniMgr.Single.BulletDestroyAni(transform.position);
         PoolMgr.Single.Despawn(gameObject);
     }
 }

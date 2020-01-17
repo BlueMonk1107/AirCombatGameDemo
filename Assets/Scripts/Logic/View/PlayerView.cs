@@ -40,6 +40,7 @@ public class PlayerView : PlaneView
     {
         gameObject.AddComponent<PlayerEnterAni>();
         gameObject.AddComponent<CameraMove>();
+        gameObject.AddComponent<PlayerBehaviour>();
 
         var reader = ReaderMgr.Single.GetReader(Paths.CONFIG_INIT_PLANE_CONFIG);
         reader["planeSpeed"].Get<float>(speed =>

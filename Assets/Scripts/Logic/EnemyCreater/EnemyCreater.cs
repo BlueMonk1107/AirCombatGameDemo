@@ -16,13 +16,13 @@ public class EnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
     private int _spawnQueueNum;
 
     private CreaterData _data;
-    private EnemyTrajectoryData _trajectoryData;
+    private EnemyTrajectoryDataMgr _trajectoryData;
     /// <summary>
     /// 当前生成队列中最后一个敌机
     /// </summary>
     private EnemyView _lastEnemy;
 
-    public void Init(CreaterData data,AllEnemyData enemyData,EnemyTrajectoryData trajectoryData)
+    public void Init(CreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData)
     {
         _data = data;
         _trajectoryData = trajectoryData;
@@ -54,7 +54,7 @@ public class EnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
         transform.position = pos;
     }
 
-    private void InitEnemyData(CreaterData data,AllEnemyData enemyData,EnemyTrajectoryData trajectoryData)
+    private void InitEnemyData(CreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData)
     {
         _id = Random.Range(data.IdMin, data.IdMax + 1);
         _type = data.Type;
@@ -69,7 +69,7 @@ public class EnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
         }
         else
         {
-            trajectoryData.Init(_enemyData.trajectoryType,_enemyData.trajectoryID);
+            trajectoryData.Init(_enemyData.trajectoryID);
         }
     }
 
@@ -78,13 +78,18 @@ public class EnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
         var plane = PoolMgr.Single.Spawn(Paths.PREFAB_PLANE);
         var enemy = plane.AddOrGet<EnemyView>();
         enemy.SetPos(transform.position);
-        enemy.Init(id, _enemyData, _sprite, data);
+        enemy.Init(id,_type, _enemyData, _sprite, data);
         return enemy;
     }
 
     public float GetSpawnRatio()
     {
         return _spawnQueueNum / (float)_data.QueueNum;
+    }
+
+    public int GetSpawnNum()
+    {
+        return _spawnQueueNum * _data.QueuePlaneNum;
     }
 
     public bool IsSpawning()
@@ -94,7 +99,7 @@ public class EnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
 
     public void Spawn()
     {
-        ITrajectoryData data = _trajectoryData.GetData();
+        ITrajectoryData data = _trajectoryData.GetData(_enemyData.trajectoryType);
         if (_spawnQueueNum < _data.QueueNum)
         {
             _spawnQueueNum++;

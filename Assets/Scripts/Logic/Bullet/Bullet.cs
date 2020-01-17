@@ -34,33 +34,32 @@ public class Bullet : MonoBehaviour, IUpdate, IBullet
         if (_move != null)
         {
             _move.Move(_trajectory.GetDirection());
-            SetAngle();
         }
     }
-
 
     // Use this for initialization
     private void Start()
     {
-        _model.GetBulletSpeed(value =>
-        {
-            _speed = value;
-            _move = gameObject.AddComponent<MoveComponent>();
-            _move.Init(_speed);
-        });
-
         gameObject.AddComponent<PlaneCollideMsgComponent>();
         gameObject.AddComponent<BulletBehaviour>();
     }
 
     public void Init(IBulletModel model, ITrajectory trajectory, Vector3 pos)
     {
-        if (_renderer == null) _renderer = GetComponent<SpriteRenderer>();
+        if (_renderer == null) 
+            _renderer = GetComponent<SpriteRenderer>();
         _model = model;
         _renderer.sprite = model.Sprite();
         _startPos = pos;
         _trajectory = trajectory;
         SetPos(pos);
+        
+        _model.GetBulletSpeed(value =>
+        {
+            _speed = value;
+            _move = gameObject.AddComponent<MoveComponent>();
+            _move.Init(_speed);
+        });
     }
 
     private void OnEnable()
@@ -71,13 +70,6 @@ public class Bullet : MonoBehaviour, IUpdate, IBullet
     private void OnDisable()
     {
         LifeCycleMgr.Single.Remove(LifeName.UPDATE, this);
-    }
-
-    private void SetAngle()
-    {
-        var eular = transform.localEulerAngles;
-        eular.z = _trajectory.GetZRotate();
-        transform.localEulerAngles = eular;
     }
 
     public void SetPos(Vector3 pos)

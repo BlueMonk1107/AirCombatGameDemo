@@ -39,4 +39,9 @@
     public const string MAP_PREFIX = "map_level_";
 
     public const string ENEMY_PREFIX = "Enemy_{0}_{1}";
+
+    /// <summary>
+    /// 敌方血条自适应宽度比例
+    /// </summary>
+    public const float ENEMY_LIFE_BAR_WIDTH = 0.8f;
 }
