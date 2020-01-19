@@ -162,6 +162,8 @@ public class JsonReader : IReader
 
             keyQueue.Complete(_tempData);
         }
+        
+        _keyQueues.Clear();
     }
 
     private T GetValue<T>(JsonData data)
