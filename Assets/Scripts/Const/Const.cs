@@ -44,4 +44,6 @@
     /// 敌方血条自适应宽度比例
     /// </summary>
     public const float ENEMY_LIFE_BAR_WIDTH = 0.8f;
+
+    public const float WAIT_BOSS_TIME = 5;
 }

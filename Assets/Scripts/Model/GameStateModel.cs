@@ -6,47 +6,39 @@ public class GameStateModel : NormalSingleton<GameStateModel>
     public GameStateModel()
     {
         HandMode = (HandMode) DataMgr.Single.Get<int>(DataKeys.HAND_MODE);
-        IsGaming = false;
+        GameState = GameState.NULL;
     }
 
     public HandMode HandMode { get; set; }
-    private bool _pause;
 
-    public bool Pause
-    {
-        get { return _pause; }
-        set
-        {
-            if (value)
-            {
-               MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_GAME_PAUSE);
-            }
-            else
-            {
-                MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_GAME_CONTINUE);
-            }
-            _pause = value;
-        }
-    }
-
-    private bool _isGameme;
+    private GameState _gameState;
 
     /// <summary>
     /// 判断是否在游戏状态中
     /// </summary>
-    public bool IsGaming
+    public GameState GameState
     {
-        get { return _isGameme; }
+        get { return _gameState; }
         set
         {
-            _isGameme = value;
-            if (value)
+            if(_gameState == value)
+                return;
+            
+            _gameState = value;
+            switch (value)
             {
-                MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_START_GAME);
-            }
-            else
-            {
-                MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_END_GAME);
+                case GameState.START:
+                    MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_START_GAME);
+                    break;
+                case GameState.PAUSE:
+                    MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_GAME_PAUSE);
+                    break;
+                case GameState.CONTINUE:
+                    MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_GAME_CONTINUE);
+                    break;
+                case GameState.END:
+                    MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_END_GAME);
+                    break;
             }
         }
     }
@@ -57,7 +49,7 @@ public class GameStateModel : NormalSingleton<GameStateModel>
     public int SelectedPlaneId { get; set; }
 
     /// <summary>
-    ///     飞机等级
+    /// 飞机等级
     /// </summary>
     public int PlaneLevel
     {

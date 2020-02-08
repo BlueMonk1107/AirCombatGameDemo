@@ -87,6 +87,11 @@ public class EnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
         return _spawnQueueNum / (float)_data.QueueNum;
     }
 
+    public bool IsEnd()
+    {
+        return GetSpawnRatio() == 1;
+    }
+
     public int GetSpawnNum()
     {
         return _spawnQueueNum * _data.QueuePlaneNum;
@@ -120,7 +125,7 @@ public class EnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
 
     public void UpdateFun()
     {
-        if (_lastEnemy != null && _lastEnemy.Renderer.bounds.max.y < GameUtil.GetCameraMax().y)
+        if (_lastEnemy != null && _lastEnemy.Renderer.Renderer.bounds.max.y < GameUtil.GetCameraMax().y)
         {
             _lastEnemy = null;
         }

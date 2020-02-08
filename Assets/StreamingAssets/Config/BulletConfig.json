@@ -1,6 +1,22 @@
 {
   "Player" : {
     "bulletSpeed" : 5,
-    "trajectory": {"0": [90],"1": [85,95],"2": [110,90,70],"3": [110,150,90,30,70]}
+    "trajectoryType": 0,
+    "trajectory": [[90],[85,95],[110,90,70],[110,150,90,30,70]]
+  },
+  "Enemy_Normal_0": {
+    "bulletSpeed" : 3,
+    "trajectoryType": 0,
+    "trajectory": [[-90]]
+  },
+  "Enemy_Boss_0": {
+    "bulletSpeed" : 3.5,
+    "trajectoryType": 0,
+    "trajectory": [[-110,-90,-70]]
+  },
+  "Enemy_Boss_1": {
+    "bulletSpeed" : 3,
+    "trajectoryType": 0,
+    "trajectory": [[-85,-95]]
   }
 }

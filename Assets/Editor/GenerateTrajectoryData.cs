@@ -12,8 +12,8 @@ public class GenerateTrajectoryData : MonoBehaviour {
 	private static void Execute()
 	{
 		EnemyTrajectoryDataMgr data =  new EnemyTrajectoryDataMgr();
-		data.TrajectoryDatas = new Dictionary<TrajectoryType, ITrajectoryData[]>();
-		data.TrajectoryDatas[TrajectoryType.Straight] = InitStraightData(data);
+		data.TrajectoryDatas = new Dictionary<PathType, ITrajectoryData[]>();
+		data.TrajectoryDatas[PathType.Straight] = InitStraightData(data);
 		string json = JsonUtil.DicConvertToJson(data.TrajectoryDatas);
 		File.WriteAllText(Paths.CONFIG_ENEMY_TRAJECTORY,json);
 		AssetDatabase.Refresh();

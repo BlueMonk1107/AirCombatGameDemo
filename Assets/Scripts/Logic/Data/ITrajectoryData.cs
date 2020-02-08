@@ -6,9 +6,9 @@ using Random = UnityEngine.Random;
 
 public class EnemyTrajectoryDataMgr
 {
-    public Dictionary<TrajectoryType, ITrajectoryData[]> TrajectoryDatas;
+    public Dictionary<PathType, ITrajectoryData[]> TrajectoryDatas;
     private int _id;
-    private Func<TrajectoryType,ITrajectoryData> _getAction;
+    private Func<PathType,ITrajectoryData> _getAction;
 
     public void Init(int id)
     {
@@ -24,7 +24,7 @@ public class EnemyTrajectoryDataMgr
         }
     }
 
-    public ITrajectoryData GetData(TrajectoryType type)
+    public ITrajectoryData GetData(PathType type)
     {
         if (_getAction == null)
         {
@@ -37,8 +37,11 @@ public class EnemyTrajectoryDataMgr
         }
     }
 
-    private ITrajectoryData GetRandomData(TrajectoryType type)
+    private ITrajectoryData GetRandomData(PathType type)
     {
+        if (!TrajectoryDatas.ContainsKey(type))
+            return null;
+        
         int count = TrajectoryDatas[type].Length;
         if (count > 0)
         {
@@ -53,8 +56,11 @@ public class EnemyTrajectoryDataMgr
         }
     }
 
-    private ITrajectoryData GetOneData(TrajectoryType type)
+    private ITrajectoryData GetOneData(PathType type)
     {
+        if (!TrajectoryDatas.ContainsKey(type))
+            return null;
+        
         if (_id < TrajectoryDatas[type].Length)
         {
             return TrajectoryDatas[type][_id];
@@ -81,5 +87,16 @@ public class VTrajectoryData : ITrajectoryData
 {
     public double Angle;
     public float[] XPos;
+}
+
+public class EllipseData : ITrajectoryData
+{
+    public Vector2 Center;
+    public float XRadius;
+    public float YRadius;
+    /// <summary>
+    /// 指定椭圆形由多少的线段构成
+    /// </summary>
+    public int Precision;
 }
 

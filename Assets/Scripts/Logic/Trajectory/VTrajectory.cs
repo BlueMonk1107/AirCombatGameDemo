@@ -34,7 +34,7 @@ public class VTrajectory : ITrajectory
         _straights[1].Init(-(float)data.Angle);
     }
 
-    public float GetY(float x, Vector2 startPos)
+    public float[] GetY(float x, Vector2 startPos)
     {
         _currentTrajectory = _straights[GetTrajectoryIndex(x)];
         return _currentTrajectory.GetY(x, startPos);
@@ -52,10 +52,10 @@ public class VTrajectory : ITrajectory
         }
     }
 
-    public float GetX(float y, Vector2 startPos)
+    public float[] GetX(float y, Vector2 startPos)
     {
         Debug.LogError("W轨迹的GetX方法无法获取正确的值");
-        return 0;
+        return null;
     }
 
     public bool SetCurrentTrajectory(float x)

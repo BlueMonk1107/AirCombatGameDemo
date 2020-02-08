@@ -30,7 +30,8 @@ public class EnemyData
     public double fireRate;
     public int life;
     public double speed;
-    public TrajectoryType trajectoryType;
+    public PathType trajectoryType;
     //-1代表当前是随机轨迹，大于0的值，代表轨迹id
     public int trajectoryID;
+    public BulletType[] bulletType;
 }

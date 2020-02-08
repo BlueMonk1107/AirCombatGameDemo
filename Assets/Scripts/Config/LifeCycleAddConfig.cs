@@ -18,5 +18,6 @@ public class LifeCycleAddConfig : IInit
         Objects.Add(PlaneSpritesModel.Single);
         Objects.Add(AudioMgr.Single);
         Objects.Add(SceneConfig.Single);
+        Objects.Add(GameDataMgr.Single);
     }
 }

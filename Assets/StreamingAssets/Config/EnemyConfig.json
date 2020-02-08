@@ -8,7 +8,8 @@
       "life": 100,
       "speed": 1,
       "trajectoryType": 0,
-      "trajectoryID": -1
+      "trajectoryID": -1,
+      "bulletType": [1]
     },
     {
       "id": 1,
@@ -18,7 +19,8 @@
       "life": 120,
       "speed": 1,
       "trajectoryType": 0,
-      "trajectoryID": -1
+      "trajectoryID": -1,
+      "bulletType": [1]
     },
     {
       "id": 2,
@@ -28,7 +30,8 @@
       "life": 140,
       "speed": 1,
       "trajectoryType": 0,
-      "trajectoryID": -1
+      "trajectoryID": -1,
+      "bulletType": [1]
     },
     {
       "id": 3,
@@ -38,7 +41,8 @@
       "life": 200,
       "speed": 1,
       "trajectoryType": 0,
-      "trajectoryID": -1
+      "trajectoryID": -1,
+      "bulletType": [1]
     },
     {
       "id": 4,
@@ -48,7 +52,8 @@
       "life": 220,
       "speed": 1,
       "trajectoryType": 0,
-      "trajectoryID": -1
+      "trajectoryID": -1,
+      "bulletType": [1]
     },
     {
       "id": 5,
@@ -58,7 +63,8 @@
       "life": 240,
       "speed": 1,
       "trajectoryType": 0,
-      "trajectoryID": -1
+      "trajectoryID": -1,
+      "bulletType": [1]
     }
   ],
   "Elites":[
@@ -70,7 +76,8 @@
       "life": 400,
       "speed": 1,
       "trajectoryType": 1,
-      "trajectoryID": -1
+      "trajectoryID": -1,
+      "bulletType": [1]
     },
     {
       "id": 1,
@@ -80,7 +87,8 @@
       "life": 500,
       "speed": 1,
       "trajectoryType": 1,
-      "trajectoryID": -1
+      "trajectoryID": -1,
+      "bulletType": [1]
     },
     {
       "id": 2,
@@ -90,29 +98,32 @@
       "life": 600,
       "speed": 1,
       "trajectoryType": 1,
-      "trajectoryID": -1
+      "trajectoryID": -1,
+      "bulletType": [1]
     }
   ],
   "Boss":[
     {
       "id": 0,
       "attackTime":1,
-      "attack": 0,
-      "fireRate": 0,
-      "life": 100,
+      "attack": 10,
+      "fireRate": 1,
+      "life": 4000,
       "speed": 1,
-      "trajectoryType": 0,
-      "trajectoryID": -1
+      "trajectoryType": 2,
+      "trajectoryID": -1,
+      "bulletType": [2,3]
     },
     {
       "id": 1,
       "attackTime":1,
-      "attack": 0,
-      "fireRate": 0,
-      "life": 100,
+      "attack": 30,
+      "fireRate": 1,
+      "life": 7000,
       "speed": 1,
-      "trajectoryType": 0,
-      "trajectoryID": -1
+      "trajectoryType": 3,
+      "trajectoryID": -1,
+      "bulletType": [2,3]
     }
   ]
 }

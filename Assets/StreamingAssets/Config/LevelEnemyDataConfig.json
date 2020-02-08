@@ -25,6 +25,14 @@
           "QueueNum": 2,
           "Type": 1,
           "X": 0.0
+        },
+        {
+          "IdMax": 0,
+          "IdMin": 0,
+          "QueuePlaneNum": 1,
+          "QueueNum": 1,
+          "Type": 2,
+          "X": 0.0
         }
       ],
       "EnemyNumMax": 50,

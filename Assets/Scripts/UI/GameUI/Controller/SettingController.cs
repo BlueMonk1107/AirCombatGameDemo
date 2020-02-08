@@ -11,7 +11,7 @@ public class SettingController : ControllerBase
     public override void Show()
     {
         base.Show();
-        GameStateModel.Single.Pause = true;
+        GameStateModel.Single.GameState = GameState.PAUSE;
     }
 
     private void Exit()
@@ -21,7 +21,7 @@ public class SettingController : ControllerBase
 
     private void Continue()
     {
-        GameStateModel.Single.Pause = false;
+        GameStateModel.Single.GameState = GameState.CONTINUE;
         UIManager.Single.Back();
     }
 

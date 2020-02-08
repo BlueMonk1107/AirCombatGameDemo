@@ -4,33 +4,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WPath : PathBase {
-    private enum StartDirection
-    {
-        LEFT,
-        RIGHT
-    }
+   
     private float _leftX;
     private float _rightX;
-    private float _offsetY;
     private List<Vector3> _startPosOffset;
     private List<float> _xPos = new List<float>();
     private List<VTrajectory> _wTrajectory;
-    private float _leftInitX;
-    private float _rightInitX;
     private int _vCount;
-    private StartDirection _startDirection;
+    private EnterPath _enterPath = new EnterPath();
+    
     
     public override void Init(Transform trans,ITrajectoryData data)
     {
         base.Init(trans,data);
-        _startDirection = StartDirection.RIGHT;
-        
         _state = PathState.ENTER;
         _vCount = 2;
         InitData();
         InitXRange();
         var datas = InitTrajectoryData(data);
         InitVTrajectory(datas);
+        _enterPath.Init(trans,0,0.8f,EnterPath.MoveDirection.LEFT_TO_RIGHT);
     }
 
     private void InitVTrajectory(ITrajectoryData[] datas)
@@ -42,7 +35,6 @@ public class WPath : PathBase {
             temp = new VTrajectory();
             temp.Init(data);
             _wTrajectory.Add(temp);
-            
         }
     }
 
@@ -51,9 +43,7 @@ public class WPath : PathBase {
         var halfWidth = _trans.GetComponent<SpriteRenderer>().bounds.size.x/2;
         _leftX = GameUtil.GetCameraMin().x + halfWidth;
         _rightX = GameUtil.GetCameraMax().x - halfWidth;
-        _offsetY = (GameUtil.GetCameraMax().y - GameUtil.GetCameraMin().y) * 0.8f;
-        _leftInitX = GameUtil.GetCameraMin().x - halfWidth;
-        _rightInitX = GameUtil.GetCameraMax().x + halfWidth;
+        
     }
     
     private void InitXRange()
@@ -106,15 +96,15 @@ public class WPath : PathBase {
         return datas;
     }
 
-    public override Vector3 GetPos(int id)
+    public override Vector3 GetInitPos(int id)
     {
         if (id > 0)
         {
             Debug.LogError("W阵型只支持飞机单飞");
             return Vector3.zero;
         }
-        
-        return new Vector3(_leftInitX, GameUtil.GetCameraMin().y + _offsetY, _trans.position.z);;
+
+        return _enterPath.GetInitPos(id);
     }
 
     public override Vector2 GetDirection()
@@ -122,8 +112,16 @@ public class WPath : PathBase {
         switch (_state)
         {
             case PathState.ENTER:
-                EndEnterState();
-                return EnterDirection();
+                Vector3 direction = _enterPath.GetDirection();
+                if (direction == Vector3.zero)
+                {
+                    _state = PathState.FORWARD_MOVING;
+                    return Vector2.zero;
+                }
+                else
+                {
+                    return direction;
+                }
             case PathState.FORWARD_MOVING:
             case PathState.BACK_MOVING:
                 SetMovingState();
@@ -132,41 +130,7 @@ public class WPath : PathBase {
                 throw new ArgumentOutOfRangeException();
         }
     }
-
-    private void EndEnterState()
-    {
-        if (_startDirection == StartDirection.RIGHT)
-        {
-            if (_trans.position.x >= _leftX)
-            {
-                _state = PathState.FORWARD_MOVING;
-            }
-        }
-        else
-        {
-            if (_trans.position.x <= _rightX)
-            {
-                _state = PathState.BACK_MOVING;
-            }
-        }
-       
-    }
-
-    private Vector2 EnterDirection()
-    {
-        if (_trans.position.x < _leftX)
-        {
-            return Vector2.right;
-        }
-        else if(_trans.position.x > _rightX)
-        {
-            return Vector2.left;
-        }
-        else
-        {
-            return Vector2.zero;
-        }
-    }
+    
 
     private Vector2 GetBaseDirection()
     {

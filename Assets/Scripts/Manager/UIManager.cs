@@ -61,7 +61,8 @@ public class UIManager : NormalSingleton<UIManager>
         AddTypeComponent(dialogGo, Paths.PREFAB_DIALOG);
 
         var dialog = dialogGo.GetComponent<DialogView>();
-        if (dialog != null) dialog.InitDialog(content, trueAction, falseAcion);
+        if (dialog != null) 
+            dialog.InitDialog(content, trueAction, falseAcion);
 
         _dialog = dialog;
         return dialog;

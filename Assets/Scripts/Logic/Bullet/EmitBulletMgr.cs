@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletMgr : MonoBehaviour, IBullet
+public class EmitBulletMgr : MonoBehaviour, IBullet
 {
     private IBulletModel _model;
 
@@ -22,8 +22,26 @@ public class BulletMgr : MonoBehaviour, IBullet
     public BulletOwner[] Tagets => _model.Tagets;
 
     private int _id;
-    public void Init(IBulletModel model)
+
+    public void Init(BulletType type)
     {
+        IBulletModel model = BulletUtil.GetBulletModel(type);
+        Init(model);
+    }
+
+    public void Init(BulletType type,EnemyData data)
+    {
+        IEnemyBulletModel model = BulletUtil.GetEnemyBulletModel(type);
+        if(model == null)
+            return;
+        model.Init(data);
+        Init(model);
+    }
+
+    private void Init(IBulletModel model)
+    {
+        if(model == null)
+            return;
         _model = model;
         if (GetAttack() > 0)
         {
@@ -53,10 +71,11 @@ public class BulletMgr : MonoBehaviour, IBullet
 
     private IEnumerator Fire(IBulletModel model)
     {
-        while (!GameStateModel.Single.IsGaming)
+        while (GameStateModel.Single.GameState == GameState.NULL)
         {
             yield return new WaitForSeconds(0.2f);
         }
+
         var audioName = model.AudioName.ToString();
         AudioMgr.Single.Play(audioName, true);
         var start = DateTime.Now;
@@ -88,7 +107,7 @@ public class BulletMgr : MonoBehaviour, IBullet
 
     private void Spawn(IBulletModel model, ITrajectory trajectory)
     {
-        if(PoolMgr.Single == null)
+        if (PoolMgr.Single == null)
             return;
         var bulletGo = PoolMgr.Single.Spawn(Paths.PREFAB_BULLET);
         var bullet = bulletGo.AddOrGet<Bullet>();

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -86,5 +87,17 @@ public class CoroutineMgr : MonoSingleton<CoroutineMgr>
         }
 
         return null;
+    }
+
+    public void Delay(float time, Action callBack)
+    {
+        Execute(Wait(time, callBack));
+    }
+
+    private IEnumerator Wait(float time, Action callBack)
+    {
+        yield return new WaitForSeconds(time);
+        if (callBack != null)
+            callBack();
     }
 }

@@ -6,6 +6,13 @@ using UnityEngine;
 
 public class EnemyCreaterMgr : MonoBehaviour,IUpdate
 {
+    public enum CreaterState
+    {
+        OTHER_START,
+        OTHER_END,
+        BOSS
+    }
+    
     private int _elitesCount;
     private int _normalCount;
     private AllEnemyData _allEnemyData;
@@ -14,12 +21,15 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
     private List<EnemyCreater> _normalCreaters;
     private List<EnemyCreater> _elitesCreaters;
     private List<EnemyCreater> _needSpawnCreaters;
+    private EnemyCreater _bossCreater;
 
     private int _enemyActiveNumMax;
     private int _spawnElitesLimit;
+    private CreaterState _state;
 
     public void Init()
     {
+        _state = CreaterState.OTHER_START;
         _needSpawnCreaters = new List<EnemyCreater>();
         _normalCreaters = new List<EnemyCreater>();
         _elitesCreaters = new List<EnemyCreater>();
@@ -112,6 +122,7 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
                 _elitesCreaters.Add(item);
                 break;
             case EnemyType.Boss:
+                _bossCreater = item;
                 break;
             case EnemyType.Item:
                 break;
@@ -140,10 +151,28 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
 
         foreach (EnemyCreater enemyCreater in creater)
         {
-            if(enemyCreater!= null)
+            if (enemyCreater != null)
+            {
                 enemyCreater.Spawn();
+            } 
         }
-            
+    }
+
+    private bool JudgeEnd()
+    {
+        foreach (EnemyCreater creater in _normalCreaters)
+        {
+            if (!creater.IsEnd())
+                return false;
+        }
+
+        foreach (EnemyCreater creater in _elitesCreaters)
+        {
+            if (!creater.IsEnd())
+                return false;
+        }
+
+        return true;
     }
 
     private List<EnemyCreater> GetNeedSpawnCreater()
@@ -213,12 +242,33 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
 
     public void UpdateFun()
     {
-        if(!GameStateModel.Single.IsGaming)
+        if(GameStateModel.Single.GameState == GameState.END)
+            return;
+        
+        if(_state == CreaterState.BOSS)
             return;
 
-        if (PoolMgr.Single.GetActiveNum(Paths.PREFAB_PLANE) < _enemyActiveNumMax)
+        if (_state == CreaterState.OTHER_START && PoolMgr.Single.GetActiveNum(Paths.PREFAB_PLANE) < _enemyActiveNumMax)
         {
             Spawn(null);
+            if (JudgeEnd())
+            {
+                _state = CreaterState.OTHER_END;
+            }
         }
+        else if(_state == CreaterState.OTHER_END)
+        {
+            if (PoolMgr.Single.GetActiveNum(Paths.PREFAB_PLANE) == 0)
+            {
+                GameUtil.ShowWarnning();
+                CoroutineMgr.Single.Delay(Const.WAIT_BOSS_TIME,SpawnBoss);
+                _state = CreaterState.BOSS;
+            }
+        }
+    }
+
+    private void SpawnBoss()
+    {
+        _bossCreater.Spawn();
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class JsonUtil  
 {
-    public static string DicConvertToJson(Dictionary<TrajectoryType,ITrajectoryData[]> dic)
+    public static string DicConvertToJson(Dictionary<PathType,ITrajectoryData[]> dic)
     {
         JsonData jsonData = new JsonData();
         foreach (var datase in dic)
@@ -21,11 +21,11 @@ public class JsonUtil
         return jsonData.ToJson();
     }
 
-    public static Dictionary<TrajectoryType, ITrajectoryData[]> JsonConvertToDic(string json)
+    public static Dictionary<PathType, ITrajectoryData[]> JsonConvertToDic(string json)
     {
-        Dictionary<TrajectoryType, ITrajectoryData[]> dic = new Dictionary<TrajectoryType, ITrajectoryData[]>();
+        Dictionary<PathType, ITrajectoryData[]> dic = new Dictionary<PathType, ITrajectoryData[]>();
         JsonData data = JsonMapper.ToObject(json);
-        for (TrajectoryType type = TrajectoryType.Straight ; type < TrajectoryType.COUNT; type++)
+        for (PathType type = PathType.Straight ; type < PathType.COUNT; type++)
         {
             if (data.Keys.Contains(type.ToString()))
             {
@@ -36,13 +36,13 @@ public class JsonUtil
         return dic;
     }
 
-    private static ITrajectoryData[] GetArray(TrajectoryType type,JsonData data)
+    private static ITrajectoryData[] GetArray(PathType type,JsonData data)
     {
         switch (type)
         {
-            case TrajectoryType.Straight:
+            case PathType.Straight:
                 return JsonMapper.ToObject<StraightTrajectoryData[]>(data[type.ToString()].ToJson());
-            case TrajectoryType.W:
+            case PathType.W:
                 return JsonMapper.ToObject<VTrajectoryData[]>(data[type.ToString()].ToJson());
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);

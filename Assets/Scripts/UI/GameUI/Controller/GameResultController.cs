@@ -12,7 +12,6 @@ public class GameResultController : ControllerBase {
     private void BackToMain()
     {
         UIManager.Single.Back();
-        GameStateModel.Single.Pause = false;
         GameStateModel.Single.TargetScene = SceneName.Main;
         UIManager.Single.Show(Paths.PREFAB_LOADING_VIEW);
         UIManager.Single.Back();
@@ -21,6 +20,12 @@ public class GameResultController : ControllerBase {
     public override void Show()
     {
         base.Show();
-        GameStateModel.Single.Pause = true;
+        GameStateModel.Single.GameState = GameState.PAUSE;
+    }
+
+    public override void Hide()
+    {
+        base.Hide();
+        GameStateModel.Single.GameState = GameState.NULL;
     }
 }

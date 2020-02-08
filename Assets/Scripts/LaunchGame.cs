@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using LitJson;
 using UnityEngine;
 
 public class LaunchGame : MonoBehaviour

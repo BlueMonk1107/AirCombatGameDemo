@@ -22,7 +22,7 @@ public class PlayerEnterAni : MonoBehaviour
 		{
 			float time = 1;
 			transform.DOMove(targetPos +Vector3.up*value*time, time).OnComplete(
-				()=>GameStateModel.Single.IsGaming = true);
+				()=>GameStateModel.Single.GameState = GameState.START);
 		});
 	}
 }

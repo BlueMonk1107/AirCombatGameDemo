@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PathFactory  {
 
-    public static IPath GetPath(TrajectoryType type)
+    public static IPath GetPath(PathType type)
     {
         switch (type)
         {
-            case TrajectoryType.Straight:
+            case PathType.Straight:
                 return new StraightPath();
-            case TrajectoryType.W:
+            case PathType.W:
                 return new WPath();
+            case PathType.StayOnTop:
+                return new StayOnTopPath();
             default:
                 Debug.LogError("当前轨迹未添加，名称："+type);
                 return null;

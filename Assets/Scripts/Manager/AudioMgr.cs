@@ -186,7 +186,7 @@ public class AudioMgr : MonoSingleton<AudioMgr>, IInit
         {
             var source = _clipAndSourceMap[name];
             source.loop = loop;
-            if(!GameStateModel.Single.Pause)
+            if(GameStateModel.Single.GameState == GameState.START || GameStateModel.Single.GameState == GameState.CONTINUE)
                 source.Play();
         }
     }

@@ -50,8 +50,8 @@ public class PlayerView : PlaneView
             gameObject.AddComponent<PlayerController>();
         });
 
-        var bulletMgr = transform.Find("BulletRoot").AddComponent<BulletMgr>();
-        bulletMgr.Init(PlayerBulletModel.Single);
+        var bulletMgr = transform.Find("BulletRoot").AddComponent<EmitBulletMgr>();
+        bulletMgr.Init(BulletType.Player);
 
         gameObject.AddComponent<ColliderComponent>();
         gameObject.AddComponent<PlaneCollideMsgComponent>();
@@ -66,10 +66,11 @@ public class PlayerView : PlaneView
 
     private void InitSprite()
     {
-        var render = GetComponent<SpriteRenderer>();
         var id = GameStateModel.Single.SelectedPlaneId;
         var level = GameStateModel.Single.PlaneLevel;
         var sprite = PlaneSpritesModel.Single[id, level];
-        render.sprite = sprite;
+        var render = gameObject.AddOrGet<RenderComponent>();
+        render.Init();
+        render.SetSprite(sprite);
     }
 }

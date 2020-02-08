@@ -19,6 +19,7 @@ public class Paths
     public const string PREFAB_GAME_RESULT_VIEW = UI_FOLDER + "GameResultView";
 
     public const string PREFAB_ITEM_EFFECT_VIEW = UI_FOLDER + "ItemEffect";
+    public const string PREFAB_WARNING = UI_FOLDER + "Warning";
 
     //game预制
     private const string Game_FOLDER = PREFAB_FOLDER + "Game/";

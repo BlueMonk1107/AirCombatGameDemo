@@ -11,14 +11,14 @@ public class StraightPath : PathBase
         _trajectory.Init(data);
     }
 
-    public override Vector3 GetPos(int id)
+    public override Vector3 GetInitPos(int id)
     {
         var render = _trans.GetComponent<SpriteRenderer>();
         float height = render.bounds.max.y - render.bounds.min.y;
         Vector3 startPos = _trans.position;
         float yOffset = height * 0.5f + height * id;
         float y = startPos.y + yOffset;
-        float x = _trajectory.GetX(y, startPos);
+        float x = _trajectory.GetX(y, startPos)[0];
         return new Vector3(x,y,_trans.position.z);
     }
 

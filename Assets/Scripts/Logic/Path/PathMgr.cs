@@ -14,7 +14,7 @@ public class PathMgr {
 
 	public Vector3 GetInitPos(int id)
 	{
-		return _path.GetPos(id);
+		return _path.GetInitPos(id);
 	}
 
 	public Vector2 GetDirection()

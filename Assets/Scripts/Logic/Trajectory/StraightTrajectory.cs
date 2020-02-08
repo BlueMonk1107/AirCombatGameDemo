@@ -10,9 +10,11 @@ public class StraightTrajectory : ITrajectory
     private Vector2 _direction;
     private float _k;
     private float _zRotate;
+    private float[] _temp;
 
     public void Init(float angle)
     {
+        _temp = new float[1];
         _direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
         _k = Mathf.Tan(angle * Mathf.Deg2Rad);
         _zRotate = angle - 90;
@@ -31,14 +33,16 @@ public class StraightTrajectory : ITrajectory
         }
     }
 
-    public float GetY(float x, Vector2 startPos)
+    public float[] GetY(float x, Vector2 startPos)
     {
-        return (x - startPos.x) * _k + startPos.y;
+        _temp[0] = (x - startPos.x) * _k + startPos.y;
+        return _temp;
     }
 
-    public float GetX(float y, Vector2 startPos)
+    public float[] GetX(float y, Vector2 startPos)
     {
-        return (y - startPos.y) / _k + startPos.x;
+        _temp[0] = (y - startPos.y) / _k + startPos.x;
+        return _temp;
     }
 
     public Vector2 GetDirection()

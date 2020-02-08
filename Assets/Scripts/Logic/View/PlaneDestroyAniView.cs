@@ -12,6 +12,7 @@ public class PlaneDestroyAniView : EffectView {
 
     private void AniEnd()
     {
-        PoolMgr.Single.Despawn(gameObject);
+        if(PoolMgr.Single != null)
+            PoolMgr.Single.Despawn(gameObject);
     }
 }

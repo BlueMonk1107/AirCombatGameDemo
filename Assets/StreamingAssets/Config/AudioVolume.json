@@ -28,8 +28,12 @@
     "Volume": 0.5
   },
   {
-    "Name": "Explode_Bullet",
+    "Name": "Effect_Warning",
     "Volume": 0.5
+  },
+  {
+    "Name": "Explode_Bullet",
+    "Volume": 0.1
   },
   {
     "Name": "Explode_Plane",

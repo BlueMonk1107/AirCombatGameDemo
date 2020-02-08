@@ -2,6 +2,6 @@
 {
     protected override void InitComponent()
     {
-        gameObject.AddComponent<BulletMgr>().Init(PowerBulletModel.Single);
+        gameObject.AddComponent<EmitBulletMgr>().Init(BulletType.Power);
     }
 }

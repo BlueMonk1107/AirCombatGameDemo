@@ -39,7 +39,7 @@ public class LifeCycleMgr : MonoSingleton<LifeCycleMgr>, IInit
     // Update is called once per frame
     private void Update()
     {
-        if (GameStateModel.Single.Pause)
+        if (GameStateModel.Single.GameState == GameState.PAUSE)
             return;
         LifeCycleConfig.LifeCycleFuns[LifeName.UPDATE]();
     }

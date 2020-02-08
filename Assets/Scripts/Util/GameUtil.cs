@@ -75,8 +75,6 @@ public class GameUtil
         {
             return _camera;
         }
-        
-       
     }
 
     public static SubMsgMgr GetSubMsgMgr(Transform trans)
@@ -88,5 +86,11 @@ public class GameUtil
             msg = root.Self.AddComponent<SubMsgMgr>();
         }
         return msg;
+    }
+
+    public static void ShowWarnning()
+    {
+        var go = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.PREFAB_WARNING,UIManager.Single.Canvas.transform);
+        go.AddComponent<Warning>();
     }
 }
