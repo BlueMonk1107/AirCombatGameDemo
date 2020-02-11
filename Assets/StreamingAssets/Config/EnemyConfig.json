@@ -108,9 +108,9 @@
       "attackTime":1,
       "attack": 10,
       "fireRate": 1,
-      "life": 4000,
+      "life": 40000,
       "speed": 1,
-      "trajectoryType": 2,
+      "trajectoryType": 3,
       "trajectoryID": -1,
       "bulletType": [2,3]
     },

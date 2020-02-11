@@ -23,7 +23,7 @@ public class WPath : PathBase {
         InitXRange();
         var datas = InitTrajectoryData(data);
         InitVTrajectory(datas);
-        _enterPath.Init(trans,0,0.8f,EnterPath.MoveDirection.LEFT_TO_RIGHT);
+        _enterPath.InitByRatio(trans,0,0.8f,EnterPath.MoveDirection.LEFT_TO_RIGHT);
     }
 
     private void InitVTrajectory(ITrajectoryData[] datas)

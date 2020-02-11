@@ -91,9 +91,12 @@ public class VTrajectoryData : ITrajectoryData
 
 public class EllipseData : ITrajectoryData
 {
+    public float XPos;
+    public Vector2 StartPos;
     public Vector2 Center;
-    public float XRadius;
-    public float YRadius;
+    public double YRatioInScreen;
+    public double XRadius;
+    public double YRadius;
     /// <summary>
     /// 指定椭圆形由多少的线段构成
     /// </summary>

@@ -44,6 +44,8 @@ public class JsonUtil
                 return JsonMapper.ToObject<StraightTrajectoryData[]>(data[type.ToString()].ToJson());
             case PathType.W:
                 return JsonMapper.ToObject<VTrajectoryData[]>(data[type.ToString()].ToJson());
+            case PathType.Ellipse:
+                return JsonMapper.ToObject<EllipseData[]>(data[type.ToString()].ToJson());
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }

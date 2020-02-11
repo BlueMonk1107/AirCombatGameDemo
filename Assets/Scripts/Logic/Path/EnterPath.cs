@@ -19,14 +19,19 @@ public class EnterPath : IPath
     {
     }
 
-    public void Init(Transform trans,float x,float yRatio,MoveDirection direction)
+    public void InitByOffsetY(Transform trans,float x,float offsetY,MoveDirection direction)
     {
-        float offsetY = (GameUtil.GetCameraMax().y - GameUtil.GetCameraMin().y) * yRatio;
         _enter = GetEnter(direction);
         if(_enter == null)
             return;
         _enter.Init(trans,offsetY);
         _initPos = _enter.InitPos(x);
+    }
+
+    public void InitByRatio(Transform trans,float x,float yRatio,MoveDirection direction)
+    {
+        float offsetY = (GameUtil.GetCameraMax().y - GameUtil.GetCameraMin().y) * yRatio;
+        InitByOffsetY(trans, x, offsetY, direction);
     }
 
     private IEnterPath GetEnter(MoveDirection direction)

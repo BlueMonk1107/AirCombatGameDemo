@@ -20,5 +20,13 @@
     {
       "Angle": 20.0
     }
+  ],
+  "Ellipse": [
+    {
+      "YRatioInScreen": 0.8,
+      "XRadius": 1,
+      "YRadius": 0.5,
+      "Precision": 20
+    }
   ]
 }

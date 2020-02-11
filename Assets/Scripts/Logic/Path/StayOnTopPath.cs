@@ -9,7 +9,7 @@ public class StayOnTopPath : PathBase
     public override void Init(Transform trans, ITrajectoryData trajectory)
     {
         base.Init(trans, trajectory);
-        _enterPath.Init(trans,0,0.8f,EnterPath.MoveDirection.UP_TO_DOWN);
+        _enterPath.InitByRatio(trans,0,0.8f,EnterPath.MoveDirection.UP_TO_DOWN);
     }
 
     public override Vector3 GetInitPos(int id)
