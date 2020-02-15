@@ -36,7 +36,12 @@
   "Enemy_Boss_0": {
     "bulletSpeed": 3,
     "trajectoryType": 0,
-    "trajectory": [[-85,-95]],
+    "trajectory": [
+      [
+        85,
+        95
+      ]
+    ],
     "Events": [
       {
         "LifeRatio": 0.5,
@@ -50,7 +55,13 @@
         "Type": 1,
         "Data": {
           "trajectoryType": 0,
-          "trajectory": [[-110,-90,-70]]
+          "trajectory": [
+            [
+              110,
+              90,
+              70
+            ]
+          ]
         }
       }
     ]
@@ -58,7 +69,12 @@
   "Enemy_Boss_1": {
     "bulletSpeed": 3,
     "trajectoryType": 0,
-    "trajectory": [[-85,-95]],
+    "trajectory": [
+      [
+        85,
+        95
+      ]
+    ],
     "Events": [
       {
         "LifeRatio": 0.5,
@@ -72,7 +88,13 @@
         "Type": 1,
         "Data": {
           "trajectoryType": 0,
-          "trajectory": [[-110,-90,-70]]
+          "trajectory": [
+            [
+              110,
+              90,
+              70
+            ]
+          ]
         }
       }
     ]
