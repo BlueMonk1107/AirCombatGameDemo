@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MsgEventTest : ITest
 {
-    public void Execute()
+    public IEnumerator Execute()
     {
         var hashSet = new HashSet<int>();
         var type = typeof(MsgEvent);
@@ -20,5 +21,7 @@ public class MsgEventTest : ITest
                 Debug.LogError("属性：" + info.Name + " 类型错误，此类所有常量必须是int类型");
             }
         }
+
+        yield return null;
     }
 }

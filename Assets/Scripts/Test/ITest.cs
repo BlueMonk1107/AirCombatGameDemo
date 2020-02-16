@@ -1,4 +1,6 @@
+using System.Collections;
+
 public interface ITest
 {
-    void Execute();
+    IEnumerator Execute();
 }

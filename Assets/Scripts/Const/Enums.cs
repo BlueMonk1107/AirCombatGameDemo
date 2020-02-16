@@ -132,5 +132,12 @@ public enum BulletName
 {
     Enemy_Normal_0,
     Enemy_Boss_0,
-    Enemy_Boss_1
+    Enemy_Boss_1,
+    COUNT
+}
+
+public enum BulletEventType
+{
+    ChangeSpeed,
+    ChangeTrajectory
 }

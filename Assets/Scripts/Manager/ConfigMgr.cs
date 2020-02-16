@@ -13,15 +13,18 @@ public class ConfigMgr : NormalSingleton<ConfigMgr>, IInit
         config["planes"].Get<JsonData>(data =>
         {
             foreach (JsonData item in data)
-            foreach (var key in item.Keys)
             {
-                if (key == "planeId")
-                    continue;
+                foreach (var key in item.Keys)
+                {
+                    if (key == "planeId")
+                        continue;
 
-                var newKey = KeysUtil.GetPropertyKeys(int.Parse(item["planeId"].ToJson()), key);
+                    var newKey = KeysUtil.GetPropertyKeys(int.Parse(item["planeId"].ToJson()), key);
 
-                if (!DataMgr.Single.Contains(newKey)) DataMgr.Single.SetJsonData(newKey, item[key]);
+                    if (!DataMgr.Single.Contains(newKey)) DataMgr.Single.SetJsonData(newKey, item[key]);
+                }
             }
+            
         });
     }
 }

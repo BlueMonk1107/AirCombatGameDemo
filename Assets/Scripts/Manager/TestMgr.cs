@@ -1,47 +1,50 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestMgr : NormalSingleton<TestMgr>, IInit
+public class TestMgr : NormalSingleton<TestMgr>
 {
     private readonly List<ITest> _editorTests = new List<ITest>
     {
-        new MsgEventTest()
+        new MsgEventTest(),
+        new BulletConfigTest()
     };
 
     private readonly List<ITest> _realTests = new List<ITest>();
 
-    public void Init()
+    public IEnumerator Init()
     {
 #if UNITY_EDITOR
-        EditorTest();
+        yield return EditorTest();
 #endif
-        RealTest();
+        yield return RealTest();
 
-        Clear();
+        yield return Clear();
     }
 
-    private void EditorTest()
+    private IEnumerator EditorTest()
     {
-        ExecuteAll(_editorTests);
+        yield return ExecuteAll(_editorTests);
     }
 
-    private void RealTest()
+    private IEnumerator RealTest()
     {
-        ExecuteAll(_realTests);
+        yield return ExecuteAll(_realTests);
     }
 
-    private void ExecuteAll(List<ITest> tests)
+    private IEnumerator ExecuteAll(List<ITest> tests)
     {
         foreach (var test in tests)
         {
-            test.Execute();
+            yield return test.Execute();
             Debug.Log("当前" + test + "类测试完成");
         }
     }
 
-    private void Clear()
+    private IEnumerator Clear()
     {
         _editorTests.Clear();
         _realTests.Clear();
+        yield return null;
     }
 }

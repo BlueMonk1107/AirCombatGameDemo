@@ -6,13 +6,44 @@ public class AllBulletData
 {
     public BulletData Player;
     public BulletData Enemy_Normal_0;
-    public BulletData Enemy_Boss_0;
-    public BulletData Enemy_Boss_1;
+    public BossBulletData Enemy_Boss_0;
+    public BossBulletData Enemy_Boss_1;
 }
 
 public class BulletData
 {
     public double bulletSpeed;
+    public PathType trajectoryType;
+    public int[][] trajectory;
+}
+
+public class BossBulletData : BulletData
+{
+    public BulletEvent[] Events;
+}
+
+public class BulletEvent
+{
+    /// <summary>
+    /// 触发当前事件的血量比例
+    /// </summary>
+    public double LifeRatio;
+    public BulletEventType Type;
+    public BulletEventData Data;
+}
+
+public class BulletEventData
+{
+    
+}
+
+public class ChangeSpeedData :BulletEventData
+{
+    public double bulletSpeed;
+}
+
+public class ChangeTrajectoryData:BulletEventData
+{
     public PathType trajectoryType;
     public int[][] trajectory;
 }

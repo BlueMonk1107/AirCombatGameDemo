@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using LitJson;
 using UnityEngine;
@@ -8,15 +9,19 @@ public class LaunchGame : MonoBehaviour
     // Use this for initialization
     private void Start()
     {
-        TestMgr.Single.Init();
-
         if (FindObjectsOfType<LaunchGame>().Length > 1)
         {
             Destroy(gameObject);
             return;
         }
-        //DataMgr.Single.ClearAll(); 
 
+        StartCoroutine(Init());
+    }
+
+    private IEnumerator Init()
+    {
+        yield return TestMgr.Single.Init();
+        //DataMgr.Single.ClearAll(); 
         GameStateModel.Single.CurrentScene = SceneName.Main;
         IInit lifeCycle = LifeCycleMgr.Single;
         lifeCycle.Init();

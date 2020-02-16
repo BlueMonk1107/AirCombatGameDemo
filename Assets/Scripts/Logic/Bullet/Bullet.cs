@@ -5,10 +5,7 @@ public class Bullet : MonoBehaviour, IUpdate, IBullet
 {
     private IBulletModel _model;
     private MoveComponent _move;
-
     private SpriteRenderer _renderer;
-    private float _speed;
-    private Vector3 _startPos;
     private ITrajectory _trajectory;
 
     public BulletOwner Owner => _model.Owner;
@@ -50,15 +47,13 @@ public class Bullet : MonoBehaviour, IUpdate, IBullet
             _renderer = GetComponent<SpriteRenderer>();
         _model = model;
         _renderer.sprite = model.Sprite();
-        _startPos = pos;
         _trajectory = trajectory;
         SetPos(pos);
         
         _model.GetBulletSpeed(value =>
         {
-            _speed = value;
             _move = gameObject.AddComponent<MoveComponent>();
-            _move.Init(_speed);
+            _move.Init(value);
         });
     }
 

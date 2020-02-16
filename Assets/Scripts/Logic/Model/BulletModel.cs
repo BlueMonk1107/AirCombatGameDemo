@@ -24,3 +24,8 @@ public interface IEnemyBulletModel : IBulletModel
 {
     void Init(EnemyData data);
 }
+
+public interface IEnemyBossBulletModel : IEnemyBulletModel
+{
+    void UpdateEvent(float lifeRatio);
+}

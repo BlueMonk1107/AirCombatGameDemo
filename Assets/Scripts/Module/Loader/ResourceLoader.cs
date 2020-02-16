@@ -63,6 +63,6 @@ public class ResourceLoader : ILoader
         }
 
         complete(www.text);
-        Debug.Log("文件加载成功，路径为：" + path);
+        //Debug.Log("文件加载成功，路径为：" + path);
     }
 }
