@@ -11,6 +11,8 @@ public class BulletTrajectoryDataUtil  {
 		{
 			case PathType.Straight:
 				return GetStraightArray(bulletData.trajectory[level]);
+			case PathType.Rotate:
+				
 			default:
 				Debug.LogError("当前轨迹未添加，名称："+type);
 				return null;
@@ -23,6 +25,7 @@ public class BulletTrajectoryDataUtil  {
 		{
 			case PathType.Straight:
 				return GetStraightArray(data.trajectory[level]);
+			case PathType.Rotate:
 			default:
 				Debug.LogError("当前轨迹未添加，名称："+type);
 				return null;

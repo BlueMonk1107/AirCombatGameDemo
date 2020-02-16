@@ -48,7 +48,15 @@ public class EmitBulletMgr : MonoBehaviour, IBullet
             _id = CoroutineMgr.Single.ExecuteOnce(Fire(model));
         }
 
+        InitComponent();
+
         InitPos(model);
+    }
+
+    private void InitComponent()
+    {
+        var component = gameObject.AddOrGet<BossBulletEventComponent>();
+        component.Init(_model);
     }
 
     private void InitPos(IBulletModel model)
@@ -84,7 +92,8 @@ public class EmitBulletMgr : MonoBehaviour, IBullet
             yield return new WaitForSeconds(model.FireTime);
             model.Trajectory(data =>
             {
-                foreach (var trajectory in data) Spawn(model, trajectory);
+                foreach (var trajectory in data) 
+                    Spawn(model, trajectory);
             });
 
             //开火暂停时间

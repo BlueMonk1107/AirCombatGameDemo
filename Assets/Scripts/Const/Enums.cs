@@ -85,11 +85,11 @@ public enum EnemyType
 public enum PathType
 {
     /// <summary>
-    /// 直线轨迹
+    /// 直线路径
     /// </summary>
     Straight,
     /// <summary>
-    /// W型轨迹
+    /// W型路径
     /// </summary>
     W,
     /// <summary>
@@ -97,9 +97,13 @@ public enum PathType
     /// </summary>
     StayOnTop,
     /// <summary>
-    /// 椭圆轨迹
+    /// 椭圆路径
     /// </summary>
     Ellipse,
+    /// <summary>
+    /// 原地旋转
+    /// </summary>
+    Rotate,
     COUNT
 }
 

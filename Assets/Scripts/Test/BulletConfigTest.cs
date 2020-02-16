@@ -12,6 +12,7 @@ public class BulletConfigTest : ITest
         bool complete = false;
         LoadMgr.Single.LoadConfig(Paths.CONFIG_BULLET_CONFIG, (value) =>
         {
+            bool change = false;
             string json = (string) value;
             JsonData data = JsonMapper.ToObject(json);
 
@@ -19,7 +20,7 @@ public class BulletConfigTest : ITest
             {
                 if(key == "Player")
                     continue;
-                ChangeValue(data[key]);
+                change = ChangeValue(data[key]);
 
                 foreach (string sKey in data[key].Keys)
                 {
@@ -29,14 +30,20 @@ public class BulletConfigTest : ITest
                         {
                             if (jsonData["Data"].Keys.Contains("trajectory"))
                             {
-                                ChangeValue(jsonData["Data"]);
+                                if (ChangeValue(jsonData["Data"]))
+                                {
+                                    change = true;
+                                }
                             }
                         }
                     }
                 }
             }
-            
-            File.WriteAllText(Paths.CONFIG_BULLET_CONFIG,data.ToJson());
+
+            if (change)
+            {
+                File.WriteAllText(Paths.CONFIG_BULLET_CONFIG,data.ToJson());
+            }
             complete = true;
         });
 
@@ -46,8 +53,10 @@ public class BulletConfigTest : ITest
         }
     }
 
-    private void ChangeValue(JsonData data)
+    private bool ChangeValue(JsonData data)
     {
+        if (!data[_trajectoryKey][0].IsArray)
+            return false;
         bool change = false;
         string json = data.ToJson();
         TempTrajectoryData temp = JsonMapper.ToObject<TempTrajectoryData>(json);
@@ -77,6 +86,8 @@ public class BulletConfigTest : ITest
                 }
             }
         }
+
+        return change;
     }
 }
 

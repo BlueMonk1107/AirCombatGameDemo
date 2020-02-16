@@ -93,4 +93,17 @@ public class GameUtil
         var go = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.PREFAB_WARNING,UIManager.Single.Canvas.transform);
         go.AddComponent<Warning>();
     }
+
+    public static int GetInt(object value)
+    {
+        if (value.GetType() == typeof(int))
+        {
+            return (int) value;
+        }
+        else
+        {
+            Debug.LogError("当前值不是int类型，值为："+value);
+            return 0;
+        }
+    }
 }

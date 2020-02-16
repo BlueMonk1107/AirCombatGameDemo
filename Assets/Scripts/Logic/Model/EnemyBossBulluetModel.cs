@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[Bullet(BulletType.Enemy_Boss_0)]
-public class EnemyBossBulluetModel : IEnemyBossBulletModel
+
+public abstract class EnemyBossBulluetModelBase : IEnemyBossBulletModel
 {
     private EnemyData _data;
     private BossBulletData _bossData;
@@ -14,9 +14,12 @@ public class EnemyBossBulluetModel : IEnemyBossBulletModel
         _data = data;
         _getBulletSpeedAction = GetDefaultBulletSpeed;
         _getTrajectoryAction = GetDefaultTrajectory;
-        _bossData = GameDataMgr.Single.Get<AllBulletData>().Enemy_Boss_0;
+        _bossData = GetBulletData();
         InitEventsData(_bossData);
     }
+
+    protected abstract BossBulletData GetBulletData();
+    protected abstract BulletName GetBulletName();
 
     private void InitEventsData(BossBulletData bossData)
     {
@@ -74,7 +77,7 @@ public class EnemyBossBulluetModel : IEnemyBossBulletModel
     public Sprite Sprite()
     {
         if (_sprite == null)
-            _sprite = LoadMgr.Single.Load<Sprite>(Paths.PICTURE_ENEMY_BULLET_FOLDER + BulletName.Enemy_Boss_0);
+            _sprite = LoadMgr.Single.Load<Sprite>(Paths.PICTURE_ENEMY_BULLET_FOLDER + GetBulletName());
 
         return _sprite;
     }
@@ -138,5 +141,33 @@ public class EnemyBossBulluetModel : IEnemyBossBulletModel
                 }
             }
         }
+    }
+}
+
+[Bullet(BulletType.Enemy_Boss_0)]
+public class EnemyBoss0BulluetModel : EnemyBossBulluetModelBase
+{
+    protected override BossBulletData GetBulletData()
+    {
+        return GameDataMgr.Single.Get<AllBulletData>().Enemy_Boss_0;
+    }
+
+    protected override BulletName GetBulletName()
+    {
+        return BulletName.Enemy_Boss_0;
+    }
+}
+
+[Bullet(BulletType.Enemy_Boss_1)]
+public class EnemyBoss1BulluetModel : EnemyBossBulluetModelBase
+{
+    protected override BossBulletData GetBulletData()
+    {
+        return GameDataMgr.Single.Get<AllBulletData>().Enemy_Boss_1;
+    }
+
+    protected override BulletName GetBulletName()
+    {
+        return BulletName.Enemy_Boss_1;
     }
 }

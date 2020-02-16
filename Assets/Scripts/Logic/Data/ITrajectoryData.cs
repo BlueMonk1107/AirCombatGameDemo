@@ -103,3 +103,10 @@ public class EllipseData : ITrajectoryData
     public int Precision;
 }
 
+public class RotateData : ITrajectoryData
+{
+    public float StartAngle;
+    public float EndAngle;
+    public float RotateOffset;
+}
+
