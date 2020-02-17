@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class EnemyBossBulluetModelBase : IEnemyBossBulletModel
 {
     private EnemyData _data;
-    private BossBulletData _bossData;
+    protected BossBulletData _bossData;
     private Dictionary<float, KeyValuePair<BulletEventType, BulletEventData>> _eventsData;
 
     public void Init(EnemyData data)
@@ -69,7 +69,7 @@ public abstract class EnemyBossBulluetModelBase : IEnemyBossBulletModel
 
     public float FireTime
     {
-        get { return (float) _data.fireRate; }
+        get { return (float) (_data.fireRate*_bossData.fireRate); }
     }
 
     private Sprite _sprite;
@@ -105,11 +105,13 @@ public abstract class EnemyBossBulluetModelBase : IEnemyBossBulletModel
 
     private void GetDefaultTrajectory(Action<ITrajectory[]> callBack)
     {
-        ITrajectory[] temp = BulletTrajectoryDataUtil.GetTrajectory(_bossData.trajectoryType, 0, _bossData);
+        ITrajectory[] temp = GetTrajectory();
 
         if (callBack != null)
             callBack(temp);
     }
+
+    protected abstract ITrajectory[] GetTrajectory();
 
     public void UpdateEvent(float lifeRatio)
     {
@@ -131,7 +133,7 @@ public abstract class EnemyBossBulluetModelBase : IEnemyBossBulletModel
                         _getTrajectoryAction = (callBack) =>
                         {
                             ChangeTrajectoryData data = pair.Value.Value as ChangeTrajectoryData;
-                            ITrajectory[] temp = BulletTrajectoryDataUtil.GetTrajectory(data.trajectoryType, 0, data);
+                            ITrajectory[] temp = BulletTrajectoryDataUtil.GetStraightArray(data.trajectory[0]);
                             if (callBack != null)
                                 callBack(temp);
                         };
@@ -156,11 +158,21 @@ public class EnemyBoss0BulluetModel : EnemyBossBulluetModelBase
     {
         return BulletName.Enemy_Boss_0;
     }
+
+    protected override ITrajectory[] GetTrajectory()
+    {
+        var data = GameDataMgr.Single.Get<AllBulletData>().Enemy_Boss_0;
+        return BulletTrajectoryDataUtil.GetStraightArray(data.trajectory[0]);
+    }
 }
 
 [Bullet(BulletType.Enemy_Boss_1)]
 public class EnemyBoss1BulluetModel : EnemyBossBulluetModelBase
 {
+    private bool _forward;
+    private float _angle;
+    private ITrajectory[] _trajectories = new ITrajectory[1];
+    
     protected override BossBulletData GetBulletData()
     {
         return GameDataMgr.Single.Get<AllBulletData>().Enemy_Boss_1;
@@ -169,5 +181,41 @@ public class EnemyBoss1BulluetModel : EnemyBossBulluetModelBase
     protected override BulletName GetBulletName()
     {
         return BulletName.Enemy_Boss_1;
+    }
+
+    protected override ITrajectory[] GetTrajectory()
+    {
+        var data = GameDataMgr.Single.Get<AllBulletData>().Enemy_Boss_1;
+        var rotateData = data.trajectory[0];
+
+        if (_angle == 0)
+        {
+            _angle = (float) rotateData.StartAngle;
+            _forward = true;
+        }
+
+
+        if (_angle < rotateData.EndAngle)
+        {
+            _forward = false;
+        }
+        else if(_angle > rotateData.StartAngle)
+        {
+            _forward = true;
+        }
+
+        if (_forward)
+        {
+            _angle += (float) rotateData.RotateOffset;
+        }
+        else
+        {
+            _angle -= (float) rotateData.RotateOffset;
+        }
+        
+        StraightTrajectory trajectory = new StraightTrajectory();
+        trajectory.Init(_angle);
+        _trajectories[0] = trajectory;
+        return _trajectories;
     }
 }

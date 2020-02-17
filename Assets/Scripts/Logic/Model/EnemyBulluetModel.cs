@@ -74,7 +74,7 @@ public class EnemyBulluetModel : IEnemyBulletModel
     {
         var data = GameDataMgr.Single.Get<AllBulletData>().Enemy_Normal_0;
 
-        ITrajectory[] temp = BulletTrajectoryDataUtil.GetTrajectory(data.trajectoryType, 0, data);
+        ITrajectory[] temp = BulletTrajectoryDataUtil.GetStraightArray(data.trajectory[0]);
 
         if (callBack != null)
             callBack(temp);

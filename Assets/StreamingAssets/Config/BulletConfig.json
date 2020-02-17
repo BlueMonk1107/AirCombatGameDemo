@@ -1,5 +1,6 @@
 {
   "Player": {
+    "fireRate": 1,
     "bulletSpeed": 5,
     "trajectoryType": 0,
     "trajectory": [
@@ -25,6 +26,7 @@
     ]
   },
   "Enemy_Normal_0": {
+    "fireRate": 1,
     "bulletSpeed": 3,
     "trajectoryType": 0,
     "trajectory": [
@@ -34,6 +36,7 @@
     ]
   },
   "Enemy_Boss_0": {
+    "fireRate": 1,
     "bulletSpeed": 3,
     "trajectoryType": 0,
     "trajectory": [
@@ -76,13 +79,14 @@
     ]
   },
   "Enemy_Boss_1": {
+    "fireRate": 0.2,
     "bulletSpeed": 2,
     "trajectoryType": 4,
     "trajectory": [
       {
         "StartAngle": -30,
         "EndAngle": -150,
-        "RotateOffset": 5
+        "RotateOffset": -5
       }
     ],
     "Events": [
