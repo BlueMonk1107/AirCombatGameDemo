@@ -39,9 +39,11 @@ public class EnemyBehaviour : MonoBehaviour, IBehaviour
 		MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_SCORE);
 		PoolMgr.Single.Despawn(gameObject);
 		AudioMgr.Single.PlayOnce(GameAudio.Explode_Plane.ToString());
+		
 		var starGo = PoolMgr.Single.Spawn(Paths.PREFAB_STAR);
 		var star = starGo.AddOrGet<StarView>();
 		star.SetPos(transform.position);
+		
 		var typeC = GetComponent<EnemyTypeComponent>();
 	}
 }

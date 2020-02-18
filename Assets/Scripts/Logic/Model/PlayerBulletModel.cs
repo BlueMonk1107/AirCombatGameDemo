@@ -34,6 +34,10 @@ public class PlayerBulletModel : IBulletModel
 		BulletOwner.ENEMY
 	};
 
+	public BulletType Type
+	{
+		get { return BulletType.Player; }
+	}
 	public GameAudio AudioName => GameAudio.Fire;
 
 	public float FireTime

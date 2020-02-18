@@ -29,7 +29,6 @@ public class AutoDespawnComponent : MonoBehaviour,IUpdate
 	}
 
 
-	
 	public int Times { get; set; }
 
 	public int UpdateTimes

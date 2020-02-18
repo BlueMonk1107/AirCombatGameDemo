@@ -1,22 +1,37 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StarView : PlaneView
 {
-    private StarAni _ani;
+    private StarEffectView _effectView;
 
     protected override void InitComponent()
     {
         gameObject.AddOrGet<AutoDespawnComponent>();
         gameObject.AddOrGet<ItemCollideMsgComponent>().Init(CollideEvent);
-        _ani = gameObject.AddOrGet<StarAni>();
+        if(_effectView == null)
+            _effectView = new StarEffectView();
+        
+        _effectView.Init(transform);
+    }
+    
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        _effectView.Begin();
+    }
+
+    protected void OnDisable()
+    {
+        _effectView.Hide();
     }
 
     private void CollideEvent()
     {
         AudioMgr.Single.PlayOnce(GameAudio.Get_Gold.ToString());
-        _ani.Hide(() =>
+        _effectView.Stop(() =>
         {
             GameModel.Single.Stars++;
             PoolMgr.Single.Despawn(gameObject);

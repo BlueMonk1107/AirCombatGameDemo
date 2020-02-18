@@ -43,6 +43,11 @@ public class EnemyBulluetModel : IEnemyBulletModel
         return _data.attack;
     }
 
+    public BulletType Type
+    {
+        get { return BulletType.Enemy_Normal_0; }
+    } 
+
     public GameAudio AudioName
     {
         get { return GameAudio.Null; }

@@ -126,9 +126,9 @@ public class UIManager : NormalSingleton<UIManager>
 
         if (_dialog == null)
         {
+            
             var name = _uiStack.Pop();
             HideAll(_views[name]);
-
             name = _uiStack.Peek();
             ShowAll(_views[name]);
         }

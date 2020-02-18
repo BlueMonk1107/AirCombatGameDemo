@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour, IUpdate, IBullet
     private MoveComponent _move;
     private SpriteRenderer _renderer;
     private ITrajectory _trajectory;
+    private BulletEffectMgr _effectMgr;
 
     public BulletOwner Owner => _model.Owner;
 
@@ -50,9 +51,13 @@ public class Bullet : MonoBehaviour, IUpdate, IBullet
         _trajectory = trajectory;
         SetPos(pos);
         
+        if(_effectMgr == null)
+            _effectMgr = gameObject.AddComponent<BulletEffectMgr>();
+        _effectMgr.Init(model.Type);
+        
         _model.GetBulletSpeed(value =>
         {
-            _move = gameObject.AddComponent<MoveComponent>();
+            _move = gameObject.AddOrGet<MoveComponent>();
             _move.Init(value);
         });
     }

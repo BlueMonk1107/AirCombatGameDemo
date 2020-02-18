@@ -24,6 +24,10 @@ public class PowerBulletModel : NormalSingleton<PowerBulletModel>, IBulletModel
 
 	public BulletOwner[] Tagets => BulletUtil.GetBulletModel(BulletType.Player).Tagets;
 
+	public BulletType Type
+	{
+		get { return BulletType.Player; }
+	}
 	public GameAudio AudioName => GameAudio.Power;
 
 	public float FireTime => 0.3f;

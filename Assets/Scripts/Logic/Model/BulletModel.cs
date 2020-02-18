@@ -13,6 +13,7 @@ public interface IBullet
 
 public interface IBulletModel : IBullet
 {
+    BulletType Type { get; }
     GameAudio AudioName { get; }
     float FireTime { get; }
     Sprite Sprite();

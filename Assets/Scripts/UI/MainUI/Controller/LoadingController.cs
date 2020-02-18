@@ -1,4 +1,6 @@
-﻿[BindPrefab(Paths.PREFAB_LOADING_VIEW, Const.BIND_PREFAB_PRIORITY_CONTROLLER)]
+﻿using UnityEngine;
+
+[BindPrefab(Paths.PREFAB_LOADING_VIEW, Const.BIND_PREFAB_PRIORITY_CONTROLLER)]
 public class LoadingController : ControllerBase
 {
     private bool _showEnd;
@@ -9,6 +11,7 @@ public class LoadingController : ControllerBase
     public override void Show()
     {
         base.Show();
+        GameStateModel.Single.GameState = GameState.NULL;
         if (GameStateModel.Single.TargetScene != GameStateModel.Single.CurrentScene
             && GameStateModel.Single.TargetScene != SceneName.NULL)
         {
@@ -22,15 +25,20 @@ public class LoadingController : ControllerBase
     public override void UpdateFun()
     {
         base.UpdateFun();
-        
         if(!_showEnd)
             return;
         
         if (SceneMgr.Single.Process() == 1)
         {
             if (GameStateModel.Single.TargetScene == SceneName.Game)
+            {
                 UIManager.Single.Show(Paths.PREFAB_GAME_UI_VIEW);
-            else if (GameStateModel.Single.TargetScene == SceneName.Main) UIManager.Single.Back();
+            }
+            else if (GameStateModel.Single.TargetScene == SceneName.Main)
+            {
+                UIManager.Single.Back();
+            }
+                
 
             UIManager.Single.Hide(Paths.PREFAB_LOADING_VIEW);
         }
@@ -39,7 +47,8 @@ public class LoadingController : ControllerBase
     public override void Hide()
     {
         base.Hide();
-        if (GameStateModel.Single.TargetScene != SceneName.NULL) GameStateModel.Single.TargetScene = SceneName.NULL;
+        if (GameStateModel.Single.TargetScene != SceneName.NULL) 
+            GameStateModel.Single.TargetScene = SceneName.NULL;
 
         LifeCycleMgr.Single.Remove(LifeName.UPDATE, this);
         _showEnd = false;

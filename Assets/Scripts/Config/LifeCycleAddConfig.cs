@@ -19,5 +19,6 @@ public class LifeCycleAddConfig : IInit
         Objects.Add(AudioMgr.Single);
         Objects.Add(SceneConfig.Single);
         Objects.Add(GameDataMgr.Single);
+        Objects.Add(BulletEffectPoolConfig.Single);
     }
 }

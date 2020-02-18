@@ -11,10 +11,16 @@ public class GameResultController : ControllerBase {
 
     private void BackToMain()
     {
-        UIManager.Single.Back();
-        GameStateModel.Single.TargetScene = SceneName.Main;
-        UIManager.Single.Show(Paths.PREFAB_LOADING_VIEW);
-        UIManager.Single.Back();
+        if (GameModel.Single.IsFinishOneLevel)
+        {
+            UIManager.Single.Back();
+        }
+        else
+        {
+            UIManager.Single.Back();
+            GameStateModel.Single.TargetScene = SceneName.Main;
+            UIManager.Single.Show(Paths.PREFAB_LOADING_VIEW);
+        }
     }
 
     public override void Show()

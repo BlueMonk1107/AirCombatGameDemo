@@ -26,7 +26,8 @@ public class PlaneCollideMsgComponent : MonoBehaviour, IColliderMsg
         }
         else if (_selfBullet != null && _selfBullet.GetTargetTags().Contains(other.tag))
         {
-            if (_behaviour != null) _behaviour.Dead();
+            if (_behaviour != null) 
+                _behaviour.Dead();
         }
     }
 }

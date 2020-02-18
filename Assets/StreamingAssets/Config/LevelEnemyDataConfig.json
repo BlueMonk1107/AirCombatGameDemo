@@ -35,8 +35,8 @@
           "X": 0.0
         }
       ],
-      "EnemyNumMax": 50,
-      "EnemyNumMin": 40,
+      "EnemyNumMax": 5,
+      "EnemyNumMin": 5,
       "NormalDeadNumForSpawnElites": 20
     },
     {

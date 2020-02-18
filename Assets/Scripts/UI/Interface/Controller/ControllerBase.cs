@@ -41,7 +41,8 @@ public abstract class ControllerBase : MonoBehaviour, IController
 
     public virtual void UpdateFun()
     {
-        foreach (var component in _updates) component.UpdateFun();
+        foreach (var component in _updates) 
+            component.UpdateFun();
     }
 
     public void AddUpdateListener(Action update)

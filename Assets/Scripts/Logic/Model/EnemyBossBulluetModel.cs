@@ -62,6 +62,8 @@ public abstract class EnemyBossBulluetModelBase : IEnemyBossBulletModel
         return _data.attack;
     }
 
+    public abstract BulletType Type { get; }
+
     public GameAudio AudioName
     {
         get { return GameAudio.Null; }
@@ -159,6 +161,11 @@ public class EnemyBoss0BulluetModel : EnemyBossBulluetModelBase
         return BulletName.Enemy_Boss_0;
     }
 
+    public override BulletType Type
+    {
+        get { return BulletType.Enemy_Boss_0; }
+    }
+
     protected override ITrajectory[] GetTrajectory()
     {
         var data = GameDataMgr.Single.Get<AllBulletData>().Enemy_Boss_0;
@@ -173,6 +180,11 @@ public class EnemyBoss1BulluetModel : EnemyBossBulluetModelBase
     private float _angle;
     private ITrajectory[] _trajectories = new ITrajectory[1];
     
+    public override BulletType Type
+    {
+        get { return BulletType.Enemy_Boss_1; }
+    }
+    
     protected override BossBulletData GetBulletData()
     {
         return GameDataMgr.Single.Get<AllBulletData>().Enemy_Boss_1;
@@ -182,7 +194,6 @@ public class EnemyBoss1BulluetModel : EnemyBossBulluetModelBase
     {
         return BulletName.Enemy_Boss_1;
     }
-
     protected override ITrajectory[] GetTrajectory()
     {
         var data = GameDataMgr.Single.Get<AllBulletData>().Enemy_Boss_1;
@@ -211,7 +222,7 @@ public class EnemyBoss1BulluetModel : EnemyBossBulluetModelBase
         else
         {
             _angle -= (float) rotateData.RotateOffset;
-        }
+        } 
         
         StraightTrajectory trajectory = new StraightTrajectory();
         trajectory.Init(_angle);

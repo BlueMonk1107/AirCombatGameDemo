@@ -16,7 +16,9 @@ public class SettingController : ControllerBase
 
     private void Exit()
     {
-        UIManager.Single.Show(Paths.PREFAB_GAME_RESULT_VIEW);
+        UIManager.Single.Back();
+        GameStateModel.Single.TargetScene = SceneName.Main;
+        UIManager.Single.Show(Paths.PREFAB_LOADING_VIEW);
     }
 
     private void Continue()
