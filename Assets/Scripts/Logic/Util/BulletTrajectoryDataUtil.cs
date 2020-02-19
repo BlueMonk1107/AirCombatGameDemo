@@ -15,7 +15,6 @@ public class BulletTrajectoryDataUtil  {
 			s.Init(data[i]);
 			array[i] = s;
 		}
-
 		return array;
 	}
 }

@@ -32,7 +32,11 @@ public abstract class ItemViewBase : PlaneView {
 
     protected abstract IEffectView GetEffectView();
     protected abstract GameAudio GetGameAudio();
-    protected abstract void ItemLogic();
+
+    protected virtual void ItemLogic()
+    {
+        Destroy(gameObject);
+    }
     protected abstract string SpritePath();
 
     protected virtual void OnDisable()

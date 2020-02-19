@@ -39,10 +39,11 @@ public class PlaneSpritesModel : NormalSingleton<PlaneSpritesModel>, IInit
 
     private Sprite GetPlaneSprite(int id, int level)
     {
-        if (!_planeSprites.ContainsKey(id) || level >= _planeSprites[id].Count)
+        int count = _planeSprites[id].Count;
+        if (!_planeSprites.ContainsKey(id) || level >= count)
         {
-            Debug.LogError("当前id或等级错误");
-            return null;
+            Debug.LogError("当前id或等级错误,等级"+level);
+            level = count - 1;
         }
 
         return _planeSprites[id][level];

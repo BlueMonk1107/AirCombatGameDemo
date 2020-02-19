@@ -11,7 +11,10 @@
       "trajectoryID": -1,
       "bulletType": [1],
       "starNum": 1,
-      "score": 1
+      "score": 1,
+      "itemProbability": 10,
+      "itemRange": [0,0],
+      "itemCount": 1
     },
     {
       "id": 1,
@@ -24,7 +27,10 @@
       "trajectoryID": -1,
       "bulletType": [1],
       "starNum": 1,
-      "score": 1
+      "score": 1,
+      "itemProbability": 10,
+      "itemRange": [0,0],
+      "itemCount": 1
     },
     {
       "id": 2,
@@ -37,7 +43,10 @@
       "trajectoryID": -1,
       "bulletType": [1],
       "starNum": 1,
-      "score": 1
+      "score": 1,
+      "itemProbability": 20,
+      "itemRange": [0,0],
+      "itemCount": 1
     },
     {
       "id": 3,
@@ -50,7 +59,10 @@
       "trajectoryID": -1,
       "bulletType": [1],
       "starNum": 1,
-      "score": 1
+      "score": 1,
+      "itemProbability": 20,
+      "itemRange": [0,0],
+      "itemCount": 1
     },
     {
       "id": 4,
@@ -63,7 +75,10 @@
       "trajectoryID": -1,
       "bulletType": [1],
       "starNum": 1,
-      "score": 1
+      "score": 1,
+      "itemProbability": 20,
+      "itemRange": [0,0],
+      "itemCount": 1
     },
     {
       "id": 5,
@@ -76,7 +91,10 @@
       "trajectoryID": -1,
       "bulletType": [1],
       "starNum": 1,
-      "score": 1
+      "score": 1,
+      "itemProbability": 30,
+      "itemRange": [0,0],
+      "itemCount": 1
     }
   ],
   "Elites":[
@@ -91,7 +109,10 @@
       "trajectoryID": -1,
       "bulletType": [1],
       "starNum": 2,
-      "score": 2
+      "score": 2,
+      "itemProbability": 40,
+      "itemRange": [0,1],
+      "itemCount": 2
     },
     {
       "id": 1,
@@ -104,7 +125,10 @@
       "trajectoryID": -1,
       "bulletType": [1],
       "starNum": 2,
-      "score": 2
+      "score": 2,
+      "itemProbability": 40,
+      "itemRange": [0,1],
+      "itemCount": 2
     },
     {
       "id": 2,
@@ -117,7 +141,10 @@
       "trajectoryID": -1,
       "bulletType": [1],
       "starNum": 2,
-      "score": 2
+      "score": 2,
+      "itemProbability": 40,
+      "itemRange": [0,1],
+      "itemCount": 2
     }
   ],
   "Boss":[
@@ -132,7 +159,10 @@
       "trajectoryID": -1,
       "bulletType": [2,3],
       "starNum": 10,
-      "score": 10
+      "score": 10,
+      "itemProbability": 40,
+      "itemRange": [1,1],
+      "itemCount": 2
     },
     {
       "id": 1,
@@ -145,7 +175,10 @@
       "trajectoryID": -1,
       "bulletType": [2,3],
       "starNum": 10,
-      "score": 10
+      "score": 10,
+      "itemProbability": 40,
+      "itemRange": [1,1],
+      "itemCount": 2
     }
   ]
 }

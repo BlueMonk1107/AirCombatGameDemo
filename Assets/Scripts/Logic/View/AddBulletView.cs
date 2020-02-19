@@ -21,11 +21,6 @@ public class AddBulletView : ItemViewBase,IBuffCarrier
         return GameAudio.Get_Item;
     }
 
-    protected override void ItemLogic()
-    {
-        Destroy(gameObject);
-    }
-    
     protected override string SpritePath()
     {
         return Paths.PICTURE_ADD_BULLET;

@@ -21,7 +21,8 @@ public class StrengthenController : ControllerBase
 
         var money = GameStateModel.Single.GetMoney(value);
 
-        var levelMax = DataMgr.Single.Get<int>(DataKeys.LEVEL_MAX);
+        key = KeysUtil.GetPropertyKeys(DataKeys.LEVEL_MAX);
+        var levelMax = DataMgr.Single.Get<int>(key);
 
         if (money >= cost && GameStateModel.Single.PlaneLevel < levelMax)
         {

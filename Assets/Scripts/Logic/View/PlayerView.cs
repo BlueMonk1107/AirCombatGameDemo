@@ -23,12 +23,14 @@ public class PlayerView : PlaneView
     {
         MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_SHIELD, UseShield);
         MessageMgr.Single.AddListener(MsgEvent.EVENT_GAME_UPDATE_LEVEL,LevelUp);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_GAME_EXP_LEVEL_UP,LevelUp);
     }
 
     private void OnDestroy()
     {
         MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_SHIELD, UseShield);
         MessageMgr.Single.RemoveListener(MsgEvent.EVENT_GAME_UPDATE_LEVEL,LevelUp);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_GAME_EXP_LEVEL_UP,LevelUp);
     }
 
     private void UseShield(object[] paras)
@@ -40,7 +42,13 @@ public class PlayerView : PlaneView
 
     private void LevelUp(object[] paras)
     {
-        InitSprite();
+        if (InitSprite())
+        {
+            var effect = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.EFFECT_LEVEL_UP);
+            effect.transform.position = transform.position;
+            effect.transform.SetParent(transform);
+            effect.AddComponent<AutoDestroyComponent>().Init(0.4f);
+        }
     }
 
     protected override void InitComponent()
@@ -72,13 +80,13 @@ public class PlayerView : PlaneView
         transform.position = pos;
     }
 
-    private void InitSprite()
+    private bool InitSprite()
     {
         var id = GameStateModel.Single.SelectedPlaneId;
         var level = GameModel.Single.TempLevel;
         var sprite = PlaneSpritesModel.Single[id, level];
         var render = gameObject.AddOrGet<RenderComponent>();
         render.Init();
-        render.SetSprite(sprite);
+        return render.SetSprite(sprite);
     }
 }

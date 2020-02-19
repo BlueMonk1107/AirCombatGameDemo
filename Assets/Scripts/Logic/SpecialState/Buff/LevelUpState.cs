@@ -14,10 +14,10 @@ public class LevelUpState : IBuff
     {
         _msgMgr = msgMgr;
         MessageMgr.Single.AddListener(MsgEvent.EVENT_GAME_EXP_LEVEL_UP,LevelUpByExp);
-        GameModel.Single.TempLevel++;
         MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_GAME_UPDATE_LEVEL);
 
         _id = DelayDetalCoroutineMgr.Single.Start(TIME_ONCE, BeginCallBack, EndCallBack, _id);
+        GameModel.Single.TempLevel++;
     }
 
     private void BeginCallBack()

@@ -15,10 +15,13 @@ public class RenderComponent : MonoBehaviour {
 		_collider = GetComponent<CapsuleCollider2D>();
 	}
 
-	public void SetSprite(Sprite sprite)
+	public bool SetSprite(Sprite sprite)
 	{
 		if (Renderer != null)
 		{
+			bool success = false;
+			success = Renderer.sprite != sprite;
+			
 			float oldX = Renderer.bounds.size.x;
 			float oldY = Renderer.bounds.size.y;
 			Renderer.sprite = sprite;
@@ -30,9 +33,12 @@ public class RenderComponent : MonoBehaviour {
 			var size = _collider.size;
 			size = new Vector2(size.x*xRatio,size.y*yRatio);
 			_collider.size = size;
+
+			return success;
 		}
 		else
 		{
+			return false;
 			Debug.LogError("当前物体SpriteRenderer为空，物体名:"+gameObject.name);
 		}
 	}

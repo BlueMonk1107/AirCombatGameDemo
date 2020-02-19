@@ -157,3 +157,9 @@ public enum DebuffType
 {
     NULL
 }
+
+public enum ItemType
+{
+    ADD_BULLET,
+    ADD_EXP
+}

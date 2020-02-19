@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -52,7 +51,40 @@ public class EnemyBehaviour : MonoBehaviour, IBehaviour
             GameStateModel.Single.GameState = GameState.END;
         }
 
-        AddBulletView.GetObject().SetPos(transform.position);
+        SpawnItem();
+    }
+
+    private void SpawnItem()
+    {
+        for (int i = 0; i < _data.itemCount; i++)
+        {
+            if (CanSpawn(_data.itemProbability))
+            {
+                var type = GetItemType(_data.itemRange);
+                var view = ItemFactory.Single.GetItem(type);
+                view.SetPos(transform.position);
+            }
+        }
+    }
+
+    private bool CanSpawn(int ratio)
+    {
+        int index = Random.Range(0, 101);
+        return index < ratio;
+    }
+
+    private ItemType GetItemType(ItemType[] itemRange)
+    {
+        if (itemRange.Length == 2)
+        {
+            
+            int index = Random.Range((int)itemRange[0], (int)itemRange[1]+1);
+            return (ItemType) index;
+        }
+        else
+        {
+            return ItemType.ADD_BULLET;
+        }
     }
 
     private void SpawnStar()

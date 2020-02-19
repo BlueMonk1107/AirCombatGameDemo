@@ -36,4 +36,17 @@ public class EnemyData
     public BulletType[] bulletType;
     public int starNum;
     public int score;
+    /// <summary>
+    /// 掉落道具的可能性，例如值为10，就代表百分之十的概率
+    /// </summary>
+    public int itemProbability;
+    /// <summary>
+    /// 掉落道具的范围，应该是长度为2的数组
+    /// </summary>
+    public ItemType[] itemRange;
+    /// <summary>
+    /// 掉落道具的数量，每个道具都在范围内随机
+    /// 例如：数量是2，范围是[0,1]，那么可能会出一个0，一1.或者是两个1，或者是两个0
+    /// </summary>
+    public int itemCount;
 }

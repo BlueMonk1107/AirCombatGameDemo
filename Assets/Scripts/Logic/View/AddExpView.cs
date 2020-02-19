@@ -15,6 +15,7 @@ public class AddExpView : ItemViewBase {
 
     protected override void ItemLogic()
     {
+        base.ItemLogic();
         GameModel.Single.TempLevel++;
         MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_GAME_EXP_LEVEL_UP);
         MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_GAME_UPDATE_LEVEL);

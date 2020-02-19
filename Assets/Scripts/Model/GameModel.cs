@@ -16,10 +16,20 @@
     /// </summary>
     public int SelectedLevel { get; set; }
 
+    private int _tempLevel;
+
     /// <summary>
     /// 在游戏中的临时等级
     /// </summary>
-    public int TempLevel { get; set; }
+    public int TempLevel
+    {
+        get { return _tempLevel; }
+        set
+        {
+            if (value < GameStateModel.Single.PlaneLevelMax)
+                _tempLevel = value;
+        }
+    }
 
     public bool IsFinishOneLevel { get; set; }
 

@@ -60,6 +60,15 @@ public class GameStateModel : NormalSingleton<GameStateModel>
         }
     }
 
+    public int PlaneLevelMax
+    {
+        get
+        {
+            var key = KeysUtil.GetPropertyKeys(DataKeys.LEVEL_MAX);
+            return DataMgr.Single.Get<int>(key);
+        }
+    }
+
     public int GetMoney(string key)
     {
         var money = 0;

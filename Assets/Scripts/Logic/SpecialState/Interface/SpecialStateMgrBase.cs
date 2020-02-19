@@ -71,7 +71,9 @@ public abstract class SpecialStateMgrBase : MonoBehaviour
 		}
 		else
 		{
-			return SpecialStateFactory.GetBuff(type);
+			IBuff buff = SpecialStateFactory.GetBuff(type);
+			_buffs.Add(type,buff);
+			return buff;
 		}
 	}
 	
@@ -83,7 +85,9 @@ public abstract class SpecialStateMgrBase : MonoBehaviour
 		}
 		else
 		{
-			return SpecialStateFactory.GetDebuff(type);
+			IDebuff debuff = SpecialStateFactory.GetDebuff(type);
+			_debuffs.Add(type,debuff);
+			return debuff;
 		}
 	}
 	
