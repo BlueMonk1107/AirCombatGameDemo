@@ -11,11 +11,7 @@ public class GameResultController : ControllerBase {
 
     private void BackToMain()
     {
-        if (GameModel.Single.IsFinishOneLevel)
-        {
-            UIManager.Single.Back();
-        }
-        else
+        if (!GameModel.Single.IsFinishOneLevel)
         {
             UIManager.Single.Back();
             GameStateModel.Single.TargetScene = SceneName.Main;
@@ -26,12 +22,23 @@ public class GameResultController : ControllerBase {
     public override void Show()
     {
         base.Show();
-        GameStateModel.Single.GameState = GameState.PAUSE;
+        if (!GameModel.Single.IsFinishOneLevel)
+        {
+            GameStateModel.Single.GameState = GameState.PAUSE;
+        }
+        else
+        {
+            GameStateModel.Single.GameState = GameState.NULL;
+            CoroutineMgr.Single.Delay(2,UIManager.Single.Back);
+        }
     }
 
     public override void Hide()
     {
         base.Hide();
-        GameStateModel.Single.GameState = GameState.NULL;
+        if (!GameModel.Single.IsFinishOneLevel)
+        {
+            GameStateModel.Single.GameState = GameState.NULL;
+        }
     }
 }

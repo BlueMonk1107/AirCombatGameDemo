@@ -3,44 +3,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StarView : PlaneView
+public class StarView : ItemViewBase
 {
-    private StarEffectView _effectView;
-
-    protected override void InitComponent()
+    protected override IEffectView GetEffectView()
     {
-        gameObject.AddOrGet<AutoDespawnComponent>();
-        gameObject.AddOrGet<ItemCollideMsgComponent>().Init(CollideEvent);
-        if(_effectView == null)
-            _effectView = new StarEffectView();
-        
-        _effectView.Init(transform);
-    }
-    
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        _effectView.Begin();
+        return new StarEffectView();
     }
 
-    protected void OnDisable()
+    protected override GameAudio GetGameAudio()
     {
-        _effectView.Hide();
+        return GameAudio.Get_Gold;
     }
 
-    private void CollideEvent()
+    protected override void ItemLogic()
     {
-        AudioMgr.Single.PlayOnce(GameAudio.Get_Gold.ToString());
-        _effectView.Stop(() =>
-        {
-            GameModel.Single.Stars++;
-            PoolMgr.Single.Despawn(gameObject);
-            MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_SCORE);
-        });
+        GameModel.Single.Stars++;
+        PoolMgr.Single.Despawn(gameObject);
+        MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_SCORE);
     }
 
-    public void SetPos(Vector3 pos)
+    protected override string SpritePath()
     {
-        transform.position = pos;
+        return Paths.PICTURE_STAR;
+    }
+
+    public static StarView GetObject()
+    {
+        var starGo = PoolMgr.Single.Spawn(Paths.PREFAB_ITEM_ITEM);
+        return starGo.AddOrGet<StarView>();
     }
 }

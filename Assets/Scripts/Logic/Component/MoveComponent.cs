@@ -13,7 +13,6 @@ public class MoveComponent : MonoBehaviour
     {
         if (_speed != 0)
             transform.Translate(direction * _speed * Time.deltaTime,Space.World);
-        else
-            Debug.LogError("当前速度未初始化");
+     
     }
 }

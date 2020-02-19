@@ -22,11 +22,13 @@ public class PlayerView : PlaneView
     private void AddListener()
     {
         MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_SHIELD, UseShield);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_GAME_UPDATE_LEVEL,LevelUp);
     }
 
     private void OnDestroy()
     {
         MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_SHIELD, UseShield);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_GAME_UPDATE_LEVEL,LevelUp);
     }
 
     private void UseShield(object[] paras)
@@ -34,6 +36,11 @@ public class PlayerView : PlaneView
         var shield = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.EFFECT_SHIELD);
         shield.transform.position = transform.position;
         shield.AddComponent<ShieldView>();
+    }
+
+    private void LevelUp(object[] paras)
+    {
+        InitSprite();
     }
 
     protected override void InitComponent()
@@ -55,6 +62,7 @@ public class PlayerView : PlaneView
 
         gameObject.AddComponent<ColliderComponent>();
         gameObject.AddComponent<PlaneCollideMsgComponent>();
+        gameObject.AddComponent<PlayerBuffMgr>();
     }
 
     private void InitPos()
@@ -67,7 +75,7 @@ public class PlayerView : PlaneView
     private void InitSprite()
     {
         var id = GameStateModel.Single.SelectedPlaneId;
-        var level = GameStateModel.Single.PlaneLevel;
+        var level = GameModel.Single.TempLevel;
         var sprite = PlaneSpritesModel.Single[id, level];
         var render = gameObject.AddOrGet<RenderComponent>();
         render.Init();

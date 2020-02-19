@@ -42,7 +42,7 @@ public class EnemyView : PlaneView,IUpdate
         gameObject.AddOrGet<EnemyTypeComponent>().Init(type);
         var lifeC = gameObject.AddOrGet<LifeComponent>();
         lifeC.Init(data.life);
-        gameObject.AddOrGet<EnemyBehaviour>();
+        gameObject.AddOrGet<EnemyBehaviour>().Init(data);
         _moveComponent = gameObject.AddOrGet<MoveComponent>();
         _moveComponent.Init((float)data.speed);
         gameObject.AddOrGet<ColliderComponent>();

@@ -34,7 +34,8 @@ public enum GameAudio
     Power,
     Effcet_Great,
     Effect_Gameover,
-    Effect_Warning,
+    Effect_Boss_Warning,
+    Effect_Missile_Warning,
     Explode_Bullet,
     Explode_Plane,
     Get_Gold,
@@ -144,4 +145,15 @@ public enum BulletEventType
 {
     ChangeSpeed,
     ChangeTrajectory
+}
+
+public enum BuffType
+{
+    NULL,
+    LEVEL_UP
+}
+
+public enum DebuffType
+{
+    NULL
 }

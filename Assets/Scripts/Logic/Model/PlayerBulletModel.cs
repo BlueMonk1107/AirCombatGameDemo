@@ -71,7 +71,7 @@ public class PlayerBulletModel : IBulletModel
 	public void Trajectory(Action<ITrajectory[]> callBack)
 	{
 		var playerData = GameDataMgr.Single.Get<AllBulletData>().Player;
-		int level = GameStateModel.Single.PlaneLevel;
+		int level = GameModel.Single.TempLevel;
         
 		if(_trajectorys == null)
 			_trajectorys = BulletTrajectoryDataUtil.GetStraightArray(playerData.trajectory[level]);

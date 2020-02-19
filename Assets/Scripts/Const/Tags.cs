@@ -4,4 +4,5 @@
     public const string BULLET = "Bullet";
     public const string ENEMY = "Enemy";
     public const string SHIELD = "Shield";
+    public const string ITEM = "Item";
 }

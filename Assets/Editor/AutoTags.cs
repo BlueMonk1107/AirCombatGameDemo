@@ -26,6 +26,10 @@ public class AutoTags
         prefab.tag = Tags.BULLET;
         prefab = Resources.Load<GameObject>(Paths.EFFECT_SHIELD);
         prefab.tag = Tags.SHIELD;
-        foreach (var o in Resources.LoadAll<GameObject>(Paths.ENEMY_FOLDER)) o.tag = Tags.ENEMY;
+        foreach (var o in Resources.LoadAll<GameObject>(Paths.ENEMY_FOLDER)) 
+            o.tag = Tags.ENEMY;
+        
+        prefab = Resources.Load<GameObject>(Paths.PREFAB_ITEM_ITEM);
+        prefab.tag = Tags.ITEM;
     }
 }

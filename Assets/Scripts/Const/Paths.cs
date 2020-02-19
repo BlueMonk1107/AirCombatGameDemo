@@ -27,7 +27,6 @@ public class Paths
     public const string PREFAB_MAP_MGR = Game_FOLDER + "MapMgr";
     public const string PREFAB_PLANE = Game_FOLDER + "Plane";
     public const string PREFAB_BULLET = Game_FOLDER + "Bullet";
-    public const string PREFAB_STAR = Game_FOLDER + "Star";
     public const string PREFAB_ENEMY_LIFE = Game_FOLDER + "EnemyLife";
 
     private const string EFFECT_FOLDER = Game_FOLDER + "Effect/";
@@ -35,6 +34,11 @@ public class Paths
     public const string EFFECT_FRAME_ANI = EFFECT_FOLDER + "FrameAni";
 
     public const string ENEMY_FOLDER = PREFAB_FOLDER + "Enemy/";
+    
+    private const string PREFAB_ITEM_FOLDER = Game_FOLDER + "Item/";
+    public const string PREFAB_ITEM_ITEM = PREFAB_ITEM_FOLDER + "Item";
+    public const string PREFAB_ITEM_LIGHT = PREFAB_ITEM_FOLDER + "Light";
+    public const string PREFAB_ITEM_MISSILE = PREFAB_ITEM_FOLDER + "Missile";
 
     //图片路径
     private const string PICTURE_FOLDER = "Picture/";
@@ -50,6 +54,11 @@ public class Paths
     public const string PICTURE_POWER = PICTURE_BULLET_EFFECT + "Power";
 
     public const string PICTURE_ENEMY_FOLDER = PICTURE_FOLDER + "Enemy/";
+    
+    public const string PICTURE_ITEM_FOLDER = PICTURE_FOLDER + "Item/";
+    public const string PICTURE_ADD_BULLET = PICTURE_ITEM_FOLDER + "AddBullet";
+    public const string PICTURE_ADD_EXP = PICTURE_ITEM_FOLDER + "AddExp";
+    public const string PICTURE_STAR = PICTURE_ITEM_FOLDER + "Star";
 
     //配置路径
     public static readonly string CONFIG_FOLDER = Application.streamingAssetsPath + "/Config";

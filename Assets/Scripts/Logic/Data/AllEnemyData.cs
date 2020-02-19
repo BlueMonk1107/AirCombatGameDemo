@@ -34,4 +34,6 @@ public class EnemyData
     //-1代表当前是随机轨迹，大于0的值，代表轨迹id
     public int trajectoryID;
     public BulletType[] bulletType;
+    public int starNum;
+    public int score;
 }

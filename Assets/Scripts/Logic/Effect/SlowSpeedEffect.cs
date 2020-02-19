@@ -1,18 +1,23 @@
-using System;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class FallDownEffect : IEffect,IUpdate
+public class SlowSpeedEffect : IEffect,IUpdate
 {
-    private float _slowSpeed, _speedMin;
+    private float _slowSpeed, _speedLimit;
     private MoveComponent _move;
     private float _speed;
+    private Vector2 _axis;
     
-    public void Init(Transform transform,float upSpeed,float slowSpeed,float speedMin)
+    public void Init(Transform transform,Vector2 axis,float startSpeed,float slowSpeed,float speedLimit)
     {
-        _speed = upSpeed;
+        _axis = axis;
+        _speed = startSpeed;
         _slowSpeed = slowSpeed;
-        _speedMin = speedMin;
-        _move = transform.gameObject.AddOrGet<MoveComponent>();
+        _speedLimit = speedLimit;
+        if(_move == null)
+            _move = transform.AddComponent<MoveComponent>();
     }
     
     public void Begin()
@@ -36,16 +41,18 @@ public class FallDownEffect : IEffect,IUpdate
     {
         _speed = 0;
         _slowSpeed = 0;
-        _speedMin = 0;
+        _speedLimit = 0;
     }
 
     public int Times { get; set; }
     public int UpdateTimes { get; }
     public void UpdateFun()
     {
-        if (_speed < _speedMin)
+        if(_move == null)
+            return;
+        if (_speed < _speedLimit)
         {
-            _speed = _speedMin;
+            _speed = _speedLimit;
         }
         else
         {
@@ -53,6 +60,6 @@ public class FallDownEffect : IEffect,IUpdate
         }
         
         _move.Init(_speed);
-        _move.Move(Vector2.up);
+        _move.Move(_axis);
     }
 }

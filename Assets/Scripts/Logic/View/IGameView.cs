@@ -76,7 +76,7 @@ public class EffectView : GameViewBase,IGameRoot
     public override GameLayer Layer => GameLayer.EFFECT;
 }
 
-public abstract class ItemView : GameViewBase
+public abstract class OtherViewBase : GameViewBase
 {
     protected override void OnEnable()
     {

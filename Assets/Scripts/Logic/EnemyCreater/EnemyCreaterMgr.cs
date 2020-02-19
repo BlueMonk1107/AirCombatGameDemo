@@ -248,12 +248,15 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
         if(_state == CreaterState.BOSS)
             return;
 
-        if (_state == CreaterState.OTHER_START && PoolMgr.Single.GetActiveNum(Paths.PREFAB_PLANE) < _enemyActiveNumMax)
+        if (_state == CreaterState.OTHER_START)
         {
-            Spawn(null);
-            if (JudgeEnd())
+            if (PoolMgr.Single.GetActiveNum(Paths.PREFAB_PLANE) < _enemyActiveNumMax)
             {
-                _state = CreaterState.OTHER_END;
+                Spawn(null);
+                if (JudgeEnd())
+                {
+                    _state = CreaterState.OTHER_END;
+                }
             }
         }
         else if(_state == CreaterState.OTHER_END)

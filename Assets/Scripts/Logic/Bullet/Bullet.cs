@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour, IUpdate, IBullet
     // Use this for initialization
     private void Start()
     {
-        gameObject.AddComponent<PlaneCollideMsgComponent>();
+        gameObject.AddComponent<BulletCollideMsgComponent>();
         gameObject.AddComponent<BulletBehaviour>();
     }
 

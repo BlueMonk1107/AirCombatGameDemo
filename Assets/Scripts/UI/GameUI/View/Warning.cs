@@ -34,7 +34,7 @@ public class Warning : MonoBehaviour
 		ShowAni();
 		
 		CoroutineMgr.Single.Delay(Const.WAIT_BOSS_TIME - _fadeTime,HideAni);
-		AudioMgr.Single.Play(GameAudio.Effect_Warning.ToString());
+		AudioMgr.Single.Play(GameAudio.Effect_Boss_Warning.ToString());
 	}
 
 	private void Init()
@@ -64,6 +64,6 @@ public class Warning : MonoBehaviour
 
 	private void OnDisable()
 	{
-		AudioMgr.Single.Stop(GameAudio.Effect_Warning.ToString());
+		AudioMgr.Single.Stop(GameAudio.Effect_Boss_Warning.ToString());
 	}
 }

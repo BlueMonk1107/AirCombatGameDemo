@@ -18,7 +18,7 @@ public class PoolConfig
         },
         new PoolData
         {
-            Path = Paths.PREFAB_STAR,
+            Path = Paths.PREFAB_ITEM_ITEM,
             PreloadCount = 10,
             AutoDestroy = false
         },

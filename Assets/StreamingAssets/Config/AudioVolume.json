@@ -24,11 +24,15 @@
     "Volume": 0.5
   },
   {
+    "Name": "Effect_Boss_Warning",
+    "Volume": 0.5
+  },
+  {
     "Name": "Effect_Gameover",
     "Volume": 0.5
   },
   {
-    "Name": "Effect_Warning",
+    "Name": "Effect_Missile_Warning",
     "Volume": 0.5
   },
   {

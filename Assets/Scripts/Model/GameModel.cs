@@ -16,6 +16,11 @@
     /// </summary>
     public int SelectedLevel { get; set; }
 
+    /// <summary>
+    /// 在游戏中的临时等级
+    /// </summary>
+    public int TempLevel { get; set; }
+
     public bool IsFinishOneLevel { get; set; }
 
     public int LifeMax
