@@ -13,8 +13,6 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
         BOSS
     }
     
-    private int _elitesCount;
-    private int _normalCount;
     private AllEnemyData _allEnemyData;
     private EnemyTrajectoryDataMgr _trajectoryData;
     private EnemyCreaterConfigData _createrData;
@@ -95,7 +93,6 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
         foreach (var createrData in levelData.CreaterDatas)
         {
             SpawnCreater(createrData,enemyData,trajectoryData);
-            InitData(createrData);
         }
 
         _enemyActiveNumMax = levelData.EnemyNumMax;
@@ -128,20 +125,6 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
-        }
-    }
-
-    private void InitData(CreaterData data)
-    {
-        int totoalNum = data.QueuePlaneNum * data.QueueNum;
-        switch (data.Type)
-        {
-            case EnemyType.Normal:
-                _normalCount += totoalNum;
-                break;
-            case EnemyType.Elites:
-                _elitesCount += totoalNum;
-                break;
         }
     }
 

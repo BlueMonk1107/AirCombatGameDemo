@@ -35,11 +35,12 @@ public class Paths
     public const string EFFECT_LEVEL_UP = EFFECT_FOLDER + "LevelUpEffect";
 
     public const string ENEMY_FOLDER = PREFAB_FOLDER + "Enemy/";
+    public const string PREFAB_ENEMY_MISSILE = ENEMY_FOLDER + "Missile";
     
     private const string PREFAB_ITEM_FOLDER = Game_FOLDER + "Item/";
     public const string PREFAB_ITEM_ITEM = PREFAB_ITEM_FOLDER + "Item";
     public const string PREFAB_ITEM_LIGHT = PREFAB_ITEM_FOLDER + "Light";
-    public const string PREFAB_ITEM_MISSILE = PREFAB_ITEM_FOLDER + "Missile";
+  
 
     //图片路径
     private const string PICTURE_FOLDER = "Picture/";
