@@ -24,12 +24,12 @@ public class GenerateLevelConfig
         data.LevelDatas[0] = level;
         level.EnemyNumMax = 50;
         level.EnemyNumMin = 40;
-        level.CreaterDatas = GetCreaterListOne();
+        level.PlaneCreaterDatas = GetCreaterListOne();
     }
 
-    private static CreaterData[] GetCreaterListOne()
+    private static PlaneCreaterData[] GetCreaterListOne()
     {
-        List<CreaterData> list = new List<CreaterData>();
+        List<PlaneCreaterData> list = new List<PlaneCreaterData>();
         list.Add(GetCreaterData(0,1,4,5,EnemyType.Normal,0));
         return list.ToArray();
     }
@@ -40,12 +40,12 @@ public class GenerateLevelConfig
         data.LevelDatas[1] = level;
         level.EnemyNumMax = 50;
         level.EnemyNumMin = 40;
-        level.CreaterDatas = GetCreaterListOne();
+        level.PlaneCreaterDatas = GetCreaterListOne();
     }
     
-    private static CreaterData GetCreaterData(int idMin,int idMax,int queueNum,int queuePlaneNum,EnemyType type,double x)
+    private static PlaneCreaterData GetCreaterData(int idMin,int idMax,int queueNum,int queuePlaneNum,EnemyType type,double x)
     {
-        var createrData = new CreaterData();
+        var createrData = new PlaneCreaterData();
         createrData.IdMin = idMin;
         createrData.IdMax = idMax;
         createrData.QueueNum = queueNum;

@@ -16,10 +16,10 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
     private AllEnemyData _allEnemyData;
     private EnemyTrajectoryDataMgr _trajectoryData;
     private EnemyCreaterConfigData _createrData;
-    private List<EnemyCreater> _normalCreaters;
-    private List<EnemyCreater> _elitesCreaters;
-    private List<EnemyCreater> _needSpawnCreaters;
-    private EnemyCreater _bossCreater;
+    private List<IEnemyCreater> _normalCreaters;
+    private List<IEnemyCreater> _elitesCreaters;
+    private List<IEnemyCreater> _needSpawnCreaters;
+    private IEnemyCreater _bossCreater;
 
     private int _enemyActiveNumMax;
     private int _spawnElitesLimit;
@@ -28,9 +28,9 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
     public void Init()
     {
         _state = CreaterState.OTHER_START;
-        _needSpawnCreaters = new List<EnemyCreater>();
-        _normalCreaters = new List<EnemyCreater>();
-        _elitesCreaters = new List<EnemyCreater>();
+        _needSpawnCreaters = new List<IEnemyCreater>();
+        _normalCreaters = new List<IEnemyCreater>();
+        _elitesCreaters = new List<IEnemyCreater>();
         InitTrajectoryData();
         InitEnemyData();
         InitCreaterData();
@@ -90,7 +90,7 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
         var levelId = GameModel.Single.SelectedLevel;
         var levelData = data.LevelDatas[levelId];
         
-        foreach (var createrData in levelData.CreaterDatas)
+        foreach (var createrData in levelData.PlaneCreaterDatas)
         {
             SpawnCreater(createrData,enemyData,trajectoryData);
         }
@@ -99,7 +99,7 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
         _spawnElitesLimit = levelData.NormalDeadNumForSpawnElites;
     }
 
-    private void SpawnCreater(CreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData)
+    private void SpawnCreater(PlaneCreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData)
     {
         var go = new GameObject();
         var creater = go.AddComponent<EnemyCreater>();
@@ -108,7 +108,7 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
         AddCraterItem(data,creater);
     }
 
-    private void AddCraterItem(CreaterData data,EnemyCreater item)
+    private void AddCraterItem(PlaneCreaterData data,IEnemyCreater item)
     {
         switch (data.Type)
         {
@@ -132,24 +132,24 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
     {
         var creater = GetNeedSpawnCreater();
 
-        foreach (EnemyCreater enemyCreater in creater)
+        foreach (IEnemyCreater IEnemyCreater in creater)
         {
-            if (enemyCreater != null)
+            if (IEnemyCreater != null)
             {
-                enemyCreater.Spawn();
+                IEnemyCreater.Spawn();
             } 
         }
     }
 
     private bool JudgeEnd()
     {
-        foreach (EnemyCreater creater in _normalCreaters)
+        foreach (IEnemyCreater creater in _normalCreaters)
         {
             if (!creater.IsEnd())
                 return false;
         }
 
-        foreach (EnemyCreater creater in _elitesCreaters)
+        foreach (IEnemyCreater creater in _elitesCreaters)
         {
             if (!creater.IsEnd())
                 return false;
@@ -158,7 +158,7 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
         return true;
     }
 
-    private List<EnemyCreater> GetNeedSpawnCreater()
+    private List<IEnemyCreater> GetNeedSpawnCreater()
     {
         _needSpawnCreaters.Clear();
         _needSpawnCreaters.Add(GetNormalCreater());
@@ -170,7 +170,7 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
     private int GetNormalSpawnNum()
     {
         int count = 0;
-        foreach (EnemyCreater creater in _normalCreaters)
+        foreach (IEnemyCreater creater in _normalCreaters)
         {
             count += creater.GetSpawnNum();
         }
@@ -179,12 +179,12 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
     }
 
     
-    private EnemyCreater GetNormalCreater()
+    private IEnemyCreater GetNormalCreater()
     {
         return GetCreater(_normalCreaters);
     }
 
-    private EnemyCreater GetElitesCreater()
+    private IEnemyCreater GetElitesCreater()
     {
         if (GetNormalSpawnNum() >= _spawnElitesLimit)
         {
@@ -197,11 +197,11 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
         }
     }
 
-    private EnemyCreater _temp;
-    private EnemyCreater GetCreater(List<EnemyCreater> list)
+    private IEnemyCreater _temp;
+    private IEnemyCreater GetCreater(List<IEnemyCreater> list)
     {
         _temp = null;
-        foreach (EnemyCreater creater in list)
+        foreach (IEnemyCreater creater in list)
         {
             if (_temp == null || _temp.GetSpawnRatio() > creater.GetSpawnRatio())
             {

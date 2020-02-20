@@ -15,14 +15,14 @@ public class EnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
     /// </summary>
     private int _spawnQueueNum;
 
-    private CreaterData _data;
+    private PlaneCreaterData _data;
     private EnemyTrajectoryDataMgr _trajectoryData;
     /// <summary>
     /// 当前生成队列中最后一个敌机
     /// </summary>
     private EnemyView _lastEnemy;
 
-    public void Init(CreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData)
+    public void Init(PlaneCreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData)
     {
         _data = data;
         _trajectoryData = trajectoryData;
@@ -54,7 +54,7 @@ public class EnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
         transform.position = pos;
     }
 
-    private void InitEnemyData(CreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData)
+    private void InitEnemyData(PlaneCreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData)
     {
         _id = Random.Range(data.IdMin, data.IdMax + 1);
         _type = data.Type;

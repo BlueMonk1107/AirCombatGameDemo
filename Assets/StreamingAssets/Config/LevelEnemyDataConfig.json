@@ -1,7 +1,7 @@
 {
   "LevelDatas": [
     {
-      "CreaterDatas": [
+      "PlaneCreaterDatas": [
         {
           "IdMax": 1,
           "IdMin": 0,
@@ -35,12 +35,27 @@
           "X": 0.0
         }
       ],
+      "MissileCreaterDatas": [
+        {
+          "X": 1,
+          "NumOfWarning": 2,
+          "EachWarningTime": 0.8,
+          "Speed": 4
+        }
+        ,
+        {
+          "X": 1,
+          "NumOfWarning": 2,
+          "EachWarningTime": 0.8,
+          "Speed": 4
+        }
+      ],
       "EnemyNumMax": 5,
       "EnemyNumMin": 5,
       "NormalDeadNumForSpawnElites": 20
     },
     {
-      "CreaterDatas": [
+      "PlaneCreaterDatas": [
         {
           "IdMax": 1,
           "IdMin": 0,

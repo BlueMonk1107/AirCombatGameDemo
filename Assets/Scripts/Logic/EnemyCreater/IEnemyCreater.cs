@@ -4,8 +4,10 @@ using UnityEngine;
 
 public interface IEnemyCreater
 {
-    void Init(CreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData);
+    void Init(PlaneCreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData);
     float GetSpawnRatio();
     int GetSpawnNum();
     void Spawn();
+    bool IsEnd();
+    bool IsSpawning();
 }

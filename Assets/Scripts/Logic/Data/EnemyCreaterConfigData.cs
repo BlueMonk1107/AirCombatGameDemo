@@ -5,7 +5,8 @@
 
 public class LevelData
 {
-    public CreaterData[] CreaterDatas;
+    public PlaneCreaterData[] PlaneCreaterDatas;
+    public MissileCreaterData[] MissileCreaterDatas;
     public int EnemyNumMax;
     public int EnemyNumMin;
     /// <summary>
@@ -14,7 +15,7 @@ public class LevelData
     public int NormalDeadNumForSpawnElites;
 }
 
-public class CreaterData
+public class PlaneCreaterData
 {
     public int IdMax;
     public int IdMin;
@@ -28,4 +29,12 @@ public class CreaterData
     public int QueueNum;
     public EnemyType Type;
     public double X;
+}
+
+public class MissileCreaterData
+{
+    public double X;
+    public int NumOfWarning;
+    public double EachWarningTime;
+    public double Speed;
 }
