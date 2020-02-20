@@ -38,8 +38,13 @@ public class PlaneCreaterData : ICreaterData
 
 public class MissileCreaterData : ICreaterData
 {
+    /// <summary>
+    /// 当前导弹的生成批次
+    /// </summary>
+    public int Batch;
     public double X;
     public int NumOfWarning;
     public double EachWarningTime;
+    public int SpwanCount;
     public double Speed;
 }

@@ -37,16 +37,20 @@
       ],
       "MissileCreaterDatas": [
         {
+          "Batch": 0,
           "X": 1,
           "NumOfWarning": 2,
           "EachWarningTime": 0.8,
+          "SpwanCount": 2,
           "Speed": 4
         }
         ,
         {
-          "X": 1,
+          "Batch": 0,
+          "X": -1,
           "NumOfWarning": 2,
           "EachWarningTime": 0.8,
+          "SpwanCount": 2,
           "Speed": 4
         }
       ],

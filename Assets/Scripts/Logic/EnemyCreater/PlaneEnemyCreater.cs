@@ -14,7 +14,6 @@ public class PlaneEnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
     /// 已经生成的队列数量
     /// </summary>
     private int _spawnQueueNum;
-
     private PlaneCreaterData _data;
     private EnemyTrajectoryDataMgr _trajectoryData;
     /// <summary>
