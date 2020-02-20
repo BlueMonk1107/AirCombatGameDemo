@@ -102,7 +102,7 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
     private void SpawnCreater(PlaneCreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData)
     {
         var go = new GameObject();
-        var creater = go.AddComponent<EnemyCreater>();
+        var creater = go.AddComponent<PlaneEnemyCreater>();
         creater.Init(data, enemyData, trajectoryData);
         go.transform.SetParent(transform);
         AddCraterItem(data,creater);

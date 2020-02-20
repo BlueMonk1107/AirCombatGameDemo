@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class EnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
+public class PlaneEnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
 {
     private int _id;
     private Sprite _sprite;
@@ -22,12 +22,20 @@ public class EnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
     /// </summary>
     private EnemyView _lastEnemy;
 
-    public void Init(PlaneCreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData)
+    public void Init(ICreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData)
     {
-        _data = data;
+        if (data is PlaneCreaterData)
+        {
+            _data = data as PlaneCreaterData;
+        }
+        else
+        {
+            Debug.LogError("传入数据类型错误，类型为:"+data);
+            return;
+        }
         _trajectoryData = trajectoryData;
-        InitPos((float) data.X);
-        InitEnemyData(data,enemyData,trajectoryData);
+        InitPos((float) _data.X);
+        InitEnemyData(_data,enemyData,trajectoryData);
         LifeCycleMgr.Single.Add(LifeName.UPDATE,this);
     }
 

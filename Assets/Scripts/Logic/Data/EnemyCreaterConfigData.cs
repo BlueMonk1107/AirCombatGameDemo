@@ -15,7 +15,12 @@ public class LevelData
     public int NormalDeadNumForSpawnElites;
 }
 
-public class PlaneCreaterData
+public interface ICreaterData
+{
+    
+}
+
+public class PlaneCreaterData : ICreaterData
 {
     public int IdMax;
     public int IdMin;
@@ -31,7 +36,7 @@ public class PlaneCreaterData
     public double X;
 }
 
-public class MissileCreaterData
+public class MissileCreaterData : ICreaterData
 {
     public double X;
     public int NumOfWarning;
