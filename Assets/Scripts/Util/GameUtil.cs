@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class GameUtil
 {
@@ -105,5 +108,50 @@ public class GameUtil
             Debug.LogError("当前值不是int类型，值为："+value);
             return 0;
         }
+    }
+    
+    
+    public static List<IEnemyCreater> InitCreater(
+        EnemyType type,
+        Transform parent,
+        AllEnemyData enemyData, 
+        EnemyTrajectoryDataMgr trajectoryData, 
+        LevelData levelData)
+    {
+        List<IEnemyCreater> list = new List<IEnemyCreater>();
+        foreach (var createrData in levelData.PlaneCreaterDatas)
+        {
+            if(createrData.Type == type)
+                list.Add(SpawnCreater(parent,createrData,enemyData,trajectoryData));
+        }
+
+        return list;
+    }
+
+    private static IEnemyCreater SpawnCreater(
+        Transform              parent,
+        PlaneCreaterData       data,
+        AllEnemyData           enemyData,
+        EnemyTrajectoryDataMgr trajectoryData)
+    {
+        var go = new GameObject();
+        var creater = go.AddComponent<PlaneEnemyCreater>();
+        creater.Init(data, enemyData, trajectoryData);
+        go.transform.SetParent(parent);
+        return creater;
+    }
+
+    public static GameProcessNormalEvent GetNormalEvent(Action spawnAction,Func<int> spawnedNum,int spawnTotalNum)
+    {
+        GameProcessNormalEvent e = new GameProcessNormalEvent();
+        e.AddEvent(spawnAction,spawnedNum,spawnTotalNum);
+        return e;
+    }
+
+    public static GameProcessTriggerEvent GetTriggerEvent(float ratio,Action action,bool needPauseProcess,Func<bool> isEnd)
+    {
+        GameProcessTriggerEvent e = new GameProcessTriggerEvent();
+        e.AddEvent(ratio,action,needPauseProcess,isEnd);
+        return e;
     }
 }

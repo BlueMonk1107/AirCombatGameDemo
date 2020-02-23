@@ -1,8 +1,9 @@
 ﻿public class GameModel : NormalSingleton<GameModel>
 {
-    public GameModel()
+    public void InitData()
     {
         Life = LifeMax;
+        MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_HP);
     }
 
     public int Life { get; set; }

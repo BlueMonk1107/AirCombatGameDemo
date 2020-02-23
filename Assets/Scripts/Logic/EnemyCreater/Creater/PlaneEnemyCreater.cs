@@ -104,6 +104,11 @@ public class PlaneEnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
         return _spawnQueueNum * _data.QueuePlaneNum;
     }
 
+    public int GetSpawnTotalNum()
+    {
+        return _data.QueuePlaneNum * _data.QueueNum;
+    }
+
     public bool IsSpawning()
     {
         return _lastEnemy != null;

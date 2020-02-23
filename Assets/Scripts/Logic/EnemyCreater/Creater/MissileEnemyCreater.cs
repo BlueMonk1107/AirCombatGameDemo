@@ -19,6 +19,11 @@ public class MissileEnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate {
         throw new System.NotImplementedException();
     }
 
+    public int GetSpawnTotalNum()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Spawn()
     {
         throw new System.NotImplementedException();

@@ -4,78 +4,45 @@ using System.IO;
 using LitJson;
 using UnityEngine;
 
-public class EnemyCreaterMgr : MonoBehaviour,IUpdate
+public class EnemyCreaterMgr : MonoBehaviour,IGameProcessTriggerEvent,IGamePrecessNormalEvent
 {
-    private AllEnemyData _allEnemyData;
-    private EnemyTrajectoryDataMgr _trajectoryData;
-    private EnemyCreaterConfigData _createrData;
-
     private ISubEnemyCreaterMgr[] _subMgrs =
     {
-        new PlaneEnemyCreaterMgr(), 
-        new MissileCreaterMgr()
+        new NormalCreaterMgr(), 
+        new ElitesCreaterMgr(), 
+        new BossCreaterMgr(), 
+        //new MissileCreaterMgr()
     };
 
-    public void Init()
+    private Action<EnemyCreaterMgr> _dataComplete;
+    private int _enemyActiveNumMax;
+
+    public void Init(Action<EnemyCreaterMgr> dataComplete)
     {
+        _dataComplete = dataComplete;
         foreach (var mgr in _subMgrs)
         {
             mgr.Init();
         }
-        InitTrajectoryData();
-        InitEnemyData();
-        InitCreaterData();
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_START_GAME,Spawn);
+
         LifeCycleMgr.Single.Add(LifeName.UPDATE,this);
+        
+        LoadCreaterData.Single.Init(InitCreater);
     }
 
     private void OnDestroy()
     {
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_START_GAME,Spawn);
         LifeCycleMgr.Single.Remove(LifeName.UPDATE,this);
-    }
 
-    private void InitEnemyData()
-    {
-        LoadMgr.Single.LoadConfig(Paths.CONFIG_ENEMY, (value) =>
+        foreach (var mgr in _subMgrs)
         {
-            string json = (string) value;
-            _allEnemyData = JsonMapper.ToObject<AllEnemyData>(json);
-            Callback();
-        });
-    }
-
-    private void InitTrajectoryData()
-    {
-        LoadMgr.Single.LoadConfig(Paths.CONFIG_ENEMY_TRAJECTORY, (value) =>
-        {
-            var json = (string) value;
-            var dic = JsonUtil.JsonConvertToDic(json);
-            _trajectoryData = new EnemyTrajectoryDataMgr();
-            _trajectoryData.TrajectoryDatas = dic;
-
-            Callback();
-        });
+            if (mgr is IDestroy)
+            {
+                (mgr as IDestroy).Destroy();
+            }
+        }
     }
     
-    private void InitCreaterData()
-    {
-        LoadMgr.Single.LoadConfig(Paths.CONFIG_LEVEL_ENEMY_DATA, (value) =>
-        {
-            string json = (string) value;
-            _createrData = JsonMapper.ToObject<EnemyCreaterConfigData>(json);
-            Callback();
-        });
-    }
-
-    private void Callback()
-    {
-        if(_allEnemyData == null || _trajectoryData == null || _createrData == null)
-            return;
-        InitCreater(_allEnemyData,_trajectoryData,_createrData);
-        
-    }
-
     private void InitCreater(AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData,EnemyCreaterConfigData data)
     {
         var levelId = GameModel.Single.SelectedLevel;
@@ -85,16 +52,18 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
         {
             mgr.InitCreater(transform,enemyData,trajectoryData,levelData);
         }
+
+        _enemyActiveNumMax = levelData.EnemyNumMax;
+
+        if (_dataComplete != null)
+            _dataComplete(this);
     }
 
-    private void Spawn(object[] paras)
+    public int GetActiveNumMax()
     {
-        foreach (var mgr in _subMgrs)
-        {
-            mgr.Spawn();
-        }
+        return _enemyActiveNumMax;
     }
-   
+
 
     public int Times { get; set; }
 
@@ -103,13 +72,33 @@ public class EnemyCreaterMgr : MonoBehaviour,IUpdate
         get { return 30; }
     }
 
-    public void UpdateFun()
+    public List<GameProcessTriggerEvent> GetTriggerEvents()
     {
+        List<GameProcessTriggerEvent> list = new List<GameProcessTriggerEvent>();
         foreach (var mgr in _subMgrs)
         {
-            mgr.UpdateFun();
+            if (mgr is IGameProcessTriggerEvent)
+            {
+                var temp = mgr as IGameProcessTriggerEvent;
+                list.AddRange(temp.GetTriggerEvents());
+            }
         }
+
+        return list;
     }
 
-   
+    public List<GameProcessNormalEvent> GetNormalEvents()
+    {
+        List<GameProcessNormalEvent> list = new List<GameProcessNormalEvent>();
+        foreach (var mgr in _subMgrs)
+        {
+            if (mgr is IGamePrecessNormalEvent)
+            {
+                var temp = mgr as IGamePrecessNormalEvent;
+                list.AddRange(temp.GetNormalEvents());
+            }
+        }
+
+        return list;
+    }
 }

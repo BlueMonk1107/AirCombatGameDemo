@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NormalCreaterMgr : IPlaneEnemyMgr  {
+public class NormalCreaterMgr : ISubEnemyCreaterMgr,IGamePrecessNormalEvent  {
 
     private List<IEnemyCreater> _normalCreaters;
 
@@ -11,20 +11,20 @@ public class NormalCreaterMgr : IPlaneEnemyMgr  {
     {
         _normalCreaters = new List<IEnemyCreater>();
     }
-	
-    public void AddCraterItem(IEnemyCreater item)
+
+    public void InitCreater(Transform parent, AllEnemyData enemyData, EnemyTrajectoryDataMgr trajectoryData, LevelData levelData)
     {
-        _normalCreaters.Add(item);
+        _normalCreaters = GameUtil.InitCreater(EnemyType.Normal,parent,enemyData,trajectoryData,levelData);  
     }
-	
-    public void Spawn()
+
+    private void Spawn()
     {
         var creater = GetValidCreater();
         if(creater != null)
             creater.Spawn();
     }
-	
-    public IEnemyCreater GetValidCreater()
+    
+    private IEnemyCreater GetValidCreater()
     {
         return GetCreater(_normalCreaters);
     }
@@ -67,5 +67,23 @@ public class NormalCreaterMgr : IPlaneEnemyMgr  {
         }
 
         return count;
+    }
+
+    public List<GameProcessNormalEvent> GetNormalEvents()
+    {
+        var list = new List<GameProcessNormalEvent>();
+        list.Add(GameUtil.GetNormalEvent(Spawn,GetSpawnNum,GetTotalNum()));
+        return list;
+    }
+
+    private int GetTotalNum()
+    {
+        int total = 0;
+        foreach (var creater in _normalCreaters)
+        {
+            total += creater.GetSpawnTotalNum();
+        }
+
+        return total;
     }
 }

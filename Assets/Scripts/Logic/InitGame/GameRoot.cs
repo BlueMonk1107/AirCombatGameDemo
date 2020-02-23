@@ -10,7 +10,7 @@ public class GameRoot : MonoBehaviour
 
         var camera = transform.Find("Main Camera");
         camera.AddComponent<CameraMove>();
-        camera.AddComponent<EnemyCreaterMgr>().Init();
+        camera.AddComponent<GameProcessMgr>().Init();
 
         var mapGo = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.PREFAB_MAP_MGR);
         var map = mapGo.AddComponent<MapMgr>();
