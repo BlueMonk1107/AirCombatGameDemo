@@ -6,7 +6,8 @@ public class GameRoot : MonoBehaviour
     {
         var layer = gameObject.AddComponent<GameLayerMgr>();
         layer.Init();
-
+        
+        GameModel.Single.InitData();
 
         var camera = transform.Find("Main Camera");
         camera.AddComponent<CameraMove>();

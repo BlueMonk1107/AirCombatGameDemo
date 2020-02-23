@@ -12,7 +12,6 @@ public class PlayerView : PlaneView
 
     public override void Init()
     {
-        GameModel.Single.InitData();
         gameObject.tag = Tags.PLAYER;
         InitPos();
         InitSprite();

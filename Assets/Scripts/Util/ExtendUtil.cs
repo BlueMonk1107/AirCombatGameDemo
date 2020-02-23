@@ -15,7 +15,8 @@ public static class ExtendUtil
     public static T AddOrGet<T>(this GameObject go) where T : Component
     {
         var t = go.GetComponent<T>();
-        if (t == null) t = go.AddComponent<T>();
+        if (t == null) 
+            t = go.AddComponent<T>();
 
         return t;
     }

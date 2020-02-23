@@ -1,20 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class CameraMove : MonoBehaviour, IUpdate
 {
     private MoveComponent _move;
 
     private float _speed;
-
-    public int Times { get; set; }
-
-    public int UpdateTimes { get; }
-
-    public void UpdateFun()
-    {
-        _move.Move(Vector2.up);
-    }
-
+    
     // Use this for initialization
     private void Start()
     {
@@ -25,12 +17,31 @@ public class CameraMove : MonoBehaviour, IUpdate
             _speed = value;
             _move = gameObject.AddComponent<MoveComponent>();
             _move.Init(_speed);
-            LifeCycleMgr.Single.Add(LifeName.UPDATE, this);
+            
         });
     }
 
-    private void OnDestroy()
+    private void OnEnable()
+    {
+        LifeCycleMgr.Single.Add(LifeName.UPDATE, this);
+    }
+
+    private void OnDisable()
     {
         LifeCycleMgr.Single.Remove(LifeName.UPDATE, this);
     }
+
+    public int Times { get; set; }
+
+    public int UpdateTimes { get; }
+
+    public void UpdateFun()
+    {
+        if(_move == null)
+            return;
+        
+        _move.Move(Vector2.up);
+    }
+
+   
 }
