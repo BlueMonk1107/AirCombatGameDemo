@@ -22,6 +22,7 @@ public class PlayerView : PlaneView
     private void AddListener()
     {
         MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_SHIELD, UseShield);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_BOMB, UseBomb);
         MessageMgr.Single.AddListener(MsgEvent.EVENT_GAME_UPDATE_LEVEL,LevelUp);
         MessageMgr.Single.AddListener(MsgEvent.EVENT_GAME_EXP_LEVEL_UP,LevelUp);
     }
@@ -29,6 +30,7 @@ public class PlayerView : PlaneView
     private void OnDestroy()
     {
         MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_SHIELD, UseShield);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_BOMB, UseBomb);
         MessageMgr.Single.RemoveListener(MsgEvent.EVENT_GAME_UPDATE_LEVEL,LevelUp);
         MessageMgr.Single.RemoveListener(MsgEvent.EVENT_GAME_EXP_LEVEL_UP,LevelUp);
     }
@@ -37,7 +39,17 @@ public class PlayerView : PlaneView
     {
         var shield = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.EFFECT_SHIELD);
         shield.transform.position = transform.position;
+        shield.transform.SetParent(transform);
         shield.AddComponent<ShieldView>();
+        
+    }
+
+    private void UseBomb(object[] paras)
+    {
+        var shield = LoadMgr.Single.LoadPrefabAndInstantiate(Paths.EFFECT_POWER);
+        shield.transform.position = transform.position;
+        shield.transform.SetParent(transform);
+        shield.AddComponent<PowerView>();
     }
 
     private void LevelUp(object[] paras)

@@ -1,8 +1,11 @@
-﻿public class ShieldView : EffectView
+﻿using System;
+using UnityEngine;
+
+public class ShieldView : MonoBehaviour
 {
-    protected override void InitComponent()
-    {
-        gameObject.AddComponent<ColliderComponent>();
-        gameObject.AddComponent<AutoDestroyComponent>().Init(Const.SHIELD_TIME);
-    }
+   private void Start()
+   {
+      gameObject.AddComponent<ColliderComponent>();
+      gameObject.AddComponent<AutoDestroyComponent>().Init(Const.SHIELD_TIME);
+   }
 }

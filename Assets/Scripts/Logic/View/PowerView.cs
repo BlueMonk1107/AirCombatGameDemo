@@ -1,6 +1,8 @@
-﻿public class PowerView : PlaneView
+﻿using UnityEngine;
+
+public class PowerView : MonoBehaviour
 {
-    protected override void InitComponent()
+    private void Start()
     {
         gameObject.AddComponent<EmitBulletMgr>().Init(BulletType.Power);
     }

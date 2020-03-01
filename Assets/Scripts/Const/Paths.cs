@@ -31,6 +31,7 @@ public class Paths
 
     private const string EFFECT_FOLDER = Game_FOLDER + "Effect/";
     public const string EFFECT_SHIELD = EFFECT_FOLDER + "Shield";
+    public const string EFFECT_POWER = EFFECT_FOLDER + "Power";
     public const string EFFECT_FRAME_ANI = EFFECT_FOLDER + "FrameAni";
     public const string EFFECT_LEVEL_UP = EFFECT_FOLDER + "LevelUpEffect";
 

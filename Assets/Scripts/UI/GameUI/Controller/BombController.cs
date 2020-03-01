@@ -7,7 +7,10 @@
 
     private void Click()
     {
-        if (GameModel.Single.BombCount > 0) GameModel.Single.BombCount--;
-        MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_USE_BOMB);
+        if (GameModel.Single.BombCount > 0)
+        {
+            GameModel.Single.BombCount--;
+            MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_USE_BOMB);
+        }
     }
 }
