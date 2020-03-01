@@ -1,7 +1,6 @@
-﻿public class Bomb : ViewBase
+﻿public class Power : ViewBase
 {
     private ItemCDEffect _cdEffect;
-    private int _count;
     private ItemEffect _itemEffect;
 
     protected override void InitChild()
@@ -16,36 +15,50 @@
     public override void Show()
     {
         base.Show();
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_BOMB, ReceiveBomb);
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_BOMB, ReceiveBomb);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_POWER, ReceivePower);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_BOMB, UsePower);
         MessageMgr.Single.AddListener(MsgEvent.EVENT_CHANGE_HAND, ReceiveHandState);
-        _count = GameModel.Single.BombCount;
         UpdateShow();
     }
 
     private void UpdateShow()
     {
-        ReceiveBomb();
+        ReceivePower();
         ReceiveHandState();
     }
 
     public override void Hide()
     {
         base.Hide();
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_BOMB, ReceiveBomb);
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_BOMB, ReceiveBomb);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_POWER, ReceivePower);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_BOMB, UsePower);
         MessageMgr.Single.RemoveListener(MsgEvent.EVENT_CHANGE_HAND, ReceiveHandState);
     }
 
     private void UpdateCount()
     {
-        Util.Get("Num").SetText(GameModel.Single.BombCount);
+        Util.Get("Num").SetText(GameModel.Single.PowerCount);
     }
 
-    private void ReceiveBomb(params object[] args)
+    private void ReceivePower(params object[] args)
     {
-        UpdateCount();
-        UpdateState();
+        UpdatePower();
+    }
+    
+    private void UsePower(params object[] args)
+    {
+        UpdatePower();
+        UpdateEffect();
+    }
+    
+    private void UpdateEffect()
+    {
+        if (GameModel.Single.ShieldCount > 0)
+        {
+            _cdEffect.StartCD(() => _itemEffect.SetActive(true));
+        }
+        
+        _itemEffect.SetActive(false);
     }
 
     private void ReceiveHandState(params object[] args)
@@ -53,21 +66,23 @@
         UpdateHandState();
     }
 
+    private void UpdatePower()
+    {
+        UpdateCount();
+        UpdateState();
+    }
+
     private void UpdateState()
     {
-        if (GameModel.Single.BombCount == 0)
+        if (GameModel.Single.PowerCount == 0)
         {
             _cdEffect.SetMask();
             _itemEffect.SetActive(false);
         }
-        else
+        else if(GameModel.Single.PowerCount > 0)
         {
-            if (_count > GameModel.Single.BombCount)
-            {
-                _cdEffect.StartCD(() => _itemEffect.SetActive(true));
-                _count = GameModel.Single.BombCount;
-                _itemEffect.SetActive(false);
-            }
+            _cdEffect.SetShow();
+            _itemEffect.SetActive(true);
         }
     }
 

@@ -13,6 +13,10 @@ public class ItemFactory : NormalSingleton<ItemFactory> {
 				return AddBulletView.GetObject();
 			case ItemType.ADD_EXP:
 				return AddExpView.GetObject();
+			case ItemType.SHIELD:
+				return ShieldItemView.GetObject();
+			case ItemType.POWER:
+				return PowerItemView.GetObject();
 		}
 
 		return null;

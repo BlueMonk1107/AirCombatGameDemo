@@ -1,7 +1,6 @@
 ﻿public class Shield : ViewBase
 {
     private ItemCDEffect _cdEffect;
-    private int _count;
     private ItemEffect _itemEffect;
 
     protected override void InitChild()
@@ -16,9 +15,8 @@
     {
         base.Show();
         MessageMgr.Single.AddListener(MsgEvent.EVENT_SHIELD, ReceiveShield);
-        MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_SHIELD, ReceiveShield);
+        MessageMgr.Single.AddListener(MsgEvent.EVENT_USE_SHIELD, UseShield);
         MessageMgr.Single.AddListener(MsgEvent.EVENT_CHANGE_HAND, ReceiveHandState);
-        _count = GameModel.Single.ShieldCount;
         UpdateShow();
     }
 
@@ -32,7 +30,7 @@
     {
         base.Hide();
         MessageMgr.Single.RemoveListener(MsgEvent.EVENT_SHIELD, ReceiveShield);
-        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_SHIELD, ReceiveShield);
+        MessageMgr.Single.RemoveListener(MsgEvent.EVENT_USE_SHIELD, UseShield);
         MessageMgr.Single.RemoveListener(MsgEvent.EVENT_CHANGE_HAND, ReceiveHandState);
     }
 
@@ -43,13 +41,34 @@
 
     private void ReceiveShield(params object[] args)
     {
-        UpdateCount();
-        UpdateState();
+        UpdateShield();
+    }
+
+    private void UseShield(params object[] args)
+    {
+        UpdateShield();
+        UpdateEffect();
+    }
+
+    private void UpdateEffect()
+    {
+        if (GameModel.Single.ShieldCount > 0)
+        {
+            _cdEffect.StartCD(() => _itemEffect.SetActive(true));
+        }
+        
+        _itemEffect.SetActive(false);
     }
 
     private void ReceiveHandState(params object[] args)
     {
         UpdateHandState();
+    }
+
+    private void UpdateShield()
+    {
+        UpdateCount();
+        UpdateState();
     }
 
     private void UpdateState()
@@ -59,14 +78,10 @@
             _cdEffect.SetMask();
             _itemEffect.SetActive(false);
         }
-        else
+        else if(GameModel.Single.ShieldCount > 0)
         {
-            if (_count > GameModel.Single.ShieldCount)
-            {
-                _cdEffect.StartCD(() => _itemEffect.SetActive(true));
-                _count = GameModel.Single.ShieldCount;
-                _itemEffect.SetActive(false);
-            }
+            _cdEffect.SetShow();
+            _itemEffect.SetActive(true);
         }
     }
 

@@ -4,7 +4,7 @@ public class GameUIController : ControllerBase
     protected override void InitChild()
     {
         transform.AddComponent<ShieldController>("Shield");
-        transform.AddComponent<BombController>("Bomb");
+        transform.AddComponent<PowerController>("Bomb");
         transform.ButtonAction("Pause", () => UIManager.Single.Show(Paths.PREFAB_SETTING_VIEW));
     }
 }

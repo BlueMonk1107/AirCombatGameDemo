@@ -10,7 +10,7 @@
     public int Score { get; set; }
     public int Stars { get; set; }
     public int ShieldCount { get; set; }
-    public int BombCount { get; set; }
+    public int PowerCount { get; set; }
 
     /// <summary>
     /// 选中的关卡

@@ -36,7 +36,7 @@ public class PowerBulletModel : NormalSingleton<PowerBulletModel>, IBulletModel
 	{
 		if (_sprite == null)
 		{
-			var path = Paths.PICTURE_POWER;
+			var path = Paths.PICTURE_BULLET_POWER;
 			_sprite = LoadMgr.Single.Load<Sprite>(path);
 		}
 

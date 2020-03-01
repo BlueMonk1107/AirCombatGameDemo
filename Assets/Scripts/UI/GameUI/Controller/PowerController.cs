@@ -1,4 +1,4 @@
-﻿public class BombController : ControllerBase
+﻿public class PowerController : ControllerBase
 {
     protected override void InitChild()
     {
@@ -7,9 +7,9 @@
 
     private void Click()
     {
-        if (GameModel.Single.BombCount > 0)
+        if (GameModel.Single.PowerCount > 0)
         {
-            GameModel.Single.BombCount--;
+            GameModel.Single.PowerCount--;
             MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_USE_BOMB);
         }
     }

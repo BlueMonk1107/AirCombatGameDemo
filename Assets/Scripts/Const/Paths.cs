@@ -54,13 +54,15 @@ public class Paths
     public const string PICTURE_PLAYER_BULLET_FOLDER = PICTURE_BULLET_FOLDER + "Player/";
     public const string PICTURE_ENEMY_BULLET_FOLDER = PICTURE_BULLET_FOLDER + "Enemy/";
     public const string PICTURE_BULLET_EFFECT = PICTURE_BULLET_FOLDER + "Effect/";
-    public const string PICTURE_POWER = PICTURE_BULLET_EFFECT + "Power";
+    public const string PICTURE_BULLET_POWER = PICTURE_BULLET_EFFECT + "Power";
 
     public const string PICTURE_ENEMY_FOLDER = PICTURE_FOLDER + "Enemy/";
     
     public const string PICTURE_ITEM_FOLDER = PICTURE_FOLDER + "Item/";
     public const string PICTURE_ADD_BULLET = PICTURE_ITEM_FOLDER + "AddBullet";
     public const string PICTURE_ADD_EXP = PICTURE_ITEM_FOLDER + "AddExp";
+    public const string PICTURE_SHIELD = PICTURE_ITEM_FOLDER + "Shield";
+    public const string PICTURE_POWER = PICTURE_ITEM_FOLDER + "Power";
     public const string PICTURE_STAR = PICTURE_ITEM_FOLDER + "Star";
 
     //配置路径

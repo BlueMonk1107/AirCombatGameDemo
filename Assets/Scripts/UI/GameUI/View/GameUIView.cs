@@ -5,7 +5,7 @@ public class GameUIView : ViewBase
     {
         Util.Get("Life").Add<Life>();
         Util.Get("Shield").Add<Shield>();
-        Util.Get("Bomb").Add<Bomb>();
+        Util.Get("Bomb").Add<Power>();
         ReceiveMessage();
     }
 

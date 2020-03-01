@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class AddBulletView : ItemViewBase,IBuffCarrier
 {
-    
     public BuffType Type
     {
         get { return BuffType.LEVEL_UP; }
