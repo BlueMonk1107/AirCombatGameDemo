@@ -36,7 +36,6 @@ public class EllipseTrajectory : ITrajectory
     {
         int count = GetVailCount(data.Precision);
         float xLeft = data.Center.x - _xRadius;
-        float xRight = data.Center.x + _xRadius;
         
         //x轴上的坐标分成多少份，举例，顶点为4个，x轴上坐标要被分成2份
         int partCount = count / 2;
@@ -49,22 +48,20 @@ public class EllipseTrajectory : ITrajectory
         for (int i = 0; i < xPointCount; i++)
         {
             y = GetY(x, Vector2.zero);
-            
-            if (y[0] > _data.Center.y)
+
+            if (Mathf.Abs(y[0] - _data.Center.y)<0.01f)
             {
                 _posList[i] = new Vector3(x, y[0]);
-                if(_posList.Length - i < xPointCount)
-                    _posList[_posList.Length - i] = new Vector3(x, y[1]);
+            }
+            else if (y[0] > _data.Center.y)
+            {
+                _posList[i] = new Vector3(x, y[0]);
+                _posList[_posList.Length - i] = new Vector3(x, y[1]);
             }
             else if(y[0] < _data.Center.y)
             {
                 _posList[i] = new Vector3(x, y[1]);
-                if(_posList.Length - i < xPointCount)
-                    _posList[_posList.Length - i] = new Vector3(x, y[0]);
-            }
-            else
-            {
-                _posList[i] = new Vector3(x, y[0]);
+                _posList[_posList.Length - i] = new Vector3(x, y[0]);  
             }
 
             x += xOffset;
