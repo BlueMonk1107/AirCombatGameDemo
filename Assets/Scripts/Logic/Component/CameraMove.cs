@@ -21,6 +21,11 @@ public class CameraMove : MonoBehaviour, IUpdate
         });
     }
 
+    private void OnDestroy()
+    {
+        Destroy(_move);
+    }
+
     private void OnEnable()
     {
         LifeCycleMgr.Single.Add(LifeName.UPDATE, this);

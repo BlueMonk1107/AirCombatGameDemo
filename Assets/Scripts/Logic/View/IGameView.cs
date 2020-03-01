@@ -46,7 +46,9 @@ public abstract class GameViewBase : MonoBehaviour, IGameView
     {
         if (GameLayerMgr.Single != null) 
             GameLayerMgr.Single.SetLayerParent(this);
-
+        var pos = transform.position;
+        pos.z = (int) Layer;
+        SetPos(pos);
         Init();
     }
 

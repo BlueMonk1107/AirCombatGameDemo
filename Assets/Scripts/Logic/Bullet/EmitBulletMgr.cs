@@ -6,6 +6,7 @@ using UnityEngine;
 public class EmitBulletMgr : MonoBehaviour, IBullet
 {
     private IBulletModel _model;
+    private SpawnBulletPointMgr _pointMgr;
 
     public HashSet<string> GetTargetTags()
     {
@@ -57,6 +58,9 @@ public class EmitBulletMgr : MonoBehaviour, IBullet
     {
         var component = gameObject.AddOrGet<BossBulletEventComponent>();
         component.Init(_model);
+
+        _pointMgr = gameObject.AddOrGet<SpawnBulletPointMgr>();
+        _pointMgr.Init();
     }
 
     private void InitPos(IBulletModel model)
@@ -92,8 +96,11 @@ public class EmitBulletMgr : MonoBehaviour, IBullet
             yield return new WaitForSeconds(model.FireTime);
             model.Trajectory(data =>
             {
-                foreach (var trajectory in data) 
-                    Spawn(model, trajectory);
+                for (int i = 0; i < data.Length; i++)
+                {
+                    Spawn(i,data.Length,model, data[i]);
+                }
+                    
             });
 
             //开火暂停时间
@@ -114,12 +121,12 @@ public class EmitBulletMgr : MonoBehaviour, IBullet
         _id = -1;
     }
 
-    private void Spawn(IBulletModel model, ITrajectory trajectory)
+    private void Spawn(int index,int count,IBulletModel model, ITrajectory trajectory)
     {
         if (PoolMgr.Single == null)
             return;
         var bulletGo = PoolMgr.Single.Spawn(Paths.PREFAB_BULLET);
         var bullet = bulletGo.AddOrGet<Bullet>();
-        bullet.Init(model, trajectory, transform.position);
+        bullet.Init(model, trajectory, _pointMgr.GetPoints(count,transform.position)[index]);
     }
 }

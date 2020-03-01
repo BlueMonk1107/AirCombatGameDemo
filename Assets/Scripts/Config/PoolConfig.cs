@@ -27,6 +27,18 @@ public class PoolConfig
             Path = Paths.EFFECT_FRAME_ANI,
             PreloadCount = 15,
             AutoDestroy = false
+        },
+        new PoolData
+        {
+            Path = Paths.PREFAB_ENEMY_MISSILE,
+            PreloadCount = 3,
+            AutoDestroy = true
+        },
+        new PoolData
+        {
+            Path = Paths.PREFAB_ITEM_LIGHT,
+            PreloadCount = 3,
+            AutoDestroy = true
         }
     };
 }

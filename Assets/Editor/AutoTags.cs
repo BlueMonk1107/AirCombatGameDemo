@@ -31,5 +31,7 @@ public class AutoTags
         
         prefab = Resources.Load<GameObject>(Paths.PREFAB_ITEM_ITEM);
         prefab.tag = Tags.ITEM;
+        prefab = Resources.Load<GameObject>(Paths.PREFAB_ENEMY_MISSILE);
+        prefab.tag = Tags.ENEMY;
     }
 }

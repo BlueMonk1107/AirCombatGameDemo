@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class EnemyView : PlaneView,IUpdate
+public class PlaneEnemyView : PlaneView,IUpdate
 {
     public RenderComponent Renderer { get;private set;}
     private MoveComponent _moveComponent;

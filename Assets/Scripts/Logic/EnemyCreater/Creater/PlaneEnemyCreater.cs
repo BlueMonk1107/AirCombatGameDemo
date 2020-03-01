@@ -19,7 +19,7 @@ public class PlaneEnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
     /// <summary>
     /// 当前生成队列中最后一个敌机
     /// </summary>
-    private EnemyView _lastEnemy;
+    private PlaneEnemyView _lastEnemy;
 
     public void Init(ICreaterData data,AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData)
     {
@@ -80,10 +80,10 @@ public class PlaneEnemyCreater : MonoBehaviour,IEnemyCreater,IUpdate
         }
     }
 
-    private EnemyView SpawnEnemy(int id, ITrajectoryData data)
+    private PlaneEnemyView SpawnEnemy(int id, ITrajectoryData data)
     {
         var plane = PoolMgr.Single.Spawn(Paths.PREFAB_PLANE);
-        var enemy = plane.AddOrGet<EnemyView>();
+        var enemy = plane.AddOrGet<PlaneEnemyView>();
         enemy.SetPos(transform.position);
         enemy.Init(id,_type, _enemyData, _sprite, data);
         return enemy;

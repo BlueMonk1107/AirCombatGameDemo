@@ -53,12 +53,14 @@ public class EllipseTrajectory : ITrajectory
             if (y[0] > _data.Center.y)
             {
                 _posList[i] = new Vector3(x, y[0]);
-                _posList[_posList.Length - i] = new Vector3(x, y[1]);
+                if(_posList.Length - i < xPointCount)
+                    _posList[_posList.Length - i] = new Vector3(x, y[1]);
             }
             else if(y[0] < _data.Center.y)
             {
                 _posList[i] = new Vector3(x, y[1]);
-                _posList[_posList.Length - i] = new Vector3(x, y[0]);
+                if(_posList.Length - i < xPointCount)
+                    _posList[_posList.Length - i] = new Vector3(x, y[0]);
             }
             else
             {

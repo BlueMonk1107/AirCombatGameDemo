@@ -11,7 +11,7 @@ public class EnemyCreaterMgr : MonoBehaviour,IGameProcessTriggerEvent,IGamePrece
         new NormalCreaterMgr(), 
         new ElitesCreaterMgr(), 
         new BossCreaterMgr(), 
-        //new MissileCreaterMgr()
+        new MissileCreaterMgr()
     };
 
     private Action<EnemyCreaterMgr> _dataComplete;

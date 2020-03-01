@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissileCreaterMgr : ISubEnemyCreaterMgr
+public class MissileCreaterMgr : ISubEnemyCreaterMgr, IGameProcessTriggerEvent
 {
     private Dictionary<int, List<MissileEnemyCreater>> _createrDatas;
     private int _curPatch;
@@ -62,8 +62,10 @@ public class MissileCreaterMgr : ISubEnemyCreaterMgr
         }
     }
 
-    public void UpdateFun()
+    public List<GameProcessTriggerEvent> GetTriggerEvents()
     {
-        
+        List<GameProcessTriggerEvent> list = new List<GameProcessTriggerEvent>();
+        list.Add(GameUtil.GetTriggerEvent(0.5f,Spawn,true,JudgeCurrentPatchEnd));
+        return list;
     }
 }

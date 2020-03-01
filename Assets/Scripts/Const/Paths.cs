@@ -34,7 +34,7 @@ public class Paths
     public const string EFFECT_FRAME_ANI = EFFECT_FOLDER + "FrameAni";
     public const string EFFECT_LEVEL_UP = EFFECT_FOLDER + "LevelUpEffect";
 
-    public const string ENEMY_FOLDER = PREFAB_FOLDER + "Enemy/";
+    public const string ENEMY_FOLDER = Game_FOLDER + "Enemy/";
     public const string PREFAB_ENEMY_MISSILE = ENEMY_FOLDER + "Missile";
     
     private const string PREFAB_ITEM_FOLDER = Game_FOLDER + "Item/";
