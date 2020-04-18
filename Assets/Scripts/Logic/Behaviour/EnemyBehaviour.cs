@@ -47,6 +47,7 @@ public class EnemyBehaviour : MonoBehaviour, IBehaviour
         var typeC = GetComponent<EnemyTypeComponent>();
         if (typeC.Type == EnemyType.Boss)
         {
+            GameModel.Single.CurrentLevel++;
             GameModel.Single.IsFinishOneLevel = true;
             GameStateModel.Single.GameState = GameState.END;
         }

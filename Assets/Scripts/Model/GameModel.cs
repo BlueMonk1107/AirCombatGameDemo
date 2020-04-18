@@ -2,6 +2,7 @@
 {
     public void InitData()
     {
+        CurrentLevel = SelectedLevel;
         Life = LifeMax;
         MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_HP);
     }
@@ -16,6 +17,11 @@
     /// 选中的关卡
     /// </summary>
     public int SelectedLevel { get; set; }
+    
+    /// <summary>
+    /// 当前的关卡
+    /// </summary>
+    public int CurrentLevel { get; set; }
 
     private int _tempLevel;
 
@@ -32,6 +38,9 @@
         }
     }
 
+    /// <summary>
+    /// 是否完成了当前所在关卡
+    /// </summary>
     public bool IsFinishOneLevel { get; set; }
 
     public int LifeMax
