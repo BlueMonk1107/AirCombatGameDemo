@@ -35,7 +35,8 @@ public class UIManager : NormalSingleton<UIManager>
         if (_uiStack.Count > 0)
         {
             var name = _uiStack.Peek();
-            if (GetLayer(name) >= GetLayer(path)) HideAll(_views[name]);
+            if (GetLayer(name) >= GetLayer(path)) 
+                HideAll(_views[name]);
         }
 
         var view = InitView(path);
@@ -52,7 +53,7 @@ public class UIManager : NormalSingleton<UIManager>
 
     private UILayer GetLayer(string path)
     {
-        return UILayerMgr._single.GetLayer(path);
+        return UILayerMgr.Single.GetLayer(path);
     }
 
     public DialogView ShowDialog(string content, Action trueAction = null, Action falseAcion = null)
