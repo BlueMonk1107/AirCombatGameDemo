@@ -45,7 +45,7 @@ public class EnemyCreaterMgr : MonoBehaviour,IGameProcessTriggerEvent,IGamePrece
     
     private void InitCreater(AllEnemyData enemyData,EnemyTrajectoryDataMgr trajectoryData,EnemyCreaterConfigData data)
     {
-        var levelId = GameModel.Single.SelectedLevel;
+        var levelId = GameModel.Single.CurrentLevel;
         var levelData = data.LevelDatas[levelId];
         
         foreach (var mgr in _subMgrs)

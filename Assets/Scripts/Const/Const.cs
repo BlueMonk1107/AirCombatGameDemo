@@ -46,4 +46,9 @@
     public const float ENEMY_LIFE_BAR_WIDTH = 0.8f;
 
     public const float WAIT_BOSS_TIME = 5;
+    
+    /// <summary>
+    /// 两关之间的等待时间
+    /// </summary>
+    public const float WAIT_LEVEL_START_TIME = 5;
 }

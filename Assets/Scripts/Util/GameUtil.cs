@@ -134,7 +134,7 @@ public class GameUtil
         AllEnemyData           enemyData,
         EnemyTrajectoryDataMgr trajectoryData)
     {
-        var go = new GameObject();
+        var go = new GameObject("PlaneEnemyCreater");
         var creater = go.AddComponent<PlaneEnemyCreater>();
         creater.Init(data, enemyData, trajectoryData);
         go.transform.SetParent(parent);

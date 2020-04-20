@@ -12,7 +12,8 @@ public class GameProcessMgr : MonoBehaviour, IUpdate
 	private bool _start;
 	private int _enemyActiveNumMax;
 	private GameProcessTriggerEvent _temp;
-
+	private GameObject _createrGo;
+	
 	public void Init()
 	{
 		_start = false;
@@ -20,19 +21,42 @@ public class GameProcessMgr : MonoBehaviour, IUpdate
 		InitCreater();
 		LifeCycleMgr.Single.Add(LifeName.UPDATE, this);
 		MessageMgr.Single.AddListener(MsgEvent.EVENT_START_GAME,StartGame);
+		MessageMgr.Single.AddListener(MsgEvent.EVENT_END_ONCE,EndOnce);
 	}
 
 	private void OnDestroy()
 	{
 		LifeCycleMgr.Single.Remove(LifeName.UPDATE, this);
 		MessageMgr.Single.RemoveListener(MsgEvent.EVENT_START_GAME,StartGame);
+		MessageMgr.Single.RemoveListener(MsgEvent.EVENT_END_ONCE,EndOnce);
+	}
+
+	private void EndOnce(object[] paras)
+	{
+		ClearData();
+		CoroutineMgr.Single.Delay(Const.WAIT_LEVEL_START_TIME,StartNewLevel);
+	}
+
+	private void ClearData()
+	{
+		if(_createrGo != null)
+			Destroy(_createrGo);
+		
+		_start = false;
+		_curTriggerEvents.Clear();
+	}
+
+	private void StartNewLevel()
+	{
+		MessageMgr.Single.DispatchMsg(MsgEvent.EVENT_START_ONCE);
+		InitCreater();
 	}
 
 	private void InitCreater()
 	{
-		GameObject createrGo = new GameObject("CreaterMgr");
-		createrGo.transform.SetParent(transform);
-		createrGo.AddComponent<EnemyCreaterMgr>().Init(InitData);
+		_createrGo = new GameObject("CreaterMgr");
+		_createrGo.transform.SetParent(transform);
+		_createrGo.AddComponent<EnemyCreaterMgr>().Init(InitData);
 	}
 
 	private void InitData(EnemyCreaterMgr createrMgr)

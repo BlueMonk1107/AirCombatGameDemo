@@ -79,6 +79,7 @@ public class GameObjectPool
         {
             temp = _inactiveList[0];
             _inactiveList.Remove(temp);
+            temp.SetActive(true);
         }
         else
         {
@@ -86,7 +87,6 @@ public class GameObjectPool
         }
 
         _acticveList.Add(temp);
-        temp.SetActive(true);
         return temp;
     }
 

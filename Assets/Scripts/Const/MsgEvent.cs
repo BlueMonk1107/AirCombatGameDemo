@@ -24,4 +24,13 @@
 
     public const int EVENT_BUFF = 13;
     public const int EVENT_DEBUFF = 14;
+    
+    /// <summary>
+    /// 结束了一关
+    /// </summary>
+    public const int EVENT_END_ONCE = 15;
+    /// <summary>
+    /// 开始新的一关
+    /// </summary>
+    public const int EVENT_START_ONCE = 16;
 }
