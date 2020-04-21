@@ -13,6 +13,13 @@ public class LoadCreaterData : NormalSingleton<LoadCreaterData> {
 
     public void Init(Action<AllEnemyData,EnemyTrajectoryDataMgr,EnemyCreaterConfigData> callBack)
     {
+        if (_allEnemyData != null && _trajectoryData != null && _createrData != null)
+        {
+            if(callBack != null)
+                callBack(_allEnemyData,_trajectoryData,_createrData);
+            
+            return;
+        }
         _callBack = callBack;
         InitTrajectoryData();
         InitEnemyData();
