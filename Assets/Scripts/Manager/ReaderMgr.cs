@@ -1,30 +1,27 @@
-﻿using LitJson;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class ConfigMgr : NormalSingleton<ConfigMgr>, IInit
+public class ReaderMgr : NormalSingleton<ReaderMgr>
 {
-    public void Init()
-    {
-        InitPlaneConfig();
-    }
+    private readonly Dictionary<string, IReader> _readersDic = new Dictionary<string, IReader>();
 
-    private void InitPlaneConfig()
+    public IReader GetReader(string path)
     {
-        var config = ReaderMgr.Single.GetReader(Paths.CONFIG_INIT_PLANE_CONFIG);
-        config["planes"].Get<JsonData>(data =>
+        IReader reader = null;
+        if (_readersDic.ContainsKey(path))
         {
-            foreach (JsonData item in data)
-            {
-                foreach (var key in item.Keys)
-                {
-                    if (key == "planeId")
-                        continue;
+            reader = _readersDic[path];
+        }
+        else
+        {
+            reader = ReaderConfig.GetReader(path);
+            LoadMgr.Single.LoadConfig(path, data => reader.SetData(data));
+            if (reader != null)
+                _readersDic[path] = reader;
+            else
+                Debug.LogError("未获取到对应reader，路径：" + path);
+        }
 
-                    var newKey = KeysUtil.GetPropertyKeys(int.Parse(item["planeId"].ToJson()), key);
-
-                    if (!DataMgr.Single.Contains(newKey)) DataMgr.Single.SetJsonData(newKey, item[key]);
-                }
-            }
-            
-        });
+        return reader;
     }
 }
