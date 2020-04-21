@@ -1,0 +1,102 @@
+{
+  "Player": {
+    "fireRate": 1,
+    "bulletSpeed": 5,
+    "trajectoryType": 0,
+    "trajectory": [
+      [
+        90
+      ],
+      [
+        95,
+        85
+      ],
+      [
+        100,
+        90,
+        80
+      ],
+      [
+        110,
+        100,
+        90,
+        80,
+        70
+      ]
+    ]
+  },
+  "Enemy_Normal_0": {
+    "fireRate": 1,
+    "bulletSpeed": 3,
+    "trajectoryType": 0,
+    "trajectory": [
+      [
+        -90
+      ]
+    ]
+  },
+  "Enemy_Boss_0": {
+    "fireRate": 1,
+    "bulletSpeed": 3,
+    "trajectoryType": 0,
+    "trajectory": [
+      [
+        -85,
+        -95,
+        -80,
+        -100,
+        -75,
+        -105
+      ]
+    ],
+    "Events": [
+      {
+        "LifeRatio": 0.5,
+        "Type": 0,
+        "Data": {
+          "bulletSpeed": 5
+        }
+      },
+      {
+        "LifeRatio": 0.3,
+        "Type": 1,
+        "Data": {
+          "trajectoryType": 0,
+          "trajectory": [
+            [
+              -85,
+              -95,
+              -80,
+              -100,
+              -75,
+              -105,
+              -70,
+              -110
+            ]
+          ]
+        }
+      }
+    ]
+  },
+  "Enemy_Boss_1": {
+    "fireRate": 0.2,
+    "bulletSpeed": 2,
+    "trajectoryType": 4,
+    "trajectory": [
+      {
+        "StartAngle": -30,
+        "EndAngle": -150,
+        "RotateOffset": -5
+      }
+    ],
+    "Events": [
+      {
+        "LifeRatio": 0.5,
+        "Type": 0,
+        "Data": {
+          "bulletSpeed": 5
+        }
+      }
+    ]
+  }
+}

@@ -1,26 +1,29 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
+using System.Reflection;
 
-public class InitCustomAttributes {
+public class InitCustomAttributes : IInit
+{
+    public void Init()
+    {
+        InitData<BindPrefab>(BindUtil.Bind);
+        InitData<BulletAttribute>(BulletUtil.Add);
+    }
 
-	public void Init()
-	{
-		System.Reflection.Assembly asm = System.Reflection.Assembly.GetAssembly(typeof(BindPrefab));
-		System.Type[] types = asm.GetExportedTypes();
+    private void InitData<T>(Action<T,Type> callBack) where T: class
+    {
+        var assembly = Assembly.GetAssembly(typeof(T));
+        var types = assembly.GetExportedTypes();
 
-		foreach (Type type in types)
-		{
-			foreach (Attribute attribute in Attribute.GetCustomAttributes(type,true))
-			{
-				if (attribute is BindPrefab)
-				{
-					BindPrefab data = attribute as BindPrefab;
-					BindUtil.Bind(data.Path,type);
-				}
-			}
-		}
-	}
+        foreach (var type in types)
+        {
+            foreach (var attribute in Attribute.GetCustomAttributes(type, true))
+            {
+                if (attribute is T)
+                {
+                    T data = attribute as T;
+                    callBack(data, type);
+                }
+            } 
+        }
+    }
 }

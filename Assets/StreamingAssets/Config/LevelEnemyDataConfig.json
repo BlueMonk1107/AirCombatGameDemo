@@ -1,0 +1,120 @@
+{
+  "LevelDatas": [
+    {
+      "PlaneCreaterDatas": [
+        {
+          "IdMax": 1,
+          "IdMin": 0,
+          "QueuePlaneNum": 5,
+          "QueueNum": 4,
+          "Type": 0,
+          "X": -1.0
+        },
+        {
+          "IdMax": 5,
+          "IdMin": 2,
+          "QueuePlaneNum": 5,
+          "QueueNum": 4,
+          "Type": 0,
+          "X": 1.0
+        },
+        {
+          "IdMax": 2,
+          "IdMin": 0,
+          "QueuePlaneNum": 1,
+          "QueueNum": 2,
+          "Type": 1,
+          "X": 0.0
+        },
+        {
+          "IdMax": 0,
+          "IdMin": 0,
+          "QueuePlaneNum": 1,
+          "QueueNum": 1,
+          "Type": 2,
+          "X": 0.0
+        }
+      ],
+      "MissileCreaterDatas": [
+        {
+          "Batch": 0,
+          "X": 1,
+          "NumOfWarning": 2,
+          "EachWarningTime": 0.8,
+          "SpwanCount": 2,
+          "Speed": 4
+        }
+        ,
+        {
+          "Batch": 0,
+          "X": -1,
+          "NumOfWarning": 2,
+          "EachWarningTime": 0.8,
+          "SpwanCount": 2,
+          "Speed": 4
+        }
+      ],
+      "EnemyNumMax": 5,
+      "EnemyNumMin": 5,
+      "NormalDeadNumForSpawnElites": 20
+    },
+    {
+      "PlaneCreaterDatas": [
+        {
+          "IdMax": 1,
+          "IdMin": 0,
+          "QueuePlaneNum": 5,
+          "QueueNum": 4,
+          "Type": 0,
+          "X": -1.0
+        },
+        {
+          "IdMax": 5,
+          "IdMin": 2,
+          "QueuePlaneNum": 5,
+          "QueueNum": 4,
+          "Type": 0,
+          "X": 1.0
+        },
+        {
+          "IdMax": 2,
+          "IdMin": 0,
+          "QueuePlaneNum": 1,
+          "QueueNum": 2,
+          "Type": 1,
+          "X": 0.0
+        },
+        {
+          "IdMax": 0,
+          "IdMin": 0,
+          "QueuePlaneNum": 1,
+          "QueueNum": 1,
+          "Type": 2,
+          "X": 0.0
+        }
+      ],
+      "MissileCreaterDatas": [
+        {
+          "Batch": 0,
+          "X": 1,
+          "NumOfWarning": 2,
+          "EachWarningTime": 0.8,
+          "SpwanCount": 2,
+          "Speed": 4
+        }
+      ,
+        {
+          "Batch": 0,
+          "X": -1,
+          "NumOfWarning": 2,
+          "EachWarningTime": 0.8,
+          "SpwanCount": 2,
+          "Speed": 4
+        }
+      ],
+      "EnemyNumMax": 5,
+      "EnemyNumMin": 5,
+      "NormalDeadNumForSpawnElites": 20
+    }
+  ]
+}

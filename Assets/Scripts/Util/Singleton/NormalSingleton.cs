@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class NormalSingleton<T> where T : class,new()
+public class NormalSingleton<T> where T : class, new()
 {
-    private static T _single;
+    protected static T _single;
 
     public static T Single
     {
@@ -12,7 +10,7 @@ public class NormalSingleton<T> where T : class,new()
         {
             if (_single == null)
             {
-                T t = new T();
+                var t = new T();
                 if (t is MonoBehaviour)
                 {
                     Debug.LogError("Mono类请使用MonoSingleton");
@@ -20,8 +18,8 @@ public class NormalSingleton<T> where T : class,new()
                 }
 
                 _single = t;
-               
             }
+
             return _single;
         }
     }

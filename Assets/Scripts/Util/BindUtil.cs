@@ -1,34 +1,45 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BindUtil  {
-    
-    private static Dictionary<string,Type> _prefabAndScriptMap = new Dictionary<string, Type>();
+public class BindUtil
+{
+    private static readonly Dictionary<string, List<Type>> _prefabAndScriptMap = new Dictionary<string, List<Type>>();
+    private static readonly Dictionary<Type, int> _prioritysMap = new Dictionary<Type, int>();
 
-    public static void Bind(string path, Type type)
+    public static void Bind(BindPrefab data, Type type)
     {
-        if (!_prefabAndScriptMap.ContainsKey(path))
+        var path = data.Path;
+        if (!_prefabAndScriptMap.ContainsKey(path)) _prefabAndScriptMap.Add(path, new List<Type>());
+
+        if (!_prefabAndScriptMap[path].Contains(type))
         {
-            _prefabAndScriptMap.Add(path,type);
-        }
-        else
-        {
-            Debug.LogError("already contain path:"+path);
+            _prefabAndScriptMap[path].Add(type);
+            _prioritysMap.Add(type, data.Priority);
+            _prefabAndScriptMap[path].Sort(new BindPriorityComparer());
         }
     }
 
-    public static Type GetScriptType(string path)
+    public static List<Type> GetType(string path)
     {
         if (_prefabAndScriptMap.ContainsKey(path))
         {
-           return _prefabAndScriptMap[path];
+            return _prefabAndScriptMap[path];
         }
-        else
+
+        Debug.LogError("当前数据中未包含路径：" + path);
+        return null;
+    }
+
+    public class BindPriorityComparer : IComparer<Type>
+    {
+        public int Compare(Type x, Type y)
         {
-            Debug.LogError("not contain path:"+path);
-            return null;
+            if (x == null)
+                return 1;
+            if (y == null)
+                return -1;
+            return _prioritysMap[x] - _prioritysMap[y];
         }
     }
 }

@@ -1,36 +1,35 @@
 ﻿// Author: Daniele Giardini - http://www.demigiant.com
 // Created: 2018/07/13
 
-using System;
-using System.Reflection;
-using UnityEngine;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Core.PathCore;
 using DG.Tweening.Plugins.Options;
+using UnityEditor;
+using UnityEngine;
 
 #pragma warning disable 1591
 namespace DG.Tweening
 {
     /// <summary>
-    /// Utility functions that deal with available Modules.
-    /// Modules defines:
-    /// - DOTAUDIO
-    /// - DOTPHYSICS
-    /// - DOTPHYSICS2D
-    /// - DOTSPRITE
-    /// - DOTUI
-    /// Extra defines set and used for implementation of external assets:
-    /// - DOTWEEN_TMP ► TextMesh Pro
-    /// - DOTWEEN_TK2D ► 2D Toolkit
+    ///     Utility functions that deal with available Modules.
+    ///     Modules defines:
+    ///     - DOTAUDIO
+    ///     - DOTPHYSICS
+    ///     - DOTPHYSICS2D
+    ///     - DOTSPRITE
+    ///     - DOTUI
+    ///     Extra defines set and used for implementation of external assets:
+    ///     - DOTWEEN_TMP ► TextMesh Pro
+    ///     - DOTWEEN_TK2D ► 2D Toolkit
     /// </summary>
-	public static class DOTweenModuleUtils
+    public static class DOTweenModuleUtils
     {
-        static bool _initialized;
+        private static bool _initialized;
 
         #region Reflection
 
         /// <summary>
-        /// Called via Reflection by DOTweenComponent on Awake
+        ///     Called via Reflection by DOTweenComponent on Awake
         /// </summary>
 #if UNITY_2018_1_OR_NEWER
         [UnityEngine.Scripting.Preserve]
@@ -46,7 +45,7 @@ namespace DG.Tweening
 #if UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5 || UNITY_2017_1
             UnityEditor.EditorApplication.playmodeStateChanged += PlaymodeStateChanged;
 #else
-            UnityEditor.EditorApplication.playModeStateChanged += PlaymodeStateChanged;
+            EditorApplication.playModeStateChanged += PlaymodeStateChanged;
 #endif
 #endif
         }
@@ -69,12 +68,12 @@ namespace DG.Tweening
         // Fires OnApplicationPause in DOTweenComponent even when Editor is paused (otherwise it's only fired at runtime)
 #if UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5 || UNITY_2017_1
         static void PlaymodeStateChanged()
-        #else
-        static void PlaymodeStateChanged(UnityEditor.PlayModeStateChange state)
+#else
+        private static void PlaymodeStateChanged(PlayModeStateChange state)
 #endif
         {
             if (DOTween.instance == null) return;
-            DOTween.instance.OnApplicationPause(UnityEditor.EditorApplication.isPaused);
+            DOTween.instance.OnApplicationPause(EditorApplication.isPaused);
         }
 #endif
 
@@ -88,7 +87,7 @@ namespace DG.Tweening
             public static void SetOrientationOnPath(PathOptions options, Tween t, Quaternion newRot, Transform trans)
             {
 #if true // PHYSICS_MARKER
-                if (options.isRigidbody) ((Rigidbody)t.target).rotation = newRot;
+                if (options.isRigidbody) ((Rigidbody) t.target).rotation = newRot;
                 else trans.rotation = newRot;
 #else
                 trans.rotation = newRot;
@@ -106,7 +105,6 @@ namespace DG.Tweening
             }
 
             #region Called via Reflection
-
 
             // Called via Reflection by DOTweenPathInspector
             // Returns FALSE if the DOTween's Physics Module is disabled, or if there's no rigidbody attached
@@ -128,19 +126,19 @@ namespace DG.Tweening
 #endif
             public static TweenerCore<Vector3, Path, PathOptions> CreateDOTweenPathTween(
                 MonoBehaviour target, bool tweenRigidbody, bool isLocal, Path path, float duration, PathMode pathMode
-            ){
+            )
+            {
                 TweenerCore<Vector3, Path, PathOptions> t;
 #if true // PHYSICS_MARKER
-                Rigidbody rBody = tweenRigidbody ? target.GetComponent<Rigidbody>() : null;
-                if (tweenRigidbody && rBody != null) {
+                var rBody = tweenRigidbody ? target.GetComponent<Rigidbody>() : null;
+                if (tweenRigidbody && rBody != null)
                     t = isLocal
                         ? rBody.DOLocalPath(path, duration, pathMode)
                         : rBody.DOPath(path, duration, pathMode);
-                } else {
+                else
                     t = isLocal
                         ? target.transform.DOLocalPath(path, duration, pathMode)
                         : target.transform.DOPath(path, duration, pathMode);
-                }
 #else
                 t = isLocal
                     ? target.transform.DOLocalPath(path, duration, pathMode)

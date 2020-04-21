@@ -1,0 +1,32 @@
+{
+  "Straight": [
+    {
+      "Angle": 100.0
+    },
+    {
+      "Angle": 90.0
+    },
+    {
+      "Angle": 80.0
+    }
+  ],
+  "W": [
+    {
+      "Angle": 20.0
+    },
+    {
+      "Angle": 20.0
+    },
+    {
+      "Angle": 20.0
+    }
+  ],
+  "Ellipse": [
+    {
+      "YRatioInScreen": 0.8,
+      "XRadius": 1,
+      "YRadius": 0.5,
+      "Precision": 20
+    }
+  ]
+}
