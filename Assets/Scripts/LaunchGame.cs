@@ -14,7 +14,7 @@ public class LaunchGame : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        
         StartCoroutine(Init());
     }
 
@@ -25,6 +25,8 @@ public class LaunchGame : MonoBehaviour
         GameStateModel.Single.CurrentScene = SceneName.Main;
         IInit lifeCycle = LifeCycleMgr.Single;
         lifeCycle.Init();
+        
+        GuideMgr.Single.InitGuide();
 
         UIManager.Single.Show(Paths.PREFAB_START_VIEW);
 

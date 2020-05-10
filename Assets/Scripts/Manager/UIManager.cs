@@ -30,13 +30,26 @@ public class UIManager : NormalSingleton<UIManager>
         }
     }
 
+    private Action<string> _showAction;
+    private Action<string> _hideAction;
+
+    public void AddShowListener(Action<string> showAction)
+    {
+        _showAction += showAction;
+    }
+    
+    public void AddHideListener(Action<string> hideAction)
+    {
+        _hideAction += hideAction;
+    }
+
     public IView Show(string path)
     {
         if (_uiStack.Count > 0)
         {
             var name = _uiStack.Peek();
             if (GetLayer(name) >= GetLayer(path)) 
-                HideAll(_views[name]);
+                Hide(name);
         }
 
         var view = InitView(path);
@@ -47,6 +60,9 @@ public class UIManager : NormalSingleton<UIManager>
             _uiStack.Push(path);
 
         _views[path] = view;
+
+        if (_showAction != null)
+            _showAction(path);
 
         return view;
     }
@@ -129,7 +145,7 @@ public class UIManager : NormalSingleton<UIManager>
         {
             
             var name = _uiStack.Pop();
-            HideAll(_views[name]);
+            Hide(name);
             name = _uiStack.Peek();
             ShowAll(_views[name]);
         }
@@ -144,6 +160,9 @@ public class UIManager : NormalSingleton<UIManager>
     public void Hide(string name)
     {
         HideAll(_views[name]);
+
+        if (_hideAction != null)
+            _hideAction(name);
     }
 
     private void ShowAll(IView view)
