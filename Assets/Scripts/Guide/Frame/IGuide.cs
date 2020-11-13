@@ -29,6 +29,9 @@ public abstract class GuideBase : IGuideRoot
 
     public void Update()
     {
+        if(_groups == null)
+            return;
+        
         foreach (IGuideGroup guideGroup in _groups)
         {
             guideGroup.Update();

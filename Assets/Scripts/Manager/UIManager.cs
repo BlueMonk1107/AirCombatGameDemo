@@ -5,7 +5,6 @@ using Object = UnityEngine.Object;
 
 public class UIManager : NormalSingleton<UIManager>
 {
-    private Canvas _canvas;
     private IView _dialog;
 
     private readonly HashSet<string> _skipViews = new HashSet<string>
@@ -16,19 +15,7 @@ public class UIManager : NormalSingleton<UIManager>
     private readonly Stack<string> _uiStack = new Stack<string>();
     private readonly Dictionary<string, IView> _views = new Dictionary<string, IView>();
 
-    public Canvas Canvas
-    {
-        get
-        {
-            if (_canvas == null)
-                _canvas = Object.FindObjectOfType<Canvas>();
-
-            if (_canvas == null)
-                Debug.LogError("场景中没有Canvas");
-
-            return _canvas;
-        }
-    }
+    public Canvas Canvas { get; private set; }
 
     private Action<string> _showAction;
     private Action<string> _hideAction;
@@ -43,6 +30,11 @@ public class UIManager : NormalSingleton<UIManager>
         _hideAction += hideAction;
     }
 
+    public void Init(Canvas canvas)
+    {
+        Canvas = canvas;
+    }
+    
     public IView Show(string path)
     {
         if (_uiStack.Count > 0)
@@ -186,5 +178,11 @@ public class UIManager : NormalSingleton<UIManager>
             Debug.LogError("当前预制为在uimanager管理当中,path:"+path);
             return null;
         }
+    }
+
+    public Transform GetCurrentViewPrefab()
+    {
+        var name = _uiStack.Peek();
+        return GetViwePrefab(name);
     }
 }

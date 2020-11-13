@@ -21,13 +21,15 @@ public class LaunchGame : MonoBehaviour
     private IEnumerator Init()
     {
         yield return TestMgr.Single.Init();
-        //DataMgr.Single.ClearAll(); 
+        DataMgr.Single.ClearAll(); 
         GameStateModel.Single.CurrentScene = SceneName.Main;
         IInit lifeCycle = LifeCycleMgr.Single;
         lifeCycle.Init();
         
+        GuideUiMgr.Single.Init(transform);
         GuideMgr.Single.InitGuide();
-
+        
+        UIManager.Single.Init(GetComponent<Canvas>());
         UIManager.Single.Show(Paths.PREFAB_START_VIEW);
 
         DontDestroyOnLoad(gameObject);

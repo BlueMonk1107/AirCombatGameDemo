@@ -20,7 +20,12 @@ public class Paths
 
     public const string PREFAB_ITEM_EFFECT_VIEW = UI_FOLDER + "ItemEffect";
     public const string PREFAB_WARNING = UI_FOLDER + "Warning";
-
+    
+    private const string GUIDE_FOLDER = PREFAB_FOLDER + "Guide/";
+    public const string PREFAB_HAND_GUIDE = GUIDE_FOLDER + "Hand";
+    public const string PREFAB_WELCOME_GUIDE = GUIDE_FOLDER + "WelcomeView";
+    public const string PREFAB_HIGH_LIGHT_GUIDE = GUIDE_FOLDER + "HighLightModule";
+    public const string PREFAB_EXPAIN_DIALOG_GUIDE = GUIDE_FOLDER + "ExplainDialog";
     //game预制
     private const string Game_FOLDER = PREFAB_FOLDER + "Game/";
     public const string PREFAB_GAME_ROOT = Game_FOLDER + "GameRoot";

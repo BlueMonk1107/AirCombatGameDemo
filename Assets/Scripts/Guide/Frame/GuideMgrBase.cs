@@ -34,6 +34,7 @@ public abstract class GuideMgrBase<T> where T : new()
         if (_viewGuide.ContainsKey(name))
         {
             _currentGuide = _viewGuide[name];
+            _currentGuide.OnEnter();
         }
     }
     

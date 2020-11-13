@@ -25,6 +25,8 @@ public class PrefabChangeSetting : AssetPostprocessor  {
 
         string fileName = Path.GetFileNameWithoutExtension(asset);
         var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(asset);
+        if(prefab == null)
+            return;
         string prefabName = prefab.name;
         if (fileName != prefabName)
         {

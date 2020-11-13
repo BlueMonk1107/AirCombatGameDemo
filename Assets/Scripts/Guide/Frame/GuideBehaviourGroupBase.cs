@@ -12,7 +12,6 @@ public abstract class GuideGroupBase<T> : IGuideGroup where T : IGuide
 	private Queue<T> _guideItems;
 	private Action _complete;
 	protected abstract bool IsTrigger { get; }
-	protected abstract bool NeedUpdateTrigger { get; }
 	protected abstract int GroupId { get; }
 	/// <summary>
 	/// 数据持久化的键值
@@ -40,7 +39,6 @@ public abstract class GuideGroupBase<T> : IGuideGroup where T : IGuide
 		if(GuideDataMgr.Single.GetData(_dataId))
 			return;
 		
-		SaveData();
 		_firstExecute = true;
 		_complete = callBack;
 		_guideItems = GetGuideItems();
@@ -56,13 +54,10 @@ public abstract class GuideGroupBase<T> : IGuideGroup where T : IGuide
 	
 	public virtual void Update()
 	{
-		if (NeedUpdateTrigger)
+		if (IsTrigger && _firstExecute)
 		{
-			if (IsTrigger && _firstExecute)
-			{
-				_firstExecute = false;
-				ExecuteGuideItem();
-			}
+			_firstExecute = false;
+			ExecuteGuideItem();
 		}
 	}
 
@@ -86,6 +81,7 @@ public abstract class GuideGroupBase<T> : IGuideGroup where T : IGuide
 	{
 		if (!ExecuteGuideItem())
 		{
+			SaveData();
 			//todo:引导结束后要执行的逻辑
 			if (_complete != null)
 				_complete();

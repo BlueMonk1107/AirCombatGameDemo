@@ -48,7 +48,9 @@ public class GuideGenerateIDTool
         {
             string filePath = "";
             string content = "";
-            foreach (string file in Directory.GetFiles(directoryPath))
+            List<string> paths = new List<string>();
+            GetFilePaths(directoryPath, paths);
+            foreach (string file in paths)
             {
                 if (file.Contains(".cs") && !file.Contains(".meta"))
                 {
@@ -63,6 +65,21 @@ public class GuideGenerateIDTool
         {
             Debug.LogError("当前脚本文件夹不存在，路径：" + directoryPath);
         } 
+    }
+
+    private static List<string> GetFilePaths(string rootPath,List<string> paths)
+    {
+        foreach (string file in Directory.GetFiles(rootPath,"*.cs"))
+        {
+            paths.Add(file);
+        }
+
+        foreach (string directory in Directory.GetDirectories(rootPath))
+        {
+            GetFilePaths(directory, paths);
+        }
+
+        return paths;
     }
 
     private static string Repalce(Match match,string oldContent,string newContent)

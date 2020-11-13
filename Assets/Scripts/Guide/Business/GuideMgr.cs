@@ -1,28 +1,32 @@
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class GuideMgr : GuideMgrBase<GuideMgr>,IUpdate
+public class GuideMgr : GuideMgrBase<GuideMgr>, IUpdate
 {
-    public override void InitGuide()
-    {
-        base.InitGuide();
-        UIManager.Single.AddShowListener(ShowUI);
-        UIManager.Single.AddHideListener(HideUI);
-        LifeCycleMgr.Single.Add(LifeName.UPDATE,this);
-    }
+	public override void InitGuide()
+	{
+		base.InitGuide();
+		UIManager.Single.AddShowListener(ShowUI);
+		UIManager.Single.AddHideListener(HideUI);
+		LifeCycleMgr.Single.Add(LifeName.UPDATE, this);
+	}
 
-    protected override Dictionary<string, IGuideRoot> GetViweGuides()
-    {
-        Dictionary<string, IGuideRoot> dic = new Dictionary<string, IGuideRoot>();
-        IGuideRoot guide = new StartViewGuide();
-        dic.Add(guide.GetViewName(),guide);
+	protected override Dictionary<string, IGuideRoot> GetViweGuides()
+	{
+		Dictionary<string, IGuideRoot> dic = new Dictionary<string, IGuideRoot>();
+		foreach (IGuideRoot root in GuideDataConfig.GUIDE_ROOTS)
+		{
+			dic.Add(root.GetViewName(),root);
+		}
+		return dic;
+	}
 
-        return dic;
-    }
+	public int Times { get; set; }
+	public int UpdateTimes { get; }
 
-    public int Times { get; set; }
-    public int UpdateTimes { get; }
-    public void UpdateFun()
-    {
-        Update();
-    }
+	public void UpdateFun()
+	{
+		Update();
+	}
 }
